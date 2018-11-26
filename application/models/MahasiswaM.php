@@ -153,5 +153,20 @@ class MahasiswaM extends CI_Model{
 		return true;
 	}
 
+	public function getJawabanPilgan($id){
+		$query = $this->db->query("SELECT *, jp.status AS statusJawaban FROM tugas t, soal_pilgan sp, jawaban_pilgan jp WHERE t.id_tugas=sp.id_tugas AND sp.id_soal_pilgan=jp.id_soal_pilgan AND t.id_tugas='$id';");
+		return $query;
+	}
+
+	public function getNilaiPilgan($id){
+		$query = $this->db->query("SELECT * FROM nilai n, tugas t WHERE n.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
+		return $query;
+	}
+
+	public function getKetSoalbyIdTugas($id){
+		$query = $this->db->query("SELECT * FROM tugas t, kelas k, dosen d, user u WHERE t.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND t.id_tugas='$id'");
+		return $query;
+	}
+
 }
 ?>

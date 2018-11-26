@@ -230,37 +230,74 @@ class MahasiswaC extends CI_Controller {
 
     	$this->load->view('mahasiswa/soal_pilganV',$data);
     }
- 
-    public function jawabSoal() {
-    	$email=$this->session->userdata('email');
- 		$id_tugas = $this->input->post('id_tugas');
- 		$id_mhs = $this->model->getUser($email);
 
-    	foreach ($id_mhs->result_array() as $row) {    	
-	    	foreach ($_POST['pilihan'] as $pilihan) {
-	    		$pilih = $pilihan['id_soal_pilgan'];
-	    		$kunci = $this->db->query("SELECT * FROM soal_pilgan WHERE id_soal_pilgan = '$pilih'")->result_array();
-	    		foreach ($kunci as $key) {
-		    		if($pilihan['jawaban'] == $key['kunci']){
-                        $status = 'B';
-		    		}else{
-                        $status = 'S';
-                    }
-                    
-                    $data =  array(
-                        "jawaban"=>$pilihan['jawaban'],
-                        "status"=>$status,
-                        "id_soal_pilgan"=>$pilihan['id_soal_pilgan'],
-                        "id_mhs"=>$row['id_mhs'],
-                        "createDtm"=>date('Y-m-d H:s:i')
-                    );
-		    		
-		    	     $result = $this->model->insertJawabanPilgan($data);
-                }
+    public function jawabSoal() {
+     $email=$this->session->userdata('email');
+     $id_tugas = $this->input->post('id_tugas');
+     $id_mhs = $this->model->getUser($email);
+
+     foreach ($id_mhs->result_array() as $row) {    	
+      foreach ($_POST['pilihan'] as $pilihan) {
+         $pilih = $pilihan['id_soal_pilgan'];
+         $kunci = $this->db->query("SELECT * FROM soal_pilgan WHERE id_soal_pilgan = '$pilih'")->result_array();
+         foreach ($kunci as $key) {
+            if($pilihan['jawaban'] == $key['kunci']){
+                $status = 'B';
+            }else{
+                $status = 'S';
             }
-		    $result2 = $this->model->insertNilaiPilgan($id_tugas,$row['id_mhs']);
-    	}
-    	redirect('MahasiswaC/');
+
+            $data =  array(
+                "jawaban"=>$pilihan['jawaban'],
+                "status"=>$status,
+                "id_soal_pilgan"=>$pilihan['id_soal_pilgan'],
+                "id_mhs"=>$row['id_mhs'],
+                "createDtm"=>date('Y-m-d H:s:i')
+            );
+
+            $result = $this->model->insertJawabanPilgan($data);
+        }
     }
+    $result2 = $this->model->insertNilaiPilgan($id_tugas,$row['id_mhs']);
+}
+redirect('MahasiswaC/tampilSelesai/'.$id_tugas);
+}
+
+public function tampilSelesai($id)
+{
+    $email=$this->session->userdata('email');
+    $id_mhs = $this->model->getUser($email);
+    $id_tugas = $this->input->post('id_tugas');
+
+    foreach ($id_mhs->result_array() as $row) {  
+        $data=array(
+            "id_mhs"=>$row['id_mhs'],
+            "soal"=>$this->model->getSoalPilgan($id)->row_array(),
+            "aktif"=>"mahasiswa"
+        );
+    }
+
+    $this->load->view('mahasiswa/selesaiV',$data);
+}
+
+public function tampilHasil($id)
+{
+    $email=$this->session->userdata('email');
+    $id_mhs = $this->model->getUser($email);
+    $id_tugas = $this->input->post('id_tugas');
+
+        foreach ($id_mhs->result_array() as $row) {  
+        $data=array(
+            "id_mhs"=>$row['id_mhs'],
+            // "nama_tugas"=>$this->model->getSoalPilgan($id)->row_array(),
+            "jawaban"=>$this->model->getJawabanPilgan($id)->result(),
+            "nilai"=>$this->model->getNilaiPilgan($id)->row_array(),
+            "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+            "aktif"=>"mahasiswa"
+        );
+    }
+
+    $this->load->view('mahasiswa/hasilV',$data);
+}
 
 }
