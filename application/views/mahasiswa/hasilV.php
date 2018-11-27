@@ -16,8 +16,8 @@ $this->load->view('head_soal');
     <div class="box-header with-border">
       <center>
         <h1 class="box-title" style="font-size: 25px;"><b> <?php echo $ket_soal['nama_tugas'];?></b></h1>
-        <p style="padding-top: 10px;">Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
-        <p>Waktu: <?php echo $ket_soal['waktu'];?> menit</p>
+        <p style="padding-top: 10px;"><i class="fa fa-calendar" ></i> Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
+        <p><i class="fa fa-clock-o" ></i> Waktu: <?php echo $ket_soal['waktu'];?> menit</p>
         </center> 
     </div>
  

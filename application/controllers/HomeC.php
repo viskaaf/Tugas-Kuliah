@@ -7,12 +7,33 @@ class HomeC extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('HomeM');
+		// $this->load->model('DosenM');
 		$this->model = $this->HomeM;
 	}
 
 	public function index()
 	{
-		$this->load->view('homeV.php');
+		$email = $this->session->userdata('email'); 
+		$q = $this->model->getUser($email)->row_array();
+        if($this->session->userdata('masuk') == TRUE){
+        	if($this->session->userdata('id_userrole') == 1){
+        		$url = site_url('DosenC/');
+        	}else{
+        		$url = site_url('MahasiswaC/');
+        	}
+			$data = array(
+				'url' => $url,
+				'nama' => $q['nama_depan'].' '.$q['nama_belakang'],
+				'foto' => $q['foto_profil'],
+			);
+		}else{
+			$data = array(
+				'url' => site_url('LoginC/'),
+				'nama' => 'Masuk',
+				'foto' => '',
+			);
+		}
+		$this->load->view('homeV.php',$data);
 	}
 
 	public function halamanLupaPass()

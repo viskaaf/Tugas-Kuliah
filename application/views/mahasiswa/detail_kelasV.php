@@ -94,7 +94,7 @@ $this->load->view('head_mahasiswa');
             <a href="#"><?php echo $value->nama_depan.' '; echo $value->nama_belakang;?></a>
             <a style="color: #999; font-size: 13px">dikirim ke <b><?php echo $value->nama_kelas?></b></a>
           </span>
-          <span class="description"><?php echo tgl_indo(date("Y-m-d",strtotime($value->createDtm))); ?> - <?php echo date("H:i",strtotime($value->createDtm)); ?></span>
+          <span class="description"><?php echo tgl_indo(date("Y-m-d",strtotime($value->createDtm))); ?> - <?php echo date("H:i",strtotime($value->createDtm)); ?></span> 
         </div>
         <!-- /.user-block -->
       </div>
@@ -103,7 +103,15 @@ $this->load->view('head_mahasiswa');
         <div class="form-group" style="padding-left: 50px">
           <p><b><?php echo $value->nama_tugas;?></b></p>
           <p>Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($value->tgl_selesai))); ?> - <?php echo date("H:i",strtotime($value->tgl_selesai)); ?></p>
-          <a href="<?php echo site_url('MahasiswaC/tampilSoalPilgan/'.$value->id_tugas); ?>" class="btn btn-default" type="submit" onclick="alert('Apakah Anda yakin untuk mengerjakan soal?')">Kerjakan</a>
+
+          <?php 
+          $q = $this->MahasiswaM->getNilaiPilgan($value->id_tugas)->row_array();?>
+          <?php if(empty($q)) { ?>
+            <a href="<?php echo site_url('MahasiswaC/tampilSoalPilgan/'.$value->id_tugas); ?>" class="btn btn-default" type="submit" onclick="alert('Apakah Anda yakin untuk mengerjakan soal?')">Kerjakan</a>
+          <?php }else { ?>
+            <a href="<?php echo site_url('MahasiswaC/tampilHasil/'.$value->id_tugas); ?>" class="btn btn-default">Lihat Hasil</a>
+          <?php } ?>
+
           <?php 
           $q = $this->MahasiswaM->getSoalPilgan($value->id_tugas)->num_rows();?>
           <span style="padding-left: 10px"> <b><?php echo $q; ?> pertanyaan</b></span>

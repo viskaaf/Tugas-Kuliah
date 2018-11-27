@@ -45,7 +45,7 @@
       <nav class="navbar navbar-static-top">
         <div class="container">
           <div class="navbar-header">
-            <a href="<?php echo site_url('MahasiswaC/'); ?>" class="navbar-brand"><b>Tugas </b>Kuliah</a>
+            <a href="<?php echo site_url('HomeC/index'); ?>" class="navbar-brand"><b>Tugas </b>Kuliah</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
@@ -78,6 +78,24 @@
                   <li class="footer"><a href="#">View all</a></li>
                 </ul>
               </li>
+
+                            <!-- User Account: style can be found in dropdown.less -->
+<!--               <li class="dropdown user user-menu">
+                <a href="<?php echo $url ?>" class="dropdown-toggle" title="Kembali ke Halaman Pengguna">
+                    <?php
+                    if($foto){
+                      ?>
+                      <img class="user-image" src="<?php echo base_url('gambar/'.$foto)?>" alt="User Image">
+                      <?php
+                    }else{
+                      ?> 
+                      <img class="user-image" src="<?php echo base_url('gambar/admin.png')?>" alt="User Image">
+                      <?php
+                    }
+                    ?>
+                  <span class="hidden-xs"><?php echo $nama; ?></span>
+                </a>
+              </li> -->
 
               <!-- User Account Menu -->
               <li class="user">

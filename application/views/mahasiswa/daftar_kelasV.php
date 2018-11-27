@@ -57,47 +57,70 @@ $this->load->view('head_mahasiswa');
     <!-- /. box -->
     <?php
   } else { ?>
+    <div class="col-md-6">
     <div class="box box-primary">
-      <div class="box-body">
+      <div class="box-body table-responsive no-padding">
         <div style="padding-bottom: 10px;">
 
       </div>
 
-      <table id="datakelas" class="table table-bordered table-striped">
+      <table class="table table-hover">
         <thead>
           <tr>
-            <th><center>No</center></th>
-            <th><center>Nama Kelas</center></th>
-            <th><center>Status</center></th>
-            <th><center>Opsi</center></th>
+            <!-- <th><center>No</center></th> -->
+            <th><center>Kelas Aktif</center></th>
+            <!-- <th><center>Status</center></th> -->
+            <!-- <th><center>Opsi</center></th> -->
           </tr>
         </thead>
         <tbody>
-         <?php $no=0; foreach ($kelas as $value): $no++; ?>
+         <?php foreach ($kelas as $value); ?>
          <tr>
-          <td><center><?php echo $no; ?></center></td>
-          <td><center><?php echo $value->nama_kelas; ?></center></td>
-          <td><center>
+          <!-- <td><center><?php echo $no; ?></center></td> -->
+          <td><center><a href="<?php echo site_url('MahasiswaC/detailKelas/'.$value->id_kelas) ?>"><?php echo $value->nama_kelas; ?></a></center></td>
+  <!--         <td><center>
             <?php if($value->status_kelas == 'Aktif') { ?>
               <span class="label label-success"><?php echo $value->status_kelas; ?></span>
             <?php }else { ?>
               <span class="label label-danger"><?php echo $value->status_kelas; ?></span>
             <?php } ?>
-          </center></td>
-          <td><center>
+          </center></td> -->
+<!--           <td><center>
             <a class="btn btn-primary btn-xs tooltips" href="<?php echo site_url('MahasiswaC/detailKelas/'.$value->id_kelas) ?>">
               <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-eye"></i></span>
             </a></center>
-          </td>
+          </td> -->
         </tr>
-      <?php  endforeach; ?>
+      <?php ?>
     </tbody>
   </table>
-
-
-
 </div>
 </div> 
+</div>
+
+        <div class="col-md-6">
+    <div class="box box-primary">
+      <div class="box-body table-responsive no-padding">
+        <div style="padding-bottom: 10px;">
+
+      </div>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th><center>Menunggu Pengesahan</center></th>
+          </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td><center><a href="<?php echo site_url('MahasiswaC/detailKelas/'.$value->id_kelas) ?>"></a></center></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+</div> 
+</div>
+
 </div>
 <!-- /.col -->
 </div>
@@ -122,15 +145,15 @@ $this->load->view('head_mahasiswa');
 
 <script type="text/javascript">
   $(function () {
-    $('#datakelas').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    });
+    // $('#datakelas').DataTable()
+    // $('#example2').DataTable({
+    //   'paging'      : true,
+    //   'lengthChange': false,
+    //   'searching'   : false,
+    //   'ordering'    : true,
+    //   'info'        : true,
+    //   'autoWidth'   : false
+    // });
 
     //Initialize Select2 Elements
     $('.select2').select2();

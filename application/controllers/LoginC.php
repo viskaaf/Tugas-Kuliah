@@ -40,6 +40,8 @@ class LoginC extends CI_Controller{
 			$this->session->set_userdata('id_userrole', $id_userrole);
 			$this->session->set_userdata('status', $status);
 			$this->session->set_userdata('akses',"user");
+			$this->session->set_userdata('masuk',TRUE);
+
 
 			if ($status == "Belum Aktif"){
 				$this->session->set_flashdata('error','Email belum diverifikasi silahkan buka email Anda untuk memverifikasi akun');
@@ -63,7 +65,7 @@ class LoginC extends CI_Controller{
 		// $this->session->unset_userdata('akses');	
 		$this->session->sess_destroy();
 		// $this->session->set_flashdata('sukses', 'Anda telah keluar dari Sistem');
-		redirect('LoginC');
+		redirect('HomeC');
 	}
 }
 ?>

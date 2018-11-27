@@ -7,11 +7,12 @@ class HomeM extends CI_Model{
     $this->load->database();
   }
 
-  //query Lupa password
-    public function cekemail($email){
-      $query = $this->db->query("SELECT id_user FROM user WHERE email = '$email'");
-      return $query;
-    }
+      //untuk mengambil email sesuai yg login
+  public function getUser($email){
+    $q = $this->db->query("SELECT * FROM user u LEFT JOIN universitas un on u.id_univ=un.id_univ LEFT JOIN dosen d on u.id_user = d.id_user LEFT JOIN mahasiswa m on u.id_user = m.id_user WHERE u.email='$email'");
+    return $q;
+  }
+
     public function lupapassword($data,$email_def){
 
       if($email_def == md5("tugaskuliah473@gmail.com")){

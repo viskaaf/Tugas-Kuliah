@@ -45,7 +45,7 @@
       <nav class="navbar navbar-static-top">
         <div class="container">
           <div class="navbar-header">
-            <a href="<?php echo site_url('DosenC/index/'.$getuniv['id_univ']); ?>" class="navbar-brand"><b>Tugas </b>Kuliah</a>
+            <a href="<?php echo site_url('HomeC/index/'); ?>" class="navbar-brand"><b>Tugas </b>Kuliah</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
@@ -82,8 +82,8 @@
               <!-- User Account Menu -->
               <li class="user">
                 <!-- Menu Toggle Button -->
-                <a href="<?php echo site_url('LoginC/logout') ?>">
-                  <span>Logout</span>
+                <a href="<?php echo site_url('LoginC/logout') ?>" title="Logout dari Tugas Kuliah">
+                  <span><i class="fa fa-sign-out"></i></span>
                 </a>
               </li>
             </ul>

@@ -45,7 +45,7 @@
       <nav class="navbar navbar-static-top">
         <div class="container">
           <div class="navbar-header">
-            <a href="<?php echo site_url('DosenC/index/'); ?>" class="navbar-brand"><b>Tugas </b>Kuliah</a>
+            <a href="<?php echo site_url('HomeC/index/'); ?>" class="navbar-brand"><b>Tugas </b>Kuliah</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
@@ -54,6 +54,14 @@
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+
+                            <!-- User Account Menu -->
+              <li class="user">
+                <!-- Menu Toggle Button -->
+                <a href="<?php echo site_url('MahasiswaC/index') ?>">
+                  <span>Beranda</span>
+                </a>
+              </li>
 
               <!-- Notifications Menu -->
               <li class="dropdown notifications-menu">
