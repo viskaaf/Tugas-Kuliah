@@ -7,6 +7,7 @@ $this->load->view('head_dosen');
     <div class="box-header with-border">
       <h3 class="box-title" style="font-size: 25px"><i class="fa fa-list"></i> Buat Soal</h3>
     </div>
+    <!-- /.box-header -->
     <?php
   $this->load->helper('form');
   $error = $this->session->flashdata('error');
@@ -33,7 +34,6 @@ $this->load->view('head_dosen');
     Berkas yang diunggah dapat berupa berkas <b>.pdf</b> atau apabila membutuhkan lebih dari satu berkas, maka berkas dapat berupa <b>.zip</b>.
   </div>
   <div class="box box-default">
-    <!-- /.box-header -->
     <?php echo form_open_multipart('DosenC/tambahSoalEssay') ?>
     <div class="box-body">
       <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $tugas; ?>">
@@ -54,7 +54,7 @@ $this->load->view('head_dosen');
       </div>
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
+    <div class="box-footer"> 
       <div class="pull-right">
         <button type="submit" class="btn btn-default">Batal</button>
         <button type="submit" class="btn btn-primary">Simpan</button>

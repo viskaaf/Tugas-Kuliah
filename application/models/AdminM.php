@@ -105,6 +105,32 @@ class AdminM extends CI_Model{
     return $q;
   }
 
+    public function tambahDosen($data){
+    $this->db->trans_start();
+      
+    $this->db->insert('user',$data);
+    $insert_id = $this->db->insert_id();
+    
+        $this->db->trans_complete();
+      return $insert_id;    
+  }
+
+
+  public function getMahasiswa(){
+    $q = $this->db->query("SELECT * from user u, user_role ur WHERE u.id_userrole=ur.id_userrole AND ur.id_userrole=2");
+    return $q;
+  }
+
+    public function tambahMahasiswa($data){
+    $this->db->trans_start();
+      
+    $this->db->insert('user',$data);
+    $insert_id = $this->db->insert_id();
+    
+        $this->db->trans_complete();
+      return $insert_id;    
+  }
+
 
 }
 ?>

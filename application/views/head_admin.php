@@ -31,8 +31,10 @@
    <link rel="stylesheet" href="<?php echo base_url('AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')?>">
    <!-- Select2 -->
    <link rel="stylesheet" href="<?php echo base_url('AdminLTE/bower_components/select2/dist/css/select2.min.css')?>">
-   <!-- iCheck -->
-   <link rel="stylesheet" href="<?php echo base_url('AdminLTE/plugins/iCheck/flat/blue.css')?>">
+   <!-- iCheck for checkboxes and radio inputs -->
+   <link rel="stylesheet" href="<?php echo base_url('AdminLTE/plugins/iCheck/all.css'); ?>">
+  <!-- iCheck -->
+   <link rel="stylesheet" href="<?php echo base_url('AdminLTE/plugins/iCheck/square/blue.css'); ?>">
 
    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -113,14 +115,14 @@
             </li>
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-users"></i> <span>Data Pengguna</span>
+                <i class="fa fa-users"></i> <span> Kelola Pengguna</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo site_url('AdminC/daftarDosen') ?>"><i class="fa fa-circle-o"></i> Data Dosen</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Data Mahasiswa</a></li>
+                <li><a href="<?php echo site_url('AdminC/daftarMahasiswa') ?>"><i class="fa fa-circle-o"></i> Data Mahasiswa</a></li>
               </ul>
             </li>
 
@@ -175,4 +177,4 @@
     <!-- Select2 -->
     <script src="<?php echo base_url('AdminLTE/bower_components/select2/dist/js/select2.full.min.js')?>"></script>
     <!-- iCheck -->
-    <script src="<?php echo base_url('AdminLTE/plugins/iCheck/icheck.min.js')?>"></script>
+    <script src="<?php echo base_url('AdminLTE/plugins/iCheck/icheck.min.js'); ?>"></script>

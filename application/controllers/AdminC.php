@@ -218,59 +218,165 @@ class AdminC extends CI_Controller {
           $result2 = $this->AdminM->insertDetFakultasProdi($data1);
 
           if($result2 > 0){
-             $this->session->set_flashdata('sukses', 'Data Program Studi berhasil ditambahkan');
-         }else{
-             $this->session->set_flashdata('error', 'Data Program Studi gagal ditambahkan');
-         }
+           $this->session->set_flashdata('sukses', 'Data Program Studi berhasil ditambahkan');
+       }else{
+           $this->session->set_flashdata('error', 'Data Program Studi gagal ditambahkan');
+       }
 
-         redirect('AdminC/daftarProdi/'.$id_fakultas);
-     }
- }
+       redirect('AdminC/daftarProdi/'.$id_fakultas);
+   }
+}
 
- public function ubahProdi() {
+public function ubahProdi() {
 		//get id jadwal yang ingin di edit
-   $id_prodi = $this->input->post('id_prodi');
+ $id_prodi = $this->input->post('id_prodi');
 
-   $this->load->library('form_validation');
+ $this->load->library('form_validation');
 
-   $this->form_validation->set_rules('nama_prodi','nama_prodi','required|xss_clean');
-   $this->form_validation->set_rules('status_prodi','status_prodi','required|xss_clean');
+ $this->form_validation->set_rules('nama_prodi','nama_prodi','required|xss_clean');
+ $this->form_validation->set_rules('status_prodi','status_prodi','required|xss_clean');
 
-   if($this->form_validation->run() == FALSE)
-   {
+ if($this->form_validation->run() == FALSE)
+ {
 			//jika form tidak lengkap maka akan dikembalikan ke route "jadwalAdminR"
-      redirect('AdminC');
-  }
-  else
+  redirect('AdminC');
+}
+else
+{
+  $nama_prodi = $this->input->post('nama_prodi');
+  $status_prodi = $this->input->post('status_prodi');
+
+  $data =  array(
+   "nama_prodi"=>$nama_prodi,
+   "status_prodi"=>$status_prodi,
+   "updateDtm"=>date('Y-m-d H:s:i')
+);
+
+  $result = $this->AdminM->editProdi($data, $id_prodi);
+
+  if($result == TRUE)
   {
-      $nama_prodi = $this->input->post('nama_prodi');
-      $status_prodi = $this->input->post('status_prodi');
+   $this->session->set_flashdata('sukses', 'Program Studi berhasil diubah');
+}
+else
+{
+   $this->session->set_flashdata('error', 'Program Studi gagal diubah');
+}	
 
-      $data =  array(
-         "nama_prodi"=>$nama_prodi,
-         "status_prodi"=>$status_prodi,
-         "updateDtm"=>date('Y-m-d H:s:i')
-     );
-
-      $result = $this->AdminM->editProdi($data, $id_prodi);
-
-      if($result == TRUE)
-      {
-         $this->session->set_flashdata('sukses', 'Program Studi berhasil diubah');
-     }
-     else
-     {
-         $this->session->set_flashdata('error', 'Program Studi gagal diubah');
-     }	
-
-     redirect('AdminC/daftarProdi');
- }
+redirect('AdminC/daftarProdi');
+}
 }
 
 public function daftarDosen() {
     $data['dosen']=$this->AdminM->getDosen()->result();
+    $data['universitas']=$this->AdminM->getUniversitas()->result();
     $this->load->view('admin/data_dosenV', $data);
 
+}
+
+public function tambahDosen() { 
+   $this->load->library('form_validation');
+   $this->form_validation->set_error_delimiters('<div style="color:#7E181B; font-size:12px; margin-bottom:2px;">','</div>');
+   $this->form_validation->set_rules('nama_depan', 'nama_depan','required');
+   $this->form_validation->set_rules('nama_belakang', 'nama_belakang','required');
+   $this->form_validation->set_rules('jenis_kelamin', 'jenis_kelamin','required');
+   $this->form_validation->set_rules('nama_univ', 'nama_univ');
+   $this->form_validation->set_rules('email', 'email','required');
+   $this->form_validation->set_rules('password','password','required|min_length[6]');
+   if($this->form_validation->run() == FALSE) {
+       $this->session->set_flashdata('error',"Pastikan password minimal 6 karakter.");
+       redirect('RegisterC');
+   }else{
+
+       $nama_depan    =    $this->input->post('nama_depan');
+       $nama_belakang =    $this->input->post('nama_belakang');
+       $jenis_kelamin =    $this->input->post('jenis_kelamin');
+       $nama_univ      =    $this->input->post('nama_univ');
+       $email         =    $this->input->post('email');
+       $password      =    md5($this->input->post('password'));
+             // $level         =    $this->input->post('level');
+
+       $data =  array(
+        "nama_depan"=>$nama_depan,
+        "nama_belakang"=>$nama_belakang,
+        "jenis_kelamin"=>$jenis_kelamin,
+        "email"=>$email,
+        "password"=>$password,
+        "status" => "Aktif",
+        "id_userrole"=>1,
+        "id_univ"=>$nama_univ,
+        "createDtm"=>date('Y-m-d H:s:i') 
+    );
+
+   }
+
+   $result = $this->AdminM->tambahDosen($data);
+   if($result == TRUE)
+   {
+       $this->session->set_flashdata('sukses', 'Dosen berhasil ditambahkan');
+   }
+   else
+   {
+       $this->session->set_flashdata('error', 'Dosen gagal ditambahkan');
+   }  
+
+   redirect('AdminC/daftarDosen');
+}
+
+public function daftarMahasiswa() {
+    $data['mahasiswa']=$this->AdminM->getMahasiswa()->result();
+    $data['universitas']=$this->AdminM->getUniversitas()->result();
+    $this->load->view('admin/data_mahasiswaV', $data);
+
+}
+
+public function tambahMahasiswa() { 
+   $this->load->library('form_validation');
+   $this->form_validation->set_error_delimiters('<div style="color:#7E181B; font-size:12px; margin-bottom:2px;">','</div>');
+   $this->form_validation->set_rules('nama_depan', 'nama_depan','required');
+   $this->form_validation->set_rules('nama_belakang', 'nama_belakang','required');
+   $this->form_validation->set_rules('jenis_kelamin', 'jenis_kelamin','required');
+   $this->form_validation->set_rules('nama_univ', 'nama_univ');
+   $this->form_validation->set_rules('email', 'email','required');
+   $this->form_validation->set_rules('password','password','required|min_length[6]');
+   if($this->form_validation->run() == FALSE) {
+       $this->session->set_flashdata('error',"Pastikan password minimal 6 karakter.");
+       redirect('RegisterC');
+   }else{
+
+       $nama_depan    =    $this->input->post('nama_depan');
+       $nama_belakang =    $this->input->post('nama_belakang');
+       $jenis_kelamin =    $this->input->post('jenis_kelamin');
+       $nama_univ      =    $this->input->post('nama_univ');
+       $email         =    $this->input->post('email');
+       $password      =    md5($this->input->post('password'));
+             // $level         =    $this->input->post('level');
+
+       $data =  array(
+        "nama_depan"=>$nama_depan,
+        "nama_belakang"=>$nama_belakang,
+        "jenis_kelamin"=>$jenis_kelamin,
+        "email"=>$email,
+        "password"=>$password,
+        "status" => "Aktif",
+        "id_userrole"=>2,
+        "id_univ"=>$nama_univ,
+        "createDtm"=>date('Y-m-d H:s:i') 
+    );
+
+   }
+
+   $result = $this->AdminM->tambahMahasiswa($data);
+   if($result == TRUE)
+   {
+       $this->session->set_flashdata('sukses', 'Mahasiswa berhasil ditambahkan');
+   }
+   else
+   {
+       $this->session->set_flashdata('error', 'Mahasiswa gagal ditambahkan');
+   }  
+
+   redirect('AdminC/daftarMahasiswa');
 }
 
 }

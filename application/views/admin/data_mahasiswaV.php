@@ -6,11 +6,11 @@ $this->load->view('head_admin');
 <div class="content-wrapper">
   <section class="content-header">
     <h1>
-      Data Dosen
+      Data Mahasiswa
     </h1>  
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Data Dosen</li>
+      <li class="active">Data Mahasiswa</li>
     </ol>
   </section>
 
@@ -53,7 +53,7 @@ $this->load->view('head_admin');
                 </tr>
               </thead>
               <tbody>
-                <?php $no=0; foreach ($dosen as $value): $no++; ?> 
+                <?php $no=0; foreach ($mahasiswa as $value): $no++; ?> 
                 <tr>
                   <td><center><?php echo $no; ?></center></td>
                   <td><center><?php echo $value->nama_depan; ?></center></td>
@@ -71,7 +71,6 @@ $this->load->view('head_admin');
                     </a></center>
                   </td>
                 </tr>
-
               <?php  endforeach; ?>
             </tbody>
           </table>
@@ -86,7 +85,7 @@ $this->load->view('head_admin');
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title"><center>Tambah Dosen</center></h4>
+              <h4 class="modal-title"><center>Tambah Mahasiswa</center></h4>
             </div>
             <div class="modal-body">
 
