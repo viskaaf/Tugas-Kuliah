@@ -29,7 +29,7 @@ class MahasiswaC extends CI_Controller {
 		$this->load->view('mahasiswa/edit_profilV', $data);
 	}
 
-	public function ubahProfil()
+	public function ubahProfil() 
 	{
 		//get id user yang ingin di edit
 		$id_user = $this->input->post('id_user');
@@ -199,7 +199,7 @@ class MahasiswaC extends CI_Controller {
     	$this->load->view('mahasiswa/daftar_kelasV', $data);
     }
 
-    public function detailKelas($id_kelas){
+    public function detailKelas($id_kelas){ 
     	$email=$this->session->userdata('email');
     	$kelas=$this->model->getKelas($id_kelas);
     	foreach ($kelas->result_array() as $row) {
@@ -280,24 +280,107 @@ public function tampilSelesai($id)
     $this->load->view('mahasiswa/selesaiV',$data);
 }
 
-public function tampilHasil($id)
-{
+public function tampilHasilPilgan($id)
+{ 
     $email=$this->session->userdata('email');
     $id_mhs = $this->model->getUser($email);
-    $id_tugas = $this->input->post('id_tugas');
+    $id_tugas = $this->input->post('id_tugas'); 
 
-        foreach ($id_mhs->result_array() as $row) {  
+    foreach ($id_mhs->result_array() as $row) {  
         $data=array(
             "id_mhs"=>$row['id_mhs'],
             // "nama_tugas"=>$this->model->getSoalPilgan($id)->row_array(),
             "jawaban"=>$this->model->getJawabanPilgan($id)->result(),
-            "nilai"=>$this->model->getNilaiPilgan($id)->row_array(),
+            "nilai"=>$this->model->getNilai($id)->row_array(),
             "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
             "aktif"=>"mahasiswa"
         );
     }
 
-    $this->load->view('mahasiswa/hasilV',$data);
+    $this->load->view('mahasiswa/hasil_soal_pilganV',$data);
+}
+
+public function tampilSoalEssay($id) 
+{
+    $email=$this->session->userdata('email');
+    $nomor=0;
+
+    $data=array(
+        "nomor" => $nomor,
+        "soal"=>$this->model->getSoalEssay($id)->row_array(),
+        "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+        "aktif"=>"mahasiswa"
+    );
+
+    $this->load->view('mahasiswa/soal_essayV',$data);
+}
+
+public function jawabSoalEssay() {
+  $email = $this->session->userdata('email');
+  $id_mhs = $this->model->getUser($email);
+  $id_tugas = $this->input->post('id_tugas');
+  $id_soal_essay = $this->input->post('id_soal_essay');
+
+  // print_r($id_mhs); exit();
+
+  $this->load->library('form_validation');
+  $this->form_validation->set_rules('jawaban', 'jawaban','required');
+  if($this->form_validation->run() == FALSE) {
+    $this->session->set_flashdata('error', 'File gagal diunggah!');
+    redirect('MahasiswaC/tampilSoal/'.$id_tugas);
+}else{
+
+  $jawaban = $this->input->post('jawaban');
+
+      $config['upload_path'] = FCPATH.'file_upload'; //path folder
+      $config['allowed_types'] = "pdf|zip|rar"; //type yang dapat diakses bisa anda sesuaikan
+      $config['overwrite'] = TRUE;
+      $config['max_size'] = 5048;
+      $config['remove_spaces'] = TRUE;
+
+      $this->load->library('upload');
+      $this->upload->initialize($config);
+
+      $this->upload->do_upload('file_soal');
+      $file_soal = $this->upload->data('file_name');
+
+      foreach ($id_mhs->result_array() as $row) {
+          $data =  array(
+            "jawaban"=>$jawaban,
+            "path_file"=>$file_soal,
+            "id_soal_essay"=>$id_soal_essay, 
+            "id_mhs"=>$row['id_mhs'],
+            "createDtm"=>date('Y-m-d H:s:i')
+        );
+
+          $result = $this->model->insertJawabanEssay($data);
+      }
+      // print_r($data); exit();
+      redirect('MahasiswaC/');
+  }
+}
+
+public function tampilHasilEssay($id)
+{ 
+    $email=$this->session->userdata('email');
+    $id_mhs = $this->model->getUser($email);
+    $id_tugas = $this->input->post('id_tugas'); 
+
+    foreach ($id_mhs->result_array() as $row) {  
+        $data=array(
+            "id_mhs"=>$row['id_mhs'],
+            "jawaban"=>$this->model->getJawabanEssay($id)->row_array(),
+            "nilai"=>$this->model->getNilai($id)->row_array(),
+            "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+            "soal"=>$this->model->getSoalEssay($id)->row_array(),
+            "aktif"=>"mahasiswa"
+            
+            // "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+            // "aktif"=>"mahasiswa"
+        );
+    }
+
+    $this->load->view('mahasiswa/hasil_soal_essayV',$data);
 }
 
 }

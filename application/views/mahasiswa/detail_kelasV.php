@@ -105,16 +105,31 @@ $this->load->view('head_mahasiswa');
           <p>Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($value->tgl_selesai))); ?> - <?php echo date("H:i",strtotime($value->tgl_selesai)); ?></p>
 
           <?php 
-          $q = $this->MahasiswaM->getNilaiPilgan($value->id_tugas)->row_array();?>
-          <?php if(empty($q)) { ?>
-            <a href="<?php echo site_url('MahasiswaC/tampilSoalPilgan/'.$value->id_tugas); ?>" class="btn btn-default" type="submit" onclick="alert('Apakah Anda yakin untuk mengerjakan soal?')">Kerjakan</a>
+          $q = $this->MahasiswaM->getNilai($value->id_tugas)->row_array();
+          $q2 = $this->MahasiswaM->getSoalPilgan($value->id_tugas)->num_rows();
+          $q3 = $this->MahasiswaM->getJawabanEssay($value->id_tugas)->row_array();
+          ?>
+          <?php if($value->jenis_tugas == 'Pilihan Ganda') { ?>
+            <?php if(empty($q)) { ?>
+              <a href="<?php echo site_url('MahasiswaC/tampilSoalPilgan/'.$value->id_tugas); ?>" class="btn btn-default" type="submit" onclick="alert('Apakah Anda yakin untuk mengerjakan soal?')">Kerjakan</a>
+            <?php }else { ?>
+              <a href="<?php echo site_url('MahasiswaC/tampilHasilPilgan/'.$value->id_tugas); ?>" class="btn btn-default">Lihat Hasil</a>
+            <?php } ?>
+
+            <span style="padding-left: 10px"> <b><?php echo $q2; ?> pertanyaan</b></span>
+
           <?php }else { ?>
-            <a href="<?php echo site_url('MahasiswaC/tampilHasil/'.$value->id_tugas); ?>" class="btn btn-default">Lihat Hasil</a>
+
+            <?php if(empty($q) && !empty($q3)) { ?>
+              <a href="<?php echo site_url('MahasiswaC/tampilHasilEssay/'.$value->id_tugas); ?>" class="btn btn-default" type="submit">Sedang dinilai</a>
+            <?php }elseif(empty($q)) { ?>
+              <a href="<?php echo site_url('MahasiswaC/tampilSoalEssay/'.$value->id_tugas); ?>" class="btn btn-default" type="submit">Kumpulkan</a>
+            <?php }else { ?>
+              <a href="<?php echo site_url('MahasiswaC/tampilHasilPilgan/'.$value->id_tugas); ?>" class="btn btn-default">Lihat Hasil</a>
+            <?php } ?>
           <?php } ?>
 
-          <?php 
-          $q = $this->MahasiswaM->getSoalPilgan($value->id_tugas)->num_rows();?>
-          <span style="padding-left: 10px"> <b><?php echo $q; ?> pertanyaan</b></span>
+          
         </div>
       </div>
       <!-- /.box-body -->

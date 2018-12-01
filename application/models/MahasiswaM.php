@@ -13,7 +13,7 @@ class MahasiswaM extends CI_Model{
 		$q = $this->db->query("SELECT * FROM user u LEFT JOIN universitas un on u.id_univ=un.id_univ LEFT JOIN mahasiswa m on u.id_user = m.id_user WHERE u.email='$email'");
 		return $q;
 	}
-
+ 
   //untuk mengambil data user
 	public function getUser1($id_user){
 		$q = $this->db->query("
@@ -158,13 +158,34 @@ class MahasiswaM extends CI_Model{
 		return $query;
 	}
 
-	public function getNilaiPilgan($id){
+	public function getNilai($id){
 		$query = $this->db->query("SELECT * FROM nilai n, tugas t WHERE n.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
 		return $query;
 	}
 
 	public function getKetSoalbyIdTugas($id){
 		$query = $this->db->query("SELECT * FROM tugas t, kelas k, dosen d, user u WHERE t.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND t.id_tugas='$id'");
+		return $query;
+	}
+
+		public function getSoalEssay($id){
+		$query = $this->db->query("SELECT * FROM soal_essay s, tugas t WHERE s.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
+		return $query;
+	}
+
+	    //untuk menambah data jawaban pilihan ganda
+	public function insertJawabanEssay($data){
+		$this->db->trans_start();
+
+		$this->db->insert('jawaban_essay',$data);
+		$insert_id = $this->db->insert_id();
+
+		$this->db->trans_complete();
+		return $insert_id;    
+	}
+
+	public function getJawabanEssay($id){
+		$query = $this->db->query("SELECT * FROM tugas t, soal_essay se, jawaban_essay je WHERE t.id_tugas=se.id_tugas AND se.id_soal_essay=je.id_soal_essay AND t.id_tugas='$id';");
 		return $query;
 	}
 

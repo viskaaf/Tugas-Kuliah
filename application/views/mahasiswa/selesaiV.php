@@ -18,7 +18,7 @@ $this->load->view('head_soal');
             $q = $this->MahasiswaM->getSoalPilgan($soal['id_tugas'])->num_rows();?>
             <p style="font-size: 13px;">Total Pertanyaan: <?php echo $q; ?> | Waktu: <?php echo $soal['waktu'];?> menit</p>
             <p style="font-size: 13px;"><b>Tugas ini telah selesai. Untuk melihat hasil silahkan klik tombol dibawah.</b></p><br>
-            <a href="<?php echo site_url('MahasiswaC/tampilHasil/'.$soal['id_tugas']); ?>" class="btn btn-default" type="submit">Lihat Hasil</a>
+            <a href="<?php echo site_url('MahasiswaC/tampilHasilPilgan/'.$soal['id_tugas']); ?>" class="btn btn-default" type="submit">Lihat Hasil</a>
           </div>
         </div>
       </div>

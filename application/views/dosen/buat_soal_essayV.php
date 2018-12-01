@@ -27,16 +27,17 @@ $this->load->view('head_dosen');
     <div class="alert alert-success alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
       <?php echo $this->session->flashdata('sukses'); ?>
-    </div>
+    </div> 
   <?php } ?>
   <div class="callout callout-info">
     <h4><i class="fa fa-info-circle"></i> PERHATIAN!</h4>
     Berkas yang diunggah dapat berupa berkas <b>.pdf</b> atau apabila membutuhkan lebih dari satu berkas, maka berkas dapat berupa <b>.zip</b>.
   </div>
-  <div class="box box-default">
-    <?php echo form_open_multipart('DosenC/tambahSoalEssay') ?>
+  <div class="box box-default"> 
+    <?php echo form_open_multipart('DosenC/tambahSoalEssay/') ?>
     <div class="box-body">
-      <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $tugas; ?>">
+      <input type="text" class="form-control" name="id_tugas" value="<?php echo $tugas['id_tugas']; ?>">
+      <input type="text" class="form-control" name="id_kelas" value="<?php echo $id_kelas; ?>">
       <div class="form-group">
         <label for="deskripsiSoal" class="col-sm-3">Keterangan</label>
         <div class="col-sm-12">

@@ -503,7 +503,7 @@ public function buatSoal($id,$id_kelas)
 {
   $email=$this->session->userdata('email');
   $id_univ = $this->model->getUnivId_byEmail($email);
-  foreach ($id_univ->result() as $key) {
+  foreach ($id_univ->result() as $key) { 
     $data=array(
       "nama"=>$this->model->getUser($email)->row_array(),
       "fakultas"=>$this->model->getFakultas($key->id_univ),
@@ -552,7 +552,7 @@ public function soalPilgan($id_kelas,$id_tugas)
   $this->load->view('dosen/buat_soal_pilganV', $data);
 }
 
-public function soalEssay($id)
+public function soalEssay($id_kelas)
 {
   $email=$this->session->userdata('email');
   $id_univ = $this->model->getUnivId_byEmail($email);
@@ -565,8 +565,9 @@ public function soalEssay($id)
       "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
 
     // "kelas"=>$this->model->getKelas($id)->result(),
-      "tugas"=>$id,
+      "tugas"=>$this->model->getTugasMax()->row_array(),
       "id_user"=>$this->model->getUser($email)->row_array(),
+      "id_kelas"=>$id_kelas,
       "aktif"=>"user"
     );
   }
@@ -617,7 +618,7 @@ public function tambahSoalEssay() {
     $this->session->set_flashdata('error', 'Soal gagal ditambahkan');
   }
 
-  redirect('DosenC/detailKelas/'.$id_kelas);
+  redirect('DosenC/');
 }
 }
 
