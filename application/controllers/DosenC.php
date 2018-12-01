@@ -741,7 +741,8 @@ public function importexcel(){
                   NULL,
                   TRUE,
                   FALSE);
-               
+                
+                if (!empty($rowData)) {
                 //memanggil id kategori dari database sesuai kategori
                 // $kategori = $rowData[0][7];
                 // print_r($rowData[0][8]);
@@ -792,6 +793,8 @@ public function importexcel(){
 
                 delete_files($media['file_path']);
                 // $jum++;
+                                
+                }
 
               }
               $highestRow--;
