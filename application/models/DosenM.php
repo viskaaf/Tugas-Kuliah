@@ -276,5 +276,19 @@ class DosenM extends CI_Model{
     return TRUE;
   }
 
+  public function getJawabanEssay($id){
+    $query = $this->db->query("SELECT * FROM tugas t, soal_essay se, jawaban_essay je WHERE t.id_tugas=se.id_tugas AND se.id_soal_essay=je.id_soal_essay AND t.id_tugas='$id';");
+    return $query;
+  }
+
+  public function getKetSoalbyIdTugas($id){
+    $query = $this->db->query("SELECT * FROM tugas t, kelas k, dosen d, user u WHERE t.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND t.id_tugas='$id'");
+    return $query;
+  }
+
+    public function getSoalEssay($id){
+    $query = $this->db->query("SELECT * FROM soal_essay s, tugas t WHERE s.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
+    return $query;
+  }
 }
 ?>

@@ -428,15 +428,16 @@ public function tambahTugas() {
 
 public function ubahTugas() {
     //get id jadwal yang ingin di edit
+  $id_kelas = $this->input->post('id_kelas');
   $id_tugas = $this->input->post('id_tugas');
   $id=$this->input->post('id_univ');
 
   $this->load->library('form_validation');
-  $this->form_validation->set_rules('nama_tugas', 'nama_tugas','required');
-  $this->form_validation->set_rules('tgl_mulai', 'tgl_mulai','required');
-  $this->form_validation->set_rules('tgl_selesai', 'tgl_selesai','required');
-  $this->form_validation->set_rules('jenis_tugas', 'jenis_tugas','required');
-  $this->form_validation->set_rules('status_tugas', 'status_tugas','required');
+  $this->form_validation->set_rules('nama_tugas', 'nama_tugas');
+  $this->form_validation->set_rules('tgl_mulai', 'tgl_mulai');
+  $this->form_validation->set_rules('tgl_selesai', 'tgl_selesai');
+  $this->form_validation->set_rules('jenis_tugas', 'jenis_tugas');
+  $this->form_validation->set_rules('status_tugas', 'status_tugas');
   if($this->form_validation->run() == FALSE)
   {
     redirect('DosenC/detailKelas/');
@@ -469,7 +470,7 @@ public function ubahTugas() {
       $this->session->set_flashdata('error', 'Tugas gagal diubah.');
     } 
 
-    redirect('DosenC/detailKelas/'.$id);
+    redirect('DosenC/detailKelas/'.$id_kelas);
   }
 }
 
@@ -742,7 +743,7 @@ public function importexcel(){
                   TRUE,
                   FALSE);
                 
-                if (!empty($rowData)) {
+                if (!empty($rowData[0][0]) && $rowData[0][0] != "" && $rowData[0][0] != NULL) {
                 //memanggil id kategori dari database sesuai kategori
                 // $kategori = $rowData[0][7];
                 // print_r($rowData[0][8]);
@@ -845,11 +846,31 @@ public function editSoalPilgan($id)
       "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
       "nomor" => $nomor,
       "soal"=>$this->model->getSoalPilgan1($id)->row_array(),
-      "aktif"=>"user"
+      "aktif"=>"dosen"
     );
   }
 
   $this->load->view('dosen/edit_soal_pilganV',$data);
+}
+
+public function tampilKoreksiEssay($id)
+{
+    $email=$this->session->userdata('email');
+    // $id_mhs = $this->model->getUser($email);
+    $id_tugas = $this->input->post('id_tugas'); 
+
+    // foreach ($id_mhs->result_array() as $row) {  
+        $data=array(
+            // "id_mhs"=>$row['id_mhs'],
+            "jawaban"=>$this->model->getJawabanEssay($id)->row_array(),
+            // "nilai"=>$this->model->getNilai($id)->row_array(),
+            "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+            "soal"=>$this->model->getSoalEssay($id)->row_array(),
+            "aktif"=>"dosen"
+        );
+    // }
+
+    $this->load->view('dosen/koreksi_jawaban_essayV',$data);
 }
 
 }

@@ -97,11 +97,11 @@ $this->load->view('head_dosen');
             <a class="btn btn-primary btn-xs tooltips" data-toggle="modal" data-target="#modal-<?php echo $value->id_kelas; ?>">
               <span data-toggle="tooltip" data-original-title="Ubah Kelas" <i class="fa fa-edit"></i></span>
             </a>
-            <a class="btn btn-primary btn-xs tooltips" href="<?php echo site_url('DosenC/detailKelas/'.$value->id_kelas) ?>">
+            <a class="btn btn-info btn-xs tooltips" href="<?php echo site_url('DosenC/detailKelas/'.$value->id_kelas) ?>">
               <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-eye"></i></span>
             </a>
             <a class="btn btn-danger btn-xs tooltips" href="<?php echo site_url('DosenC/hapusKelas/'.$value->id_kelas) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus kelas?')">
-              <span data-toggle="tooltip" data-original-title="Hapus Kelas" <i class="fa fa-remove"></i></span>
+              <span data-toggle="tooltip" data-original-title="Hapus Kelas" <i class="fa fa-trash"></i></span>
             </a></center>
           </td>
         </tr>

@@ -125,26 +125,32 @@ $this->load->view('head_dosen');
          <tr>
           <td><center><?php echo $no; ?></center></td>
           <td><center><?php echo $value->nama_tugas; ?></center></td>
-          <td><center><?php echo tgl_indo($value->tgl_mulai); ?></center></td>
-          <td><center><?php echo tgl_indo($value->tgl_selesai); ?></center></td>
+          <td><center><?php echo tgl_indo(date("Y-m-d",strtotime($value->tgl_mulai))); ?></center></td>
+          <td><center><?php echo tgl_indo(date("Y-m-d",strtotime($value->tgl_selesai))); ?></center></td>
           <td><center><?php echo $value->jenis_tugas; ?></center></td>
-          <td><center><?php echo $value->status_tugas; ?></center></td>
+          <td><center>
+            <?php if($value->status_tugas == 'Aktif') { ?>
+              <span class="label label-success"><?php echo $value->status_kelas; ?></span>
+            <?php }else { ?>
+              <span class="label label-danger"><?php echo $value->status_kelas; ?></span>
+            <?php } ?>
+          </center></td>
           <td><center>
             <a class="btn btn-primary btn-xs tooltips" data-toggle="modal" data-target="#modal-<?php echo $value->id_tugas; ?>">
               <span data-toggle="tooltip" data-original-title="Ubah Tugas" <i class="fa fa-edit"></i></span>
             </a>
-            <a class="btn btn-success btn-xs tooltips" href="<?php echo site_url('DosenC/tampilSoalPilgan/'.$value->id_tugas); ?>">
-              <span data-toggle="tooltip" data-original-title="Lihat Tugas" <i class="fa fa-search"></i></span>
+            <a class="btn btn-info btn-xs tooltips" href="<?php echo site_url('DosenC/tampilSoalPilgan/'.$value->id_tugas); ?>">
+              <span data-toggle="tooltip" data-original-title="Lihat Tugas" <i class="fa fa-eye"></i></span>
             </a>
-            <a class="btn btn-warning btn-xs tooltips" href="#">
-              <span data-toggle="tooltip" data-original-title="Lihat Koreksi" <i class="fa fa-file-text-o"></i></span>
+            <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiEssay/'.$value->id_tugas); ?>">
+              <span data-toggle="tooltip" data-original-title="Penilaian" <i class="fa fa-file-text-o"></i></span>
             </a>
             <a class="btn btn-danger btn-xs tooltips" href="<?php echo site_url('DosenC/hapusTugas/'.$value->id_tugas.'/'.$getuniv['id_univ']); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus tugas?')">
-              <span data-toggle="tooltip" data-original-title="Hapus Tugas" <i class="fa fa-remove"></i></span>
+              <span data-toggle="tooltip" data-original-title="Hapus Tugas" <i class="fa fa-trash"></i></span>
             </a></center>
           </td>
         </tr>
-      <?php  endforeach; ?>
+      <?php  endforeach; ?> 
       <?php } ?>
     </tbody>
   </table>
@@ -243,6 +249,7 @@ $this->load->view('head_dosen');
         </div>
         <div class="modal-body">
          <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/ubahTugas') ?>">
+          <input type="text" class="col-sm-10 form-control" id="id_kelas" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
           <input type="hidden" class="col-sm-10 form-control" id="id_tugas" name="id_tugas" value="<?php echo $value->id_tugas; ?>">
           <input type="hidden" name="id_univ" id="id_univ" value="<?php echo $getuniv['id_univ']?>">
           <div class="form-group">
@@ -253,7 +260,7 @@ $this->load->view('head_dosen');
          </div> 
          <!-- <div class="form-group">
           <label for="" class="col-sm-3 control-label">Tanggal Mulai</label>
-          <div class="col-sm-8"> -->
+          <div class="col-sm-8"> --> 
             <input type="hidden" class="col-sm-10 form-control" name="tgl_mulai" value="<?php echo $value->tgl_mulai; ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
           <!-- </div>
           </div> -->
@@ -281,7 +288,7 @@ $this->load->view('head_dosen');
         <div class="form-group">
           <label for="" class="col-sm-3 control-label">Status</label>
           <div class="col-sm-8">
-            <select name="status_tugas" class="form-control required" required="">
+            <select name="status_tugas" class="form-control required" required>
               <?php
               $status_tugas=$value->status_tugas;
               if ($status_tugas== "Aktif") echo "<option value='Aktif' selected>Aktif</option>";
@@ -295,10 +302,10 @@ $this->load->view('head_dosen');
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-        <input class="btn btn-primary" id="" type="submit" value="Simpan" >
+        <button class="btn btn-primary" id="" type="submit">Simpan</button>
       </div>
     </div>
-  </form>
+  </form> 
   <!-- /.modal-content -->
 </div>
 <!-- /.modal-dialog -->

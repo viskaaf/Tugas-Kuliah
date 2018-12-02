@@ -11,21 +11,32 @@ $this->load->view('head_soal');
         <p style="padding-top: 10px;"><i class="fa fa-calendar" ></i> Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
       </center> 
     </div>
-    <?php echo form_open_multipart('MahasiswaC/jawabSoalEssay') ?>
     <div class="box-body">
       <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $soal['id_tugas']; ?>">
       <input type="hidden" class="form-control" name="id_soal_essay" value="<?php echo $soal['id_soal_essay']; ?>">
+      <div style="margin-bottom: 20px; margin-left: 10px;">
+      <span><img class="img" style="width: 40px;" src="<?php echo base_url('gambar/circular-check-button.png')?>"></span>
+      <span style="padding-left: 10px; font-size: 13px;">Tugas berhasil dikumpulkan!</span>
+      <span style="font-size: 13px;">Menunggu penilaian dari dosen.</span>
+      </div>
       
-      
+      <div class="attachment-block clearfix" style="margin-bottom: 40px;">
+        <?php $link = base_url()."file_upload/".$jawaban['path_file']; ?>
+        <a target="_blank" href="<?php echo $link;?>"><img class="attachment-img" src="<?php echo base_url()?>gambar/pdf.svg"></a>
+        
+        <div class="attachment-pushed">
+          <h4 class="attachment-heading"><a target="_blank" href="<?php echo $link;?>"><?php echo $jawaban['path_file']; ?></a></h4>
+          <div class="attachment-text">
+            PDF File
+          </div>
+          <!-- /.attachment-text -->
+        </div> 
+        <!-- /.attachment-pushed --> 
+      </div>
+      <h4>Catatan:</h4>
+      <p><?php echo $jawaban['jawaban'];?></p>
     </div>
     <!-- /.box-body -->
-    <div class="box-footer"> 
-      <div class="pull-right">
-        <button type="submit" class="btn btn-primary">Kirim</button>
-      </div>
-    </div> 
-    <!-- /.box-footer -->
-    <?php echo form_close(); ?>
 
 
   </div>
