@@ -277,8 +277,19 @@ class DosenM extends CI_Model{
   }
 
   public function getJawabanEssay($id){
-    $query = $this->db->query("SELECT * FROM tugas t, soal_essay se, jawaban_essay je WHERE t.id_tugas=se.id_tugas AND se.id_soal_essay=je.id_soal_essay AND t.id_tugas='$id';");
-    return $query;
+    // $query = $this->db->query("SELECT * FROM tugas t, soal_essay se, jawaban_essay je WHERE t.id_tugas=se.id_tugas AND se.id_soal_essay=je.id_soal_essay AND t.id_tugas='$id';");
+    return $this->db
+    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang')
+    ->from('nilai n')
+    ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
+    ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
+    ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
+    ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
+    ->join('user u', 'u.id_user = m.id_user')
+    ->where('t.id_tugas', $id)
+    ->get();
+
+    // return $query;
   }
 
   public function getKetSoalbyIdTugas($id){

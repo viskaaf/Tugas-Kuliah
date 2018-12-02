@@ -862,7 +862,7 @@ public function tampilKoreksiEssay($id)
     // foreach ($id_mhs->result_array() as $row) {  
         $data=array(
             // "id_mhs"=>$row['id_mhs'],
-            "jawaban"=>$this->model->getJawabanEssay($id)->row_array(),
+            "jawaban"=>$this->model->getJawabanEssay($id)->result(),
             // "nilai"=>$this->model->getNilai($id)->row_array(),
             "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
             "soal"=>$this->model->getSoalEssay($id)->row_array(),

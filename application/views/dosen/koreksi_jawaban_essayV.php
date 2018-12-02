@@ -22,19 +22,21 @@ $this->load->view('head_soal');
             </tr>
           </thead>
           <tbody>
-            <?php $no=0; $no++; ?>
+            <?php 
+              foreach ($jawaban as $i => $data) {
+            ?>
             <tr>
-              <td><center><?php echo $no; ?></center></td>
-              <td><center></center></td>
-              <td><center></center></td>
-              <td><center></center></td>
+              <td><center><?php echo $i+1; ?></center></td>
+              <td><center><?php echo $data->nama_depan . ' ' . $data->nama_belakang ?></center></td>
+              <td><center><?php echo $data->nim ?></center></td>
+              <td><center><?php echo !empty($data->nilai) ? $data->nilai : 'Belum dinilai'; ?></center></td>
               <td><center>
                 <a class="btn btn-success btn-xs tooltips">
                   <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-search"></i></span>
                 </a></center>
               </td>
             </tr> 
-          <?php ?>
+          <?php } ?>
         </tbody>
       </table>
     </div>
