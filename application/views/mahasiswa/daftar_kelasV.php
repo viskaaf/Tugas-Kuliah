@@ -76,7 +76,7 @@ $this->load->view('head_mahasiswa');
         <tbody>
          <?php foreach ($kelas as $value); ?>
          <tr>
-          <!-- <td><center><?php echo $no; ?></center></td> -->
+          <!-- <td><center><?php echo $no; ?></center></td> --> 
           <td><center><a href="<?php echo site_url('MahasiswaC/detailKelas/'.$value->id_kelas) ?>"><?php echo $value->nama_kelas; ?></a></center></td>
   <!--         <td><center>
             <?php if($value->status_kelas == 'Aktif') { ?>

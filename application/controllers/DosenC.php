@@ -853,24 +853,35 @@ public function editSoalPilgan($id)
   $this->load->view('dosen/edit_soal_pilganV',$data);
 }
 
-public function tampilKoreksiEssay($id)
+public function tampilDaftarKoreksiEssay($id)
 {
     $email=$this->session->userdata('email');
-    // $id_mhs = $this->model->getUser($email);
     $id_tugas = $this->input->post('id_tugas'); 
 
-    // foreach ($id_mhs->result_array() as $row) {  
         $data=array(
-            // "id_mhs"=>$row['id_mhs'],
-            "jawaban"=>$this->model->getJawabanEssay($id)->result(),
-            // "nilai"=>$this->model->getNilai($id)->row_array(),
+            "jawaban"=>$this->model->getDaftarNilaiEssay($id)->result(),
+            "belum"=>$this->model->getEssayBelum($id)->result(),
+            "sudah"=>$this->model->getEssaySudah($id)->result(),
             "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
             "soal"=>$this->model->getSoalEssay($id)->row_array(),
             "aktif"=>"dosen"
         );
-    // }
 
     $this->load->view('dosen/koreksi_jawaban_essayV',$data);
+}
+
+public function tampilKoreksiSoalEssay($id)
+{
+  $email=$this->session->userdata('email');
+  $nomor=0;
+
+  $data=array(
+    "nomor" => $nomor,
+    "soal"=>$this->model->getSoalPilgan($id)->result(),
+    "aktif"=>"user"
+  );
+
+  $this->load->view('dosen/soal_pilganV',$data);
 }
 
 }

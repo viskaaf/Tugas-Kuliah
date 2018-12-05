@@ -72,8 +72,8 @@ class DosenM extends CI_Model{
   }
 
   public function getUnivDosen($id){
-      return $this->db->query("SELECT un.id_univ, un.nama_univ FROM user u, universitas un WHERE u.id_univ=un.id_univ AND u.id_user='$id'")->result();
-}
+    return $this->db->query("SELECT un.id_univ, un.nama_univ FROM user u, universitas un WHERE u.id_univ=un.id_univ AND u.id_user='$id'")->result();
+  }
   //=================================================================================
 
 
@@ -151,8 +151,8 @@ class DosenM extends CI_Model{
   }
 
   public function getFakKelas($id){
-      return $this->db->query("SELECT det.id_det_fakultasprodi, nama_fakultas FROM fakultas f, detail_fakultasprodi det, prodi p, kelas k WHERE det.id_fakultas=f.id_fakultas AND det.id_prodi=p.id_prodi AND det.id_det_fakultasprodi=k.id_det_fakultasprodi AND k.id_det_fakultasprodi=$id")->result();
-}
+    return $this->db->query("SELECT det.id_det_fakultasprodi, nama_fakultas FROM fakultas f, detail_fakultasprodi det, prodi p, kelas k WHERE det.id_fakultas=f.id_fakultas AND det.id_prodi=p.id_prodi AND det.id_det_fakultasprodi=k.id_det_fakultasprodi AND k.id_det_fakultasprodi=$id")->result();
+  }
   //=================================================================================
 
   //================================== DATA TUGAS ==================================
@@ -185,19 +185,19 @@ class DosenM extends CI_Model{
   //   }
 
   public function getTugas($id){
-      $q = $this->db->query("SELECT * FROM user u, dosen d, kelas k, tugas t WHERE u.id_user=d.id_user AND d.id_dosen=k.id_dosen AND k.id_kelas=t.id_kelas AND k.id_kelas=$id");
-        return $q;
-    }
+    $q = $this->db->query("SELECT * FROM user u, dosen d, kelas k, tugas t WHERE u.id_user=d.id_user AND d.id_dosen=k.id_dosen AND k.id_kelas=t.id_kelas AND k.id_kelas=$id");
+    return $q;
+  }
 
   public function getKelasId($id){
-      $q = $this->db->query("SELECT * from kelas WHERE id_kelas=$id");
-        return $q;
-    }
+    $q = $this->db->query("SELECT * from kelas WHERE id_kelas=$id");
+    return $q;
+  }
 
   public function getFakultasProdi($id){
-      $q = $this->db->query("SELECT * FROM fakultas f, detail_fakultasprodi det, prodi p, kelas k WHERE det.id_fakultas=f.id_fakultas AND det.id_prodi=p.id_prodi AND k.id_det_fakultasprodi=det.id_det_fakultasprodi AND k.id_kelas=$id");
-        return $q;
-    }
+    $q = $this->db->query("SELECT * FROM fakultas f, detail_fakultasprodi det, prodi p, kelas k WHERE det.id_fakultas=f.id_fakultas AND det.id_prodi=p.id_prodi AND k.id_det_fakultasprodi=det.id_det_fakultasprodi AND k.id_kelas=$id");
+    return $q;
+  }
   //=================================================================================
 
   // //untuk menampilkan data kelas
@@ -276,10 +276,10 @@ class DosenM extends CI_Model{
     return TRUE;
   }
 
-  public function getJawabanEssay($id){
+  public function getDaftarNilaiEssay($id){
     // $query = $this->db->query("SELECT * FROM tugas t, soal_essay se, jawaban_essay je WHERE t.id_tugas=se.id_tugas AND se.id_soal_essay=je.id_soal_essay AND t.id_tugas='$id';");
     return $this->db
-    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang')
+    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas')
     ->from('nilai n')
     ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
     ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
@@ -292,12 +292,40 @@ class DosenM extends CI_Model{
     // return $query;
   }
 
+  public function getEssayBelum($id){
+    return $this->db
+    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas')
+    ->from('nilai n')
+    ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
+    ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
+    ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
+    ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
+    ->join('user u', 'u.id_user = m.id_user')
+    ->where('t.id_tugas', $id)
+    ->where('n.nilai = ""')
+    ->get();
+  }
+
+  public function getEssaySudah($id){
+    return $this->db
+    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas')
+    ->from('nilai n')
+    ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
+    ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
+    ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
+    ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
+    ->join('user u', 'u.id_user = m.id_user')
+    ->where('t.id_tugas', $id)
+    ->where('n.nilai != ""')
+    ->get();
+  }
+
   public function getKetSoalbyIdTugas($id){
     $query = $this->db->query("SELECT * FROM tugas t, kelas k, dosen d, user u WHERE t.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND t.id_tugas='$id'");
     return $query;
   }
 
-    public function getSoalEssay($id){
+  public function getSoalEssay($id){
     $query = $this->db->query("SELECT * FROM soal_essay s, tugas t WHERE s.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
     return $query;
   }

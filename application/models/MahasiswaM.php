@@ -10,15 +10,19 @@ class MahasiswaM extends CI_Model{
   //================================== LOGIN ==================================
   //untuk mengambil email sesuai yg login
 	public function getUser($email){
-		$q = $this->db->query("SELECT * FROM user u LEFT JOIN universitas un on u.id_univ=un.id_univ LEFT JOIN mahasiswa m on u.id_user = m.id_user WHERE u.email='$email'");
+		$q = $this->db->query("
+			SELECT u.id_user, nama_depan, nama_belakang, foto_profil, un.nama_univ, m.id_mhs FROM user u 
+			LEFT JOIN universitas un on u.id_univ=un.id_univ 
+			LEFT JOIN mahasiswa m on u.id_user = m.id_user 
+			WHERE u.email='$email'
+			");
 		return $q;
 	}
- 
+
   //untuk mengambil data user
 	public function getUser1($id_user){
 		$q = $this->db->query("
-			SELECT u.id_user, nama_depan, nama_belakang, jenis_kelamin, email, id_userrole, u.id_univ, nama_univ, foto_profil, nim  
-			FROM user u
+			SELECT u.id_user, nama_depan, nama_belakang, foto_profil, un.nama_univ, m.nim, status, email FROM user u
 			LEFT JOIN universitas un on u.id_univ = un.id_univ
 			LEFT JOIN mahasiswa m on u.id_user = m.id_user
 			WHERE u.id_user='$id_user'
@@ -158,9 +162,16 @@ class MahasiswaM extends CI_Model{
 		return $query;
 	}
 
-	public function getNilai($id){
-		$query = $this->db->query("SELECT * FROM nilai n, tugas t WHERE n.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
-		return $query;
+	public function getNilai($id,$id_mhs){
+		return $this->db
+		->select('n.nilai, t.id_tugas, m.id_mhs')
+		->from('nilai n')
+		->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
+		->join('mahasiswa m', 'm.id_mhs = n.id_mhs')
+		->join('user u', 'u.id_user = m.id_user')
+		->where('t.id_tugas', $id)
+		->where('m.id_mhs', $id_mhs)
+		->get();
 	}
 
 	public function getKetSoalbyIdTugas($id){
@@ -168,7 +179,7 @@ class MahasiswaM extends CI_Model{
 		return $query;
 	}
 
-		public function getSoalEssay($id){
+	public function getSoalEssay($id){
 		$query = $this->db->query("SELECT * FROM soal_essay s, tugas t WHERE s.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
 		return $query;
 	}
@@ -184,10 +195,32 @@ class MahasiswaM extends CI_Model{
 		return $insert_id;    
 	}
 
-	public function getJawabanEssay($id){
-		$query = $this->db->query("SELECT * FROM tugas t, soal_essay se, jawaban_essay je WHERE t.id_tugas=se.id_tugas AND se.id_soal_essay=je.id_soal_essay AND t.id_tugas='$id';");
-		return $query;
+		//untuk menambahkan nilai soal pilihan ganda
+	public function insertNilaiEssay($id_tugas,$id_mhs){
+		$dataNilai = array(
+			'nilai' =>0,
+			'id_mhs' =>$id_mhs,
+			'id_tugas' =>$id_tugas
+		);
+		$this->db->insert('nilai',$dataNilai);
+		return true;
 	}
 
-}
+	public function getJawabanEssay($id,$id_mhs){
+		return $this->db
+		->select('je.jawaban, t.id_tugas, m.id_mhs')
+		->from('jawaban_essay je')
+		->join('soal_essay se', 'se.id_soal_essay = je.id_soal_essay', 'left')
+		->join('tugas t', 't.id_tugas = se.id_tugas')
+		->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
+		->join('user u', 'u.id_user = m.id_user')
+		->where('t.id_tugas', $id)
+		->where('m.id_mhs', $id_mhs)
+		->get();
+	}
+	public function getIdMhsbyEmail($email){
+		$q = $this->db->query("SELECT id_mhs FROM mahasiswa m, user u WHERE m.id_user=u.id_user AND u.email='$email'");
+		return $q;
+	}
+} 
 ?>

@@ -2,6 +2,19 @@
 $this->load->view('head_soal');
 ?>
 
+  <div class="box" style="margin-top: 20px">
+    <div class="box-header with-border">
+      <!-- <center> -->
+        <h3><b>Ringkasan Penilaian</b></h3>
+      <!-- </center>  -->
+    </div>
+    <div class="box-body">
+      <!-- <center> -->
+        <p>Nama Tugas: <a href="<?php echo site_url('DosenC/tampilSoalPilgan/'.$ket_soal['id_tugas']); ?>" style="font-size: 20px;"><?php echo $ket_soal['nama_tugas'];?></a></p>
+        <p>Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
+      <!-- </center>  -->
+    </div>
+  </div>
 
 <div class="nav-tabs-custom" style="margin-top: 20px;">
     <ul class="nav nav-tabs">
@@ -31,8 +44,8 @@ $this->load->view('head_soal');
               <td><center><?php echo $data->nim ?></center></td>
               <td><center><?php echo !empty($data->nilai) ? $data->nilai : 'Belum dinilai'; ?></center></td>
               <td><center>
-                <a class="btn btn-success btn-xs tooltips">
-                  <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-search"></i></span>
+                <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_tugas); ?>">
+                  <span data-toggle="tooltip" data-original-title="Koreksi Jawaban" <i class="fa fa-file-text-o"></i></span>
                 </a></center>
               </td>
             </tr> 
@@ -42,31 +55,32 @@ $this->load->view('head_soal');
     </div>
     <!-- /.tab-pane -->
 
-    <div class="tab-pane" id="belum">
+    <div class="tab-pane" id="belum"> 
       <table id="belumdinilai" class="table table-bordered table-striped">
         <thead>
             <tr>
               <th><center>No</center></th>
               <th><center>Nama Mahasiswa</center></th>
               <th><center>NIM</center></th>
-              <th><center>Hasil</center></th>
+              <!-- <th><center>Hasil</center></th> -->
               <th><center>Opsi</center></th>
             </tr>
           </thead>
           <tbody>
-            <?php $no=0; $no++; ?>
+            <?php 
+              foreach ($belum as $i => $data) {
+            ?>
             <tr>
-              <td><center><?php echo $no; ?></center></td>
-              <td><center></center></td>
-              <td><center></center></td>
-              <td><center></center></td>
+              <td><center><?php echo $i+1; ?></center></td>
+              <td><center><?php echo $data->nama_depan . ' ' . $data->nama_belakang ?></center></td>
+              <td><center><?php echo $data->nim ?></center></td>
               <td><center>
-                <a class="btn btn-warning btn-xs tooltips">
+                <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_tugas); ?>">
                   <span data-toggle="tooltip" data-original-title="Koreksi Jawaban" <i class="fa fa-file-text-o"></i></span>
                 </a></center>
               </td>
             </tr> 
-          <?php ?>
+          <?php } ?>
         </tbody>
   </table>
 </div>
@@ -84,19 +98,21 @@ $this->load->view('head_soal');
             </tr>
           </thead>
           <tbody>
-            <?php $no=0; $no++; ?>
+            <?php 
+              foreach ($sudah as $i => $data) {
+            ?>
             <tr>
-              <td><center><?php echo $no; ?></center></td>
-              <td><center></center></td>
-              <td><center></center></td>
-              <td><center></center></td>
+              <td><center><?php echo $i+1; ?></center></td>
+              <td><center><?php echo $data->nama_depan . ' ' . $data->nama_belakang ?></center></td>
+              <td><center><?php echo $data->nim ?></center></td>
+              <td><center><?php echo $data->nilai ?></center></td>
               <td><center>
-                <a class="btn btn-warning btn-xs tooltips">
+                <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_tugas); ?>">
                   <span data-toggle="tooltip" data-original-title="Edit Koreksi Jawaban" <i class="fa fa-edit"></i></span>
                 </a></center>
               </td>
             </tr> 
-          <?php ?>
+          <?php } ?>
         </tbody>
   </table>
 </div>

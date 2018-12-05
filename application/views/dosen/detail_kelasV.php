@@ -142,7 +142,7 @@ $this->load->view('head_dosen');
             <a class="btn btn-info btn-xs tooltips" href="<?php echo site_url('DosenC/tampilSoalPilgan/'.$value->id_tugas); ?>">
               <span data-toggle="tooltip" data-original-title="Lihat Tugas" <i class="fa fa-eye"></i></span>
             </a>
-            <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiEssay/'.$value->id_tugas); ?>">
+            <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilDaftarKoreksiEssay/'.$value->id_tugas); ?>">
               <span data-toggle="tooltip" data-original-title="Penilaian" <i class="fa fa-file-text-o"></i></span>
             </a>
             <a class="btn btn-danger btn-xs tooltips" href="<?php echo site_url('DosenC/hapusTugas/'.$value->id_tugas.'/'.$getuniv['id_univ']); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus tugas?')">

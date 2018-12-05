@@ -101,16 +101,19 @@ $this->load->view('head_mahasiswa');
       <!-- /.box-header -->
       <div class="box-body">
         <div class="form-group" style="padding-left: 50px">
+          <input type="hidden" name="id_tugas" value="<?php echo $value->id_tugas;?>">
+          <!-- <input type="text" name="id_mhs" value="<?php echo $value->id_mhs;?>"> -->
           <p><b><?php echo $value->nama_tugas;?></b></p>
-          <p>Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($value->tgl_selesai))); ?> - <?php echo date("H:i",strtotime($value->tgl_selesai)); ?></p>
+          <p>Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($value->tgl_selesai))); ?> - <?php echo date("H:i",strtotime($value->tgl_selesai)); ?> </p>
 
-          <?php 
-          $q = $this->MahasiswaM->getNilai($value->id_tugas)->row_array();
+          <?php
+
+          $q = $this->MahasiswaM->getNilai($value->id_tugas, $id_mhs['id_mhs'])->row_array();
           $q2 = $this->MahasiswaM->getSoalPilgan($value->id_tugas)->num_rows();
-          $q3 = $this->MahasiswaM->getJawabanEssay($value->id_tugas)->row_array();
+          $q3 = $this->MahasiswaM->getJawabanEssay($value->id_tugas, $id_mhs['id_mhs'])->row_array();
           ?>
-          <?php if($value->jenis_tugas == 'Pilihan Ganda') { ?>
-            <?php if(empty($q)) { ?>
+          <?php if($value->jenis_tugas == 'Pilihan Ganda') {
+            if(empty($q['nilai'])) { ?>
               <a href="<?php echo site_url('MahasiswaC/tampilSoalPilgan/'.$value->id_tugas); ?>" class="btn btn-default" type="submit" onclick="alert('Apakah Anda yakin untuk mengerjakan soal?')">Kerjakan</a>
             <?php }else { ?>
               <a href="<?php echo site_url('MahasiswaC/tampilHasilPilgan/'.$value->id_tugas); ?>" class="btn btn-default">Lihat Hasil</a>
@@ -120,9 +123,9 @@ $this->load->view('head_mahasiswa');
 
           <?php }else { ?>
 
-            <?php if(empty($q) && !empty($q3)) { ?>
+            <?php if(empty($q['nilai']) && !empty($q3['jawaban'])) { ?>
               <a href="<?php echo site_url('MahasiswaC/tampilHasilEssay/'.$value->id_tugas); ?>" class="btn btn-default" type="submit">Sedang dinilai</a>
-            <?php }elseif(empty($q)) { ?>
+            <?php }elseif(empty($q['nilai'])) { ?>
               <a href="<?php echo site_url('MahasiswaC/tampilSoalEssay/'.$value->id_tugas); ?>" class="btn btn-default" type="submit">Kumpulkan</a>
             <?php }else { ?>
               <a href="<?php echo site_url('MahasiswaC/tampilHasilPilgan/'.$value->id_tugas); ?>" class="btn btn-default">Lihat Hasil</a>

@@ -23,7 +23,7 @@ class MahasiswaC extends CI_Controller {
 	public function tampilProfil($id_user){
 		$data=array(
 			"user"=>$this->model->getUser1($id_user)->row_array(),
-			"id_mhs"=>$this->model->getIdMhs($id_user)->row_array(),
+            "id_mhs"=>$this->model->getIdMhs($id_user)->row_array(),
 			"aktif"=>"mahasiswa"
 		);
 		$this->load->view('mahasiswa/edit_profilV', $data);
@@ -204,9 +204,9 @@ class MahasiswaC extends CI_Controller {
     	$kelas=$this->model->getKelas($id_kelas);
     	foreach ($kelas->result_array() as $row) {
     		$data=array(
-    			"user"=>$this->model->getUser($row['email'])->row_array(),
-    			"id_mhs"=>$this->model->getIdMhs($row['id_user'])->row_array(),
-    			"kelas"=>$this->model->getKelas($id_kelas)->row_array(),
+    			"user"=>$this->model->getUser($email)->row_array(),
+    			"id_mhs"=>$this->model->getIdMhsbyEmail($email)->row_array(),
+    			"kelas"=>$this->model->getKelasbyUser($row['id_user'])->row_array(),
     			"getFakultasProdi"=>$this->model->getFakultasProdi($id_kelas)->row_array(),
     			"pengumuman"=>$this->model->getPengumuman($id_kelas)->result(),
     			"tugas"=>$this->model->getTugas($id_kelas)->result(),
@@ -284,7 +284,6 @@ public function tampilHasilPilgan($id)
 { 
     $email=$this->session->userdata('email');
     $id_mhs = $this->model->getUser($email);
-    $id_tugas = $this->input->post('id_tugas'); 
 
     foreach ($id_mhs->result_array() as $row) {  
         $data=array(
@@ -303,10 +302,8 @@ public function tampilHasilPilgan($id)
 public function tampilSoalEssay($id) 
 {
     $email=$this->session->userdata('email');
-    $nomor=0;
 
     $data=array(
-        "nomor" => $nomor,
         "soal"=>$this->model->getSoalEssay($id)->row_array(),
         "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
         "aktif"=>"mahasiswa"
@@ -327,7 +324,7 @@ public function jawabSoalEssay() {
   $this->form_validation->set_rules('jawaban', 'jawaban','required');
   if($this->form_validation->run() == FALSE) {
     $this->session->set_flashdata('error', 'File gagal diunggah!');
-    redirect('MahasiswaC/tampilSoal/'.$id_tugas);
+    redirect('MahasiswaC/tampilSoalEssay/'.$id_tugas);
 }else{
 
   $jawaban = $this->input->post('jawaban');
@@ -348,14 +345,14 @@ public function jawabSoalEssay() {
           $data =  array(
             "jawaban"=>$jawaban,
             "path_file"=>$file_soal,
-            "id_soal_essay"=>$id_soal_essay, 
+            "id_soal_essay"=>$id_soal_essay,
             "id_mhs"=>$row['id_mhs'],
             "createDtm"=>date('Y-m-d H:s:i')
         );
 
           $result = $this->model->insertJawabanEssay($data);
+          // $result2 = $this->model->insertNilaiEssay($id_tugas,$row['id_mhs']);
       }
-      // print_r($data); exit();
       redirect('MahasiswaC/');
   }
 }
@@ -374,9 +371,6 @@ public function tampilHasilEssay($id)
             "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
             "soal"=>$this->model->getSoalEssay($id)->row_array(),
             "aktif"=>"mahasiswa"
-            
-            // "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
-            // "aktif"=>"mahasiswa"
         );
     }
 

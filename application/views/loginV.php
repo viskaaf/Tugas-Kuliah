@@ -67,7 +67,7 @@
         <!-- /.col -->
         <div class="col-xs-8">
         <a href="<?php echo site_url('HomeC/halamanLupaPass') ?>">Lupa kata sandi?</a><br>
-        Belum punya akun? <a href="<?php echo site_url('HomeC') ?>" class="text-center">Daftar</a>
+        Belum punya akun? <a href="<?php echo site_url('RegisterC') ?>" class="text-center">Daftar</a>
         </div>
         <div class="col-xs-4">
           

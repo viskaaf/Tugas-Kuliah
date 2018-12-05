@@ -140,7 +140,7 @@
 
                   <h3 class="profile-username text-center"><?php echo $user['nama_depan'].' '; echo $user['nama_belakang'];?></h3>
 
-                  <p class="text-muted text-center">Mahasiswa</p>
+                  <p class="text-muted text-center">Mahasiswa<?php echo $user['id_user']; ?></p>
 
                   <p class="text-muted text-center"><?php echo $user['nama_univ'];?></p>
                   <br>
@@ -161,9 +161,9 @@
                   <ul class="nav nav-pills nav-stacked">
                     <li>
                       <?php if(!empty($user['nim'])){ ?>
-                      <a class="btn" data-toggle="modal" data-target="#modal-add"><i class="fa fa-users"></i> Gabung Kelas</a>
-                      <?php } else{?>
                        <a href="<?php echo site_url('MahasiswaC/tampilProfil/'.$user['id_user']); ?>" class="btn" type="submit" data-toggle="modal" onclick="alert('Anda harus mengisi NIM terlebih dahulu')"><i class="fa fa-users"></i> Gabung Kelas</a>
+                      <?php } else{?>
+                      <a class="btn" data-toggle="modal" data-target="#modal-add"><i class="fa fa-users"></i> Gabung Kelas</a>
                       <?php } ?>
                     </li>
                     <li class="text-center"><a href="<?php echo site_url('MahasiswaC/tampilKelas/'.$user['id_user']) ?>"><i class="fa fa-inbox"></i> Kelola Kelas</a></li>
