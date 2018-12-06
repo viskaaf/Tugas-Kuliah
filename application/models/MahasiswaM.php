@@ -157,16 +157,26 @@ class MahasiswaM extends CI_Model{
 		return true;
 	}
 
-	public function getJawabanPilgan($id){
-		$query = $this->db->query("SELECT *, jp.status AS statusJawaban FROM tugas t, soal_pilgan sp, jawaban_pilgan jp WHERE t.id_tugas=sp.id_tugas AND sp.id_soal_pilgan=jp.id_soal_pilgan AND t.id_tugas='$id';");
-		return $query;
+	public function getJawabanPilgan($id, $id_mhs){
+		// $query = $this->db->query("SELECT *, jp.status AS statusJawaban FROM tugas t, soal_pilgan sp, jawaban_pilgan jp WHERE t.id_tugas=sp.id_tugas AND sp.id_soal_pilgan=jp.id_soal_pilgan AND t.id_tugas='$id';");
+		// return $query;
+		return $this->db
+		->SELECT('jp.id_jawaban_pilgan, t.id_tugas, jp.id_mhs, sp.id_soal_pilgan, sp.soal_pilgan, sp.gambar, jp.status AS statusJawaban, sp.kunci, jp.jawaban, sp.pil_a, sp.pil_b, sp.pil_c, sp.pil_d, sp.pil_e')
+		->from('jawaban_pilgan jp')
+		->join('soal_pilgan sp', 'jp.id_soal_pilgan=sp.id_soal_pilgan')
+		->join('tugas t', 'sp.id_tugas=t.id_tugas')
+		->join('mahasiswa m', 'm.id_mhs=jp.id_mhs')
+		->join('user u', 'u.id_user=m.id_user')
+		->WHERE('t.id_tugas', $id) 
+		->WHERE('m.id_mhs', $id_mhs)
+		->get(); 
 	}
 
 	public function getNilai($id,$id_mhs){
 		return $this->db
-		->select('n.nilai, t.id_tugas, m.id_mhs')
+		->select('n.nilai, t.id_tugas, n.id_mhs')
 		->from('nilai n')
-		->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
+		->join('tugas t', 't.id_tugas = n.id_tugas')
 		->join('mahasiswa m', 'm.id_mhs = n.id_mhs')
 		->join('user u', 'u.id_user = m.id_user')
 		->where('t.id_tugas', $id)
@@ -208,12 +218,11 @@ class MahasiswaM extends CI_Model{
 
 	public function getJawabanEssay($id,$id_mhs){
 		return $this->db
-		->select('je.jawaban, t.id_tugas, m.id_mhs')
+		->select('je.jawaban, t.id_tugas, je.id_mhs, je.path_file')
 		->from('jawaban_essay je')
 		->join('soal_essay se', 'se.id_soal_essay = je.id_soal_essay', 'left')
 		->join('tugas t', 't.id_tugas = se.id_tugas')
 		->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
-		->join('user u', 'u.id_user = m.id_user')
 		->where('t.id_tugas', $id)
 		->where('m.id_mhs', $id_mhs)
 		->get();

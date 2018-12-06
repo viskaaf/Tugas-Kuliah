@@ -4,7 +4,7 @@ class DosenM extends CI_Model{
 
 	function __construct(){
     parent:: __construct();
-    $this->load->database();
+    $this->load->database(); 
   }
 
   //untuk mengambil email sesuai yg login
@@ -277,9 +277,8 @@ class DosenM extends CI_Model{
   }
 
   public function getDaftarNilaiEssay($id){
-    // $query = $this->db->query("SELECT * FROM tugas t, soal_essay se, jawaban_essay je WHERE t.id_tugas=se.id_tugas AND se.id_soal_essay=je.id_soal_essay AND t.id_tugas='$id';");
     return $this->db
-    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas')
+    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas, je.jawaban, je.path_file, je.id_jawaban_essay')
     ->from('nilai n')
     ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
     ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
@@ -288,8 +287,6 @@ class DosenM extends CI_Model{
     ->join('user u', 'u.id_user = m.id_user')
     ->where('t.id_tugas', $id)
     ->get();
-
-    // return $query;
   }
 
   public function getEssayBelum($id){

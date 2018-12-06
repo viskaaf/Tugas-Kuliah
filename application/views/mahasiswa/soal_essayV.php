@@ -2,6 +2,30 @@
 $this->load->view('head_soal');
 ?>
 
+<div style="margin-top: 20px">
+  <?php
+  $this->load->helper('form');
+  $error = $this->session->flashdata('error');
+  if($error)
+  {
+    ?>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <?php echo $this->session->flashdata('error'); ?>                    
+    </div>
+  <?php } ?>
+  <?php  
+  $sukses = $this->session->flashdata('sukses');
+  if($sukses)
+  {
+    ?>
+    <div class="alert alert-success alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <?php echo $this->session->flashdata('sukses'); ?>
+    </div>
+  <?php } ?>
+</div>
+
 <div class="col-xs-7">
   <!-- Main content --> 
   <div class="box box-primary" style="margin-top: 20px">
@@ -15,12 +39,13 @@ $this->load->view('head_soal');
     <div class="box-body">
       <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $soal['id_tugas']; ?>">
       <input type="hidden" class="form-control" name="id_soal_essay" value="<?php echo $soal['id_soal_essay']; ?>">
+      <input type="hidden" class="form-control" name="id_mhs" value="<?php echo $id_mhs; ?>">
       <div class="form-group">
         <label for="deskripsiSoal" class="col-sm-3">Catatan</label>
         <div class="col-sm-12">
           <textarea class="form-control" rows="3" name="jawaban" placeholder="Catatan..."></textarea>
         </div>
-      </div>  
+      </div>   
       <div class="form-group">
         <div class="col-sm-3">
           <p><i class="fa fa-paperclip"></i> Lampiran</p>

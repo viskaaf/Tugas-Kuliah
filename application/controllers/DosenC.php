@@ -11,7 +11,7 @@ class DosenC extends CI_Controller {
     $this->load->library('Excel');
   }
 
-  public function index()
+  public function index() 
   {
     $email=$this->session->userdata('email');
     $id = $this->model->getUnivId_byEmail($email);
@@ -867,21 +867,21 @@ public function tampilDaftarKoreksiEssay($id)
             "aktif"=>"dosen"
         );
 
-    $this->load->view('dosen/koreksi_jawaban_essayV',$data);
+    $this->load->view('dosen/daftar_koreksi_jawaban_essayV',$data);
 }
 
 public function tampilKoreksiSoalEssay($id)
-{
+{ 
   $email=$this->session->userdata('email');
-  $nomor=0;
 
   $data=array(
-    "nomor" => $nomor,
-    "soal"=>$this->model->getSoalPilgan($id)->result(),
+    "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+    "soal"=>$this->model->getSoalEssay($id)->row_array(),
+    "jawaban"=>$this->model->getDaftarNilaiEssay($id)->row_array(),
     "aktif"=>"user"
   );
 
-  $this->load->view('dosen/soal_pilganV',$data);
+  $this->load->view('dosen/koreksi_jawaban_essayV',$data);
 }
 
 }

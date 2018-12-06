@@ -2,14 +2,6 @@
 $this->load->view('head_soal');
 ?>
 
-<!-- Content Header (Page header) -->
-<!-- <section class="content-header">
-  <h1>
-    <?php echo $nama_tugas['nama_tugas'];?>
-  </h1>
-</section> -->
-<!-- /.content-header -->
-
 <div class="col-xs-9">
   <!-- Main content --> 
   <div class="box box-primary" style="margin-top: 20px">
@@ -24,7 +16,7 @@ $this->load->view('head_soal');
     <?php $nomor=0; ?>
     <?php foreach($jawaban as $value) { $nomor=$nomor+1; ?>
 
-     <table class="table-responsive" style="margin: 10px 10px 10px 10px">
+     <table class="table-responsive" style="margin: 10px 10px 10px 10px;">
       <!-- form start -->
       <form id="form_soal" action="<?php echo site_url('MahasiswaC/jawabSoal') ?>" method="POST">
         <input type="hidden" name="id_tugas" value="<?php echo $value->id_tugas; ?>">

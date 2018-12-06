@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 05 Des 2018 pada 14.42
+-- Generation Time: 06 Des 2018 pada 21.10
 -- Versi Server: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -184,6 +184,14 @@ CREATE TABLE `jawaban_essay` (
   `updateDtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
+--
+-- Dumping data untuk tabel `jawaban_essay`
+--
+
+INSERT INTO `jawaban_essay` (`id_jawaban_essay`, `jawaban`, `path_file`, `id_soal_essay`, `id_mhs`, `createDtm`, `updateDtm`) VALUES
+(1, 'ini jawabannya', '56.pdf', 13, 3, '2018-12-06 09:32:44', '2018-12-06 09:32:44'),
+(4, 'Berikut ini jawaban dari soal tersebut', 'Artikel_11104011.pdf', 13, 5, '2018-12-06 05:19:09', '2018-12-06 11:09:19');
+
 -- --------------------------------------------------------
 
 --
@@ -205,14 +213,14 @@ CREATE TABLE `jawaban_pilgan` (
 --
 
 INSERT INTO `jawaban_pilgan` (`id_jawaban_pilgan`, `jawaban`, `status`, `id_soal_pilgan`, `id_mhs`, `createDtm`, `updateDtm`) VALUES
-(139, 'A', 'B', 60, 3, '2018-11-26 06:02:07', '0000-00-00 00:00:00'),
-(140, 'C', 'B', 61, 3, '2018-11-26 06:02:07', '0000-00-00 00:00:00'),
-(141, 'C', 'S', 62, 3, '2018-11-26 06:02:07', '0000-00-00 00:00:00'),
-(142, 'C', 'S', 63, 3, '2018-11-26 06:02:07', '0000-00-00 00:00:00'),
-(149, 'A', 'S', 69, 3, '2018-12-01 21:45:28', '0000-00-00 00:00:00'),
-(150, 'A', 'B', 70, 3, '2018-12-01 21:45:28', '0000-00-00 00:00:00'),
-(151, 'D', 'S', 69, 5, '2018-12-05 03:03:44', '0000-00-00 00:00:00'),
-(152, 'A', 'B', 70, 5, '2018-12-05 03:03:44', '0000-00-00 00:00:00');
+(139, 'A', 'B', 60, 3, '2018-11-26 06:02:07', '2018-12-06 04:44:00'),
+(140, 'C', 'B', 61, 3, '2018-11-26 06:02:07', '2018-12-06 04:43:52'),
+(141, 'C', 'S', 62, 3, '2018-11-26 06:02:07', '2018-12-06 04:43:45'),
+(142, 'C', 'S', 63, 3, '2018-11-26 06:02:07', '2018-12-06 04:43:36'),
+(149, 'A', 'S', 69, 3, '2018-12-01 21:45:28', '2018-12-06 04:21:06'),
+(150, 'A', 'B', 70, 3, '2018-12-01 21:45:28', '2018-12-06 04:20:57'),
+(151, 'B', 'B', 69, 5, '2018-12-05 03:03:44', '2018-12-06 08:23:40'),
+(152, 'A', 'B', 70, 5, '2018-12-05 03:03:44', '2018-12-06 04:20:42');
 
 -- --------------------------------------------------------
 
@@ -318,7 +326,7 @@ INSERT INTO `nilai` (`id_nilai`, `nilai`, `id_mhs`, `id_tugas`, `createDtm`, `up
 (29, 50, 3, 75, '2018-11-26 16:24:54', '0000-00-00 00:00:00'),
 (32, 50, 3, 88, '2018-12-02 03:28:45', '0000-00-00 00:00:00'),
 (34, 0, 3, 83, '2018-12-04 12:10:26', '0000-00-00 00:00:00'),
-(35, 50, 5, 88, '2018-12-05 09:44:03', '0000-00-00 00:00:00');
+(35, 100, 5, 88, '2018-12-06 08:24:11', '2018-12-06 08:24:11');
 
 -- --------------------------------------------------------
 
@@ -625,8 +633,7 @@ ALTER TABLE `jawaban_essay`
 --
 ALTER TABLE `jawaban_pilgan`
   ADD PRIMARY KEY (`id_jawaban_pilgan`),
-  ADD KEY `id_soal_pilgan` (`id_soal_pilgan`),
-  ADD KEY `id_mhs` (`id_mhs`);
+  ADD KEY `id_soal_pilgan` (`id_soal_pilgan`);
 
 --
 -- Indexes for table `kelas`
@@ -747,7 +754,7 @@ ALTER TABLE `fakultas`
 -- AUTO_INCREMENT for table `jawaban_essay`
 --
 ALTER TABLE `jawaban_essay`
-  MODIFY `id_jawaban_essay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_jawaban_essay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `jawaban_pilgan`
 --
@@ -757,7 +764,7 @@ ALTER TABLE `jawaban_pilgan`
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `kelas_mhs`
 --

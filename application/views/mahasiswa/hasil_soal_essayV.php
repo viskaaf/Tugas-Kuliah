@@ -14,6 +14,7 @@ $this->load->view('head_soal');
     <div class="box-body">
       <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $soal['id_tugas']; ?>">
       <input type="hidden" class="form-control" name="id_soal_essay" value="<?php echo $soal['id_soal_essay']; ?>">
+      <!-- <input type="text" class="form-control" name="id_mhs" value="<?php echo $id_mhs; ?>"> -->
       <div style="margin-bottom: 20px; margin-left: 10px;">
       <span><img class="img" style="width: 40px;" src="<?php echo base_url('gambar/circular-check-button.png')?>"></span>
       <span style="padding-left: 10px; font-size: 13px;">Tugas berhasil dikumpulkan!</span>

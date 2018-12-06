@@ -107,10 +107,9 @@ $this->load->view('head_mahasiswa');
           <p>Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($value->tgl_selesai))); ?> - <?php echo date("H:i",strtotime($value->tgl_selesai)); ?> </p>
 
           <?php
-
-          $q = $this->MahasiswaM->getNilai($value->id_tugas, $id_mhs['id_mhs'])->row_array();
+          $q = $this->MahasiswaM->getNilai($value->id_tugas, $id_mhs)->row_array();
           $q2 = $this->MahasiswaM->getSoalPilgan($value->id_tugas)->num_rows();
-          $q3 = $this->MahasiswaM->getJawabanEssay($value->id_tugas, $id_mhs['id_mhs'])->row_array();
+          $q3 = $this->MahasiswaM->getJawabanEssay($value->id_tugas, $id_mhs)->row_array();
           ?>
           <?php if($value->jenis_tugas == 'Pilihan Ganda') {
             if(empty($q['nilai'])) { ?>

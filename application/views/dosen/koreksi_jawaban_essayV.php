@@ -2,172 +2,92 @@
 $this->load->view('head_soal');
 ?>
 
-  <div class="box" style="margin-top: 20px">
+<div class="col-xs-7">
+  <!-- Main content --> 
+  <div class="box box-primary" style="margin-top: 20px">
     <div class="box-header with-border">
-      <!-- <center> -->
-        <h3><b>Ringkasan Penilaian</b></h3>
-      <!-- </center>  -->
+      <center>
+        <h1 class="box-title" style="font-size: 25px;"><b> <?php echo $ket_soal['nama_tugas'];?></b></h1>
+        <p style="padding-top: 10px;"><i class="fa fa-calendar" ></i> Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
+      </center> 
     </div>
     <div class="box-body">
-      <!-- <center> -->
-        <p>Nama Tugas: <a href="<?php echo site_url('DosenC/tampilSoalPilgan/'.$ket_soal['id_tugas']); ?>" style="font-size: 20px;"><?php echo $ket_soal['nama_tugas'];?></a></p>
-        <p>Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
-      <!-- </center>  -->
+      <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $soal['id_tugas']; ?>">
+      <input type="hidden" class="form-control" name="id_soal_essay" value="<?php echo $soal['id_soal_essay']; ?>">
+      <!-- <input type="text" class="form-control" name="id_mhs" value="<?php echo $id_mhs; ?>"> -->
+      <div style="margin-bottom: 20px; margin-left: 10px;">
+      <span><img class="img" style="width: 40px;" src="<?php echo base_url('gambar/circular-check-button.png')?>"></span>
+      <span style="padding-left: 10px; font-size: 13px;">Tugas berhasil dikumpulkan!</span>
+      <span style="font-size: 13px;">Menunggu penilaian dari dosen.</span>
+      </div>
+      
+      <div class="attachment-block clearfix" style="margin-bottom: 40px;">
+        <?php $link = base_url()."file_upload/".$jawaban['path_file']; ?>
+        <a target="_blank" href="<?php echo $link;?>"><img class="attachment-img" src="<?php echo base_url()?>gambar/pdf.svg"></a>
+        
+        <div class="attachment-pushed">
+          <h4 class="attachment-heading"><a target="_blank" href="<?php echo $link;?>"><?php echo $jawaban['path_file']; ?></a></h4>
+          <div class="attachment-text">
+            PDF File
+          </div>
+          <!-- /.attachment-text -->
+        </div> 
+        <!-- /.attachment-pushed --> 
+      </div>
+      <h4>Catatan:</h4>
+      <p><?php echo $jawaban['jawaban'];?></p>
     </div>
+    <!-- /.box-body -->
+
+
   </div>
+  <!-- /.content -->
+</div> 
 
-<div class="nav-tabs-custom" style="margin-top: 20px;">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#semua" data-toggle="tab">Semua</a></li>
-      <li><a href="#belum" data-toggle="tab">Belum Dinilai</a></li>
-      <li><a href="#sudah" data-toggle="tab">Sudah Dinilai</a></li>
-    </ul>
-    <div class="tab-content">
-      <div class="active tab-pane" id="semua">
-        <table id="semuadata" class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th><center>No</center></th>
-              <th><center>Nama Mahasiswa</center></th>
-              <th><center>NIM</center></th>
-              <th><center>Hasil</center></th>
-              <th><center>Opsi</center></th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php 
-              foreach ($jawaban as $i => $data) {
-            ?>
-            <tr>
-              <td><center><?php echo $i+1; ?></center></td>
-              <td><center><?php echo $data->nama_depan . ' ' . $data->nama_belakang ?></center></td>
-              <td><center><?php echo $data->nim ?></center></td>
-              <td><center><?php echo !empty($data->nilai) ? $data->nilai : 'Belum dinilai'; ?></center></td>
-              <td><center>
-                <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_tugas); ?>">
-                  <span data-toggle="tooltip" data-original-title="Koreksi Jawaban" <i class="fa fa-file-text-o"></i></span>
-                </a></center>
-              </td>
-            </tr> 
-          <?php } ?>
-        </tbody>
-      </table>
+<div class="col-xs-5">
+  <div class="box box-primary" style="margin-top: 20px">
+    <div class="box-header with-border">
+      <p style="font-size: 12px;">Ditugaskan Oleh:</p>
+      <div class="user-block">
+        <?php if($ket_soal['foto_profil']) { ?>
+          <img class="img-circle img-bordered-sm" src="<?php echo base_url('gambar/'.$ket_soal['foto_profil'])?>" alt="user image">
+          <?php
+        }else { ?> 
+          <img class="img-circle img-bordered-sm" src="<?php echo base_url('gambar/admin.png')?>" alt="user image">
+        <?php } ?>
+        <span class="username" style="font-size: 11px;">
+          <a href="#"><?php echo $ket_soal['nama_depan'].' '; echo $ket_soal['nama_belakang'];?></a>
+        </span>
+        <span class="description" style="font-size: 11px;">Dosen</span>
+      </div>
+      <!-- /.user-block -->
     </div>
-    <!-- /.tab-pane -->
+    <div class="box-body">
+      <p style="margin-top: 10px;"><?php echo $soal['keterangan'];?></p>
 
-    <div class="tab-pane" id="belum"> 
-      <table id="belumdinilai" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-              <th><center>No</center></th>
-              <th><center>Nama Mahasiswa</center></th>
-              <th><center>NIM</center></th>
-              <!-- <th><center>Hasil</center></th> -->
-              <th><center>Opsi</center></th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php 
-              foreach ($belum as $i => $data) {
-            ?>
-            <tr>
-              <td><center><?php echo $i+1; ?></center></td>
-              <td><center><?php echo $data->nama_depan . ' ' . $data->nama_belakang ?></center></td>
-              <td><center><?php echo $data->nim ?></center></td>
-              <td><center>
-                <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_tugas); ?>">
-                  <span data-toggle="tooltip" data-original-title="Koreksi Jawaban" <i class="fa fa-file-text-o"></i></span>
-                </a></center>
-              </td>
-            </tr> 
-          <?php } ?>
-        </tbody>
-  </table>
-</div>
-<!-- /.tab-pane -->
+      <div class="attachment-block clearfix">
+        <?php $link = base_url()."file_upload/".$soal['path_file']; ?>
+        <a target="_blank" href="<?php echo $link;?>"><img class="attachment-img" src="<?php echo base_url()?>gambar/pdf.svg"></a>
+        
+        <div class="attachment-pushed">
+          <h4 class="attachment-heading"><a target="_blank" href="<?php echo $link;?>"><?php echo $soal['path_file']; ?></a></h4>
 
-<div class="tab-pane" id="sudah">
-      <table id="sudahdinilai" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-              <th><center>No</center></th>
-              <th><center>Nama Mahasiswa</center></th>
-              <th><center>NIM</center></th>
-              <th><center>Hasil</center></th>
-              <th><center>Opsi</center></th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php 
-              foreach ($sudah as $i => $data) {
-            ?>
-            <tr>
-              <td><center><?php echo $i+1; ?></center></td>
-              <td><center><?php echo $data->nama_depan . ' ' . $data->nama_belakang ?></center></td>
-              <td><center><?php echo $data->nim ?></center></td>
-              <td><center><?php echo $data->nilai ?></center></td>
-              <td><center>
-                <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_tugas); ?>">
-                  <span data-toggle="tooltip" data-original-title="Edit Koreksi Jawaban" <i class="fa fa-edit"></i></span>
-                </a></center>
-              </td>
-            </tr> 
-          <?php } ?>
-        </tbody>
-  </table>
-</div>
-<!-- /.tab-pane -->
-</div>
-<!-- /.tab-content -->
-</div>
-<!-- /.nav-tabs-custom -->
+          <div class="attachment-text">
+            PDF File
+          </div>
+          <!-- /.attachment-text -->
+        </div>
+        <!-- /.attachment-pushed -->
+      </div>
+    </div>
 
-
-
+  </div>
 </div>
-<!-- /.content -->
+
 </div>
 <!-- /.container -->
 </div>
 <!-- /.content-wrapper -->
-
-<script>
-  $(function () {
-    $('#semuadata').DataTable()
-    $('#examples2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-
-  $(function () {
-    $('#belumdinilai').DataTable()
-    $('#examples2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-
-  $(function () {
-    $('#sudahdinilai').DataTable()
-    $('#examples2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-</script>
 
 <footer class="main-footer">
   <div class="container">
