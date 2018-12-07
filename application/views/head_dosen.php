@@ -54,6 +54,11 @@
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+              <li class="user">
+                  <a href="<?php echo site_url('DosenC/index') ?>"> 
+                    <span>Beranda</span>
+                  </a>
+              </li>
 
               <!-- Notifications Menu -->
               <li class="dropdown notifications-menu">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 06 Des 2018 pada 21.10
+-- Generation Time: 07 Des 2018 pada 06.02
 -- Versi Server: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -190,7 +190,8 @@ CREATE TABLE `jawaban_essay` (
 
 INSERT INTO `jawaban_essay` (`id_jawaban_essay`, `jawaban`, `path_file`, `id_soal_essay`, `id_mhs`, `createDtm`, `updateDtm`) VALUES
 (1, 'ini jawabannya', '56.pdf', 13, 3, '2018-12-06 09:32:44', '2018-12-06 09:32:44'),
-(4, 'Berikut ini jawaban dari soal tersebut', 'Artikel_11104011.pdf', 13, 5, '2018-12-06 05:19:09', '2018-12-06 11:09:19');
+(4, 'Berikut ini jawaban dari soal tersebut', 'Artikel_11104011.pdf', 13, 5, '2018-12-06 05:19:09', '2018-12-06 11:09:19'),
+(5, 'Berikut ini jawabannya', '10-37-1-PB.pdf', 14, 6, '2018-12-06 17:19:09', '2018-12-06 23:09:19');
 
 -- --------------------------------------------------------
 
@@ -254,8 +255,7 @@ INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `kode`, `status_kelas`, `id_det_f
 (16, 'Kimia B', '6aguxw', 'Aktif', 17, 1, '2018-10-23 09:33:11', '0000-00-00 00:00:00', 0),
 (17, 'Kimia C', 'xvw7v9', 'Aktif', 17, 1, '2018-10-23 09:58:33', '0000-00-00 00:00:00', 0),
 (18, 'Kimia D', 'zu2256', 'Aktif', 17, 1, '2018-10-23 09:36:37', '0000-00-00 00:00:00', 0),
-(19, 'serah', 'oiot2r', 'Aktif', 13, 1, '2018-10-23 09:13:40', '0000-00-00 00:00:00', 0),
-(20, 'jjjj', '7wnpm9', 'Aktif', 13, 1, '2018-10-23 10:57:53', '0000-00-00 00:00:00', 0);
+(19, 'serah', 'oiot2r', 'Aktif', 13, 1, '2018-10-23 09:13:40', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -278,7 +278,8 @@ CREATE TABLE `kelas_mhs` (
 
 INSERT INTO `kelas_mhs` (`id_kelas_mhs`, `id_mhs`, `id_kelas`, `createDtm`, `updateDtm`, `isDeleted`) VALUES
 (3, 3, 1, '2018-11-05 13:17:48', '2018-11-05 12:48:17', 0),
-(5, 5, 1, '2018-12-04 09:28:47', '2018-12-04 08:47:28', 0);
+(5, 5, 1, '2018-12-04 09:28:47', '2018-12-04 08:47:28', 0),
+(7, 6, 9, '2018-12-07 00:39:06', '2018-12-06 23:06:39', 0);
 
 -- --------------------------------------------------------
 
@@ -301,7 +302,8 @@ CREATE TABLE `mahasiswa` (
 
 INSERT INTO `mahasiswa` (`id_mhs`, `nim`, `id_user`, `createDtm`, `updateDtm`, `isDeleted`) VALUES
 (3, '15/386079/SV/09465', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-(5, '0972646819', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0);
+(5, '0972646819', 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
+(6, '1234567', 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -325,8 +327,9 @@ CREATE TABLE `nilai` (
 INSERT INTO `nilai` (`id_nilai`, `nilai`, `id_mhs`, `id_tugas`, `createDtm`, `updateDtm`) VALUES
 (29, 50, 3, 75, '2018-11-26 16:24:54', '0000-00-00 00:00:00'),
 (32, 50, 3, 88, '2018-12-02 03:28:45', '0000-00-00 00:00:00'),
-(34, 0, 3, 83, '2018-12-04 12:10:26', '0000-00-00 00:00:00'),
-(35, 100, 5, 88, '2018-12-06 08:24:11', '2018-12-06 08:24:11');
+(35, 100, 5, 88, '2018-12-06 08:24:11', '2018-12-06 08:24:11'),
+(38, 70, 5, 83, '2018-12-06 15:35:36', '0000-00-00 00:00:00'),
+(40, 100, 6, 85, '2018-12-06 17:24:24', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -490,10 +493,9 @@ INSERT INTO `tugas` (`id_tugas`, `nama_tugas`, `tgl_mulai`, `tgl_selesai`, `stat
 (63, 'kuis 1', '2018-10-22 00:00:00', '2018-10-23 00:00:00', 'Aktif', 'Pilihan Ganda', 120, 15, '2018-10-22 21:05:55', '0000-00-00 00:00:00', 0),
 (75, 'Kuis Pencernaan', '2018-11-26 00:00:00', '2018-11-28 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 1, '2018-11-26 10:32:25', '0000-00-00 00:00:00', 0),
 (80, 'tugas essay', '2018-11-30 00:00:00', '2018-11-30 00:00:00', 'Aktif', 'Essay', 0, 1, '2018-11-30 17:52:39', '0000-00-00 00:00:00', 0),
-(83, 'tugas essayyyyy', '2018-11-30 00:00:00', '2018-12-01 00:00:00', 'Aktif', 'Essay', 0, 1, '2018-11-30 18:25:20', '0000-00-00 00:00:00', 0),
-(84, 'tugasss', '2018-11-30 00:00:00', '2018-12-03 00:00:00', 'Aktif', 'Essay', 0, 9, '2018-11-30 18:05:28', '0000-00-00 00:00:00', 0),
+(83, 'Tugas Sistem Respirasi', '2018-11-30 00:00:00', '2018-12-01 00:00:00', 'Aktif', 'Essay', 0, 1, '2018-11-30 18:25:20', '2018-12-06 22:04:39', 0),
 (85, 'tugasss', '2018-11-30 00:00:00', '2018-12-03 00:00:00', 'Aktif', 'Essay', 0, 9, '2018-11-30 18:05:28', '0000-00-00 00:00:00', 0),
-(88, 'kuis9', '2018-12-01 00:00:00', '2018-12-01 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 1, '2018-12-01 10:24:34', '0000-00-00 00:00:00', 0);
+(88, 'Kuis Bio 1', '2018-12-01 00:00:00', '2018-12-01 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 1, '2018-12-01 10:24:34', '2018-12-06 22:06:29', 0);
 
 -- --------------------------------------------------------
 
@@ -555,8 +557,7 @@ INSERT INTO `user` (`id_user`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `
 (7, 'Budi', 'Yanto', 'Laki-Laki', 'vfatchiana@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 1, 1, '2018-10-25 10:28:56', '2018-11-05 08:23:59', 0),
 (10, 'Ani', 'Inawati', 'Perempuan', 'viska.ayu.f@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, NULL, '2018-11-05 11:23:49', '2018-11-05 06:54:47', 0),
 (11, 'Anto', 'Anti', 'Laki-Laki', 'anto@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 1, 1, '2018-11-28 17:01:34', '0000-00-00 00:00:00', 0),
-(12, 'Ana', 'Ani', 'Perempuan', 'ana@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 1, 1, '2018-11-28 17:31:42', '0000-00-00 00:00:00', 0),
-(13, 'Ini', 'Budi', 'Laki-Laki', 'inibudi@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 1, 1, '2018-11-28 17:14:44', '0000-00-00 00:00:00', 0),
+(12, 'Ana', 'Ani', 'Perempuan', 'ana@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, 1, '2018-11-28 17:31:42', '2018-12-06 23:02:10', 0),
 (16, 'Hida', 'Hidayati', 'Laki-Laki', 'hida@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, NULL, NULL, '2018-12-04 02:24:29', 0);
 
 -- --------------------------------------------------------
@@ -754,7 +755,7 @@ ALTER TABLE `fakultas`
 -- AUTO_INCREMENT for table `jawaban_essay`
 --
 ALTER TABLE `jawaban_essay`
-  MODIFY `id_jawaban_essay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_jawaban_essay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `jawaban_pilgan`
 --
@@ -764,22 +765,22 @@ ALTER TABLE `jawaban_pilgan`
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `kelas_mhs`
 --
 ALTER TABLE `kelas_mhs`
-  MODIFY `id_kelas_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_kelas_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `pengumuman`
 --

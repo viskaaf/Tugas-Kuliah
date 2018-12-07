@@ -80,24 +80,24 @@ $this->load->view('head_dosen');
     </ul>
     <div class="tab-content">
       <div class="active tab-pane" id="daftarmahasiswa">
-        <table id="datakelas" class="table table-bordered table-striped">
+        <table id="datamahasiswa" class="table table-bordered table-striped">
           <thead>
             <tr>
               <th><center>No</center></th>
               <th><center>Nama Mahasiswa</center></th>
-              <th><center>Status</center></th>
-              <th>Opsi</th>
+              <th><center>NIM</center></th>
+              <th><center>Opsi</center></th>
             </tr>
           </thead>
-          <tbody>
-            <?php $no=0; foreach ($tugas as $value): $no++; ?>
+          <tbody> 
+            <?php $no=0; foreach ($mahasiswa as $value): $no++; ?>
             <tr>
               <td><center><?php echo $no; ?></center></td>
-              <td><center></center></td>
-              <td><center></center></td>
+              <td><center><?php echo $value->nama_depan.' '.$value->nama_belakang;?></center></td>
+              <td><center><?php echo $value->nim;?></center></td>
               <td><center>
-                <a class="btn btn-success btn-xs tooltips">
-                  <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-search"></i></span>
+                <a class="btn btn-danger btn-xs tooltips" href="<?php echo site_url('DosenC/hapusMahasiswa/'.$value->id_kelas_mhs.'/'.$getuniv['id_univ']); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus mahasiswa dari kelas ini?')">
+                  <span data-toggle="tooltip" data-original-title="Hapus Mahasiswa" <i class="fa fa-trash"></i></span>
                 </a></center>
               </td>
             </tr> 
@@ -315,7 +315,7 @@ $this->load->view('head_dosen');
 
 <script>
   $(function () {
-    $('#datakelas').DataTable()
+    $('#datamahasiswa').DataTable()
     $('#examples2').DataTable({
       'paging'      : true,
       'lengthChange': false,
@@ -324,7 +324,7 @@ $this->load->view('head_dosen');
       'info'        : true,
       'autoWidth'   : false
     })
-  })
+  }) 
 
   $(function () {
     $('#datatugas').DataTable()

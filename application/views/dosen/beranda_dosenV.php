@@ -6,9 +6,6 @@ $this->load->view('head_dosen');
   <div class="box-header with-border">
     <h3 class="box-title" style="font-size: 25px"><i class="fa fa-home"></i> Beranda</h3>
   </div>
-  <ol class="breadcrumb">
-    <li class="active"><a href="#"><i class="fa fa-home"></i> Beranda</a></li>
-  </ol>
 
   <?php
   $this->load->helper('form');

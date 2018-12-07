@@ -54,13 +54,19 @@
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-
+ 
                             <!-- User Account Menu -->
               <li class="user">
                 <!-- Menu Toggle Button -->
-                <a href="<?php echo site_url('MahasiswaC/index') ?>">
+                <?php if($this->session->userdata("id_userrole") == 1){ ?>
+                  <a href="<?php echo site_url('DosenC/index') ?>"> 
+                    <span>Beranda</span>
+                  </a>
+                <?php }else{ ?>
+                  <a href="<?php echo site_url('MahasiswaC/index') ?>"> 
                   <span>Beranda</span>
                 </a>
+                <?php } ?>
               </li>
 
               <!-- Notifications Menu -->

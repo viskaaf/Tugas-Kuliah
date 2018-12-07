@@ -11,7 +11,7 @@ $this->load->view('head_soal');
         <p style="padding-top: 10px;">NIM: <?php echo $jawaban['nim']; ?></p>
       </center> 
     </div>
-    <form method="POST" action="<?php echo site_url('DosenC/tambahNilaiEssay')?>">
+    <form method="POST" action="<?php echo site_url('DosenC/editNilaiEssay')?>">
     <div class="box-body">
       <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $jawaban['id_tugas']; ?>">
       <input type="hidden" class="form-control" name="id_soal_essay" value="<?php echo $jawaban['id_jawaban_essay']; ?>">
@@ -45,7 +45,7 @@ $this->load->view('head_soal');
     <div class="box-header with-border">
       <center>
         <p>Nilai:</p>
-        <input type="text" class="text-center" style="width: 70px;" name="nilai">
+        <input type="text" class="text-center" style="width: 70px;" name="nilai" value="<?php echo $nilai['nilai'];?>">
       </center>
     </div>
     <div class="box-footer">

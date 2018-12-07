@@ -127,7 +127,7 @@ $this->load->view('head_mahasiswa');
             <?php }elseif(empty($q['nilai'])) { ?>
               <a href="<?php echo site_url('MahasiswaC/tampilSoalEssay/'.$value->id_tugas); ?>" class="btn btn-default" type="submit">Kumpulkan</a>
             <?php }else { ?>
-              <a href="<?php echo site_url('MahasiswaC/tampilHasilPilgan/'.$value->id_tugas); ?>" class="btn btn-default">Lihat Hasil</a>
+              <a href="<?php echo site_url('MahasiswaC/tampilHasilEssay/'.$value->id_tugas); ?>" class="btn btn-default">Lihat Hasil</a>
             <?php } ?>
           <?php } ?>
 

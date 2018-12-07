@@ -179,6 +179,12 @@ class DosenM extends CI_Model{
     return $q;
   }
 
+    //untuk menghapus data tugas
+  public function hapusMahasiswa($id){
+    $q = $this->db->delete('kelas_mhs', "id_kelas_mhs=$id");
+    return $q;
+  }
+
   // public function getTugas($id){
   //     $q = $this->db->query("SELECT * FROM kelas k, tugas t WHERE k.id_kelas=t.id_kelas AND k.id_kelas=$id");
   //       return $q;
@@ -277,44 +283,72 @@ class DosenM extends CI_Model{
   }
 
   public function getDaftarNilaiEssay($id){
-    return $this->db
-    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas, je.jawaban, je.path_file, je.id_jawaban_essay')
-    ->from('nilai n')
-    ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
-    ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
-    ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
-    ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
-    ->join('user u', 'u.id_user = m.id_user')
-    ->where('t.id_tugas', $id)
-    ->get();
+    // return $this->db
+    // ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas, je.jawaban, je.path_file, je.id_jawaban_essay')
+    // ->from('nilai n')
+    // ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
+    // ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
+    // ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
+    // ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
+    // // ->join('mahasiswa m', 'm.id_mhs = n.id_mhs')
+    // ->join('user u', 'u.id_user = m.id_user') 
+    // ->where('t.id_tugas', $id)
+    // ->get();
+    $q = $this->db->query("SELECT t.nama_tugas, n.id_nilai, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas, je.id_jawaban_essay
+      from nilai n
+      right join tugas t on t.id_tugas = n.id_tugas
+      join soal_essay se on se.id_tugas = t.id_tugas
+      join jawaban_essay je on je.id_soal_essay = se.id_soal_essay
+      join mahasiswa m on m.id_mhs = je.id_mhs
+      join user u on u.id_user = m.id_user
+      WHERE t.id_tugas ='$id'");
+    return $q;
   }
 
   public function getEssayBelum($id){
-    return $this->db
-    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas')
-    ->from('nilai n')
-    ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
-    ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
-    ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
-    ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
-    ->join('user u', 'u.id_user = m.id_user')
-    ->where('t.id_tugas', $id)
-    ->where('n.nilai = ""')
-    ->get();
+    // return $this->db
+    // ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas')
+    // ->from('nilai n')
+    // ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
+    // ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
+    // ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
+    // ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
+    // ->join('user u', 'u.id_user = m.id_user')
+    // ->where('t.id_tugas', $id)
+    // ->where('n.nilai = ""')
+    // ->get();
+    $q = $this->db->query("SELECT t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas, je.jawaban, je.path_file, je.id_jawaban_essay
+      from nilai n
+      right join tugas t on t.id_tugas = n.id_tugas
+      join mahasiswa m on m.id_mhs = n.id_mhs
+      join soal_essay se on se.id_tugas = t.id_tugas
+      join jawaban_essay je on je.id_soal_essay = se.id_soal_essay AND m.id_mhs = je.id_mhs
+      join user u on u.id_user = m.id_user
+      WHERE t.id_tugas = '$id' AND n.nilai =''");
+    return $q;
   }
 
   public function getEssaySudah($id){
-    return $this->db
-    ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas')
-    ->from('nilai n')
-    ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
-    ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
-    ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
-    ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
-    ->join('user u', 'u.id_user = m.id_user')
-    ->where('t.id_tugas', $id)
-    ->where('n.nilai != ""')
-    ->get();
+    // return $this->db
+    // ->select('t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas')
+    // ->from('nilai n')
+    // ->join('tugas t', 't.id_tugas = n.id_tugas', 'right')
+    // ->join('soal_essay se', 'se.id_tugas = t.id_tugas')
+    // ->join('jawaban_essay je', 'je.id_soal_essay = se.id_soal_essay')
+    // ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
+    // ->join('user u', 'u.id_user = m.id_user')
+    // ->where('t.id_tugas', $id)
+    // ->where('n.nilai != ""')
+    // ->get();
+    $q = $this->db->query("SELECT t.nama_tugas, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas, je.jawaban, je.path_file, je.id_jawaban_essay
+      from nilai n
+      right join tugas t on t.id_tugas = n.id_tugas
+      join mahasiswa m on m.id_mhs = n.id_mhs
+      join soal_essay se on se.id_tugas = t.id_tugas
+      join jawaban_essay je on je.id_soal_essay = se.id_soal_essay AND m.id_mhs = je.id_mhs
+      join user u on u.id_user = m.id_user
+      WHERE t.id_tugas = '$id' AND n.nilai !=''");
+    return $q;
   }
 
   public function getKetSoalbyIdTugas($id){
@@ -324,6 +358,52 @@ class DosenM extends CI_Model{
 
   public function getSoalEssay($id){
     $query = $this->db->query("SELECT * FROM soal_essay s, tugas t WHERE s.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
+    return $query;
+  }
+
+  public function getJawabanEssay($id){
+    return $this->db
+    ->select('je.id_jawaban_essay, je.jawaban, je.path_file, je.id_mhs, t.id_tugas, u.nama_depan, u.nama_belakang, m.nim')
+    ->from('jawaban_essay je')
+    ->join('soal_essay se', 'se.id_soal_essay = je.id_soal_essay', 'left')
+    ->join('tugas t', 't.id_tugas = se.id_tugas')
+    ->join('mahasiswa m', 'm.id_mhs = je.id_mhs')
+    ->join('user u', 'u.id_user = m.id_user')
+    ->where('je.id_jawaban_essay', $id)
+    ->get();
+  }
+
+  public function getNilaibyId($id){
+    $q = $this->db->query("SELECT t.nama_tugas, n.id_nilai, n.nilai, m.nim, u.nama_depan, u.nama_belakang, t.id_tugas, je.id_jawaban_essay
+      from nilai n
+      right join tugas t on t.id_tugas = n.id_tugas
+      join soal_essay se on se.id_tugas = t.id_tugas
+      join jawaban_essay je on je.id_soal_essay = se.id_soal_essay
+      join mahasiswa m on m.id_mhs = je.id_mhs
+      join user u on u.id_user = m.id_user
+      WHERE n.nilai ='$id'");
+    return $q;
+  }
+
+    //untuk menambah data pengumuman
+  public function insertNilai($data){
+    $this->db->trans_start();
+
+    $this->db->insert('nilai',$data);
+    $insert_id = $this->db->insert_id();
+    
+    $this->db->trans_complete();
+    return $insert_id;    
+  }
+
+    public function editNilaiEssay($data,$id_nilai){
+    $this->db->where("id_nilai",$id_nilai);
+    $this->db->update("nilai",$data);
+    return true;
+  }
+
+  public function daftarMahasiswa($id){
+    $query = $this->db->query("SELECT km.id_kelas_mhs, u.nama_depan, u.nama_belakang, m.nim FROM kelas_mhs km left JOIN mahasiswa m on m.id_mhs=km.id_mhs JOIN user u on u.id_user=m.id_user JOIN kelas k on k.id_kelas=km.id_kelas WHERE k.id_kelas=$id");
     return $query;
   }
 }

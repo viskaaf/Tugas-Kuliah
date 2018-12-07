@@ -9,17 +9,19 @@ $this->load->view('head_soal');
       <center>
         <h1 class="box-title" style="font-size: 25px;"><b> <?php echo $ket_soal['nama_tugas'];?></b></h1>
         <p style="padding-top: 10px;"><i class="fa fa-calendar" ></i> Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
-      </center> 
+      </center>  
     </div>
     <div class="box-body">
       <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $soal['id_tugas']; ?>">
       <input type="hidden" class="form-control" name="id_soal_essay" value="<?php echo $soal['id_soal_essay']; ?>">
       <!-- <input type="text" class="form-control" name="id_mhs" value="<?php echo $id_mhs; ?>"> -->
+      <?php if($nilai['nilai'] == '') { ?>
       <div style="margin-bottom: 20px; margin-left: 10px;">
-      <span><img class="img" style="width: 40px;" src="<?php echo base_url('gambar/circular-check-button.png')?>"></span>
-      <span style="padding-left: 10px; font-size: 13px;">Tugas berhasil dikumpulkan!</span>
-      <span style="font-size: 13px;">Menunggu penilaian dari dosen.</span>
+        <span><img class="img" style="width: 40px;" src="<?php echo base_url('gambar/circular-check-button.png')?>"></span>
+        <span style="padding-left: 10px; font-size: 13px;">Tugas berhasil dikumpulkan!</span>
+        <span style="font-size: 13px;">Menunggu penilaian dari dosen.</span>
       </div>
+      <?php } ?>
       
       <div class="attachment-block clearfix" style="margin-bottom: 40px;">
         <?php $link = base_url()."file_upload/".$jawaban['path_file']; ?>
@@ -32,7 +34,7 @@ $this->load->view('head_soal');
           </div>
           <!-- /.attachment-text -->
         </div> 
-        <!-- /.attachment-pushed --> 
+        <!-- /.attachment-pushed -->  
       </div>
       <h4>Catatan:</h4>
       <p><?php echo $jawaban['jawaban'];?></p>
@@ -46,6 +48,14 @@ $this->load->view('head_soal');
 
 <div class="col-xs-5">
   <div class="box box-primary" style="margin-top: 20px">
+    <?php if($nilai['nilai'] != '') { ?>
+    <div class="box-header with-border">
+      <center>
+        <p>Nilai:</p>
+        <h1 class="box-title" style="font-size: 25px;"><b> <?php echo $nilai['nilai']; ?></b></h1>
+      </center>
+    </div>
+    <?php } ?>
     <div class="box-header with-border">
       <p style="font-size: 12px;">Ditugaskan Oleh:</p>
       <div class="user-block">
