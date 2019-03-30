@@ -54,10 +54,21 @@
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <li class="user">
-                  <a href="<?php echo site_url('DosenC/index') ?>"> 
-                    <span>Beranda</span>
-                  </a>
+              <li class="dropdown user user-menu">
+                <a href="<?php echo site_url('DosenC/index'); ?>" class="dropdown-toggle" title="Kembali ke Halaman Profil">
+                    <?php
+                    if($user['foto_profil']){
+                      ?>
+                      <img class="user-image" src="<?php echo base_url('gambar/'.$user['foto_profil'])?>" alt="User Image">
+                      <?php
+                    }else{
+                      ?> 
+                      <img class="user-image" src="<?php echo base_url('gambar/admin.png')?>" alt="User Image">
+                      <?php
+                    }
+                    ?>
+                  <span class="hidden-xs"><?php echo $user['nama_depan'].' '; echo $user['nama_belakang'];?></span>
+                </a>
               </li>
 
               <!-- Notifications Menu -->
@@ -87,7 +98,7 @@
               <!-- User Account Menu -->
               <li class="user">
                 <!-- Menu Toggle Button -->
-                <a href="<?php echo site_url('LoginC/logout') ?>" title="Logout dari Tugas Kuliah">
+                <a href="<?php echo site_url('LoginC/logout') ?>" title="Keluar dari Tugas Kuliah" onclick="return confirm('Apakah anda yakin ingin keluar dari sistem ini?')">
                   <span><i class="fa fa-sign-out"></i></span>
                 </a>
               </li>
@@ -114,9 +125,9 @@
               <div class="box box-primary">
                 <div class="box-body box-profile">
                   <?php
-                  if($nama['foto_profil']){
+                  if($user['foto_profil']){
                     ?>
-                    <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('gambar/'.$nama['foto_profil'])?>" alt="User profile picture">
+                    <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('gambar/'.$user['foto_profil'])?>" alt="User profile picture">
                     <?php
                   }else{
                     ?> 
@@ -125,142 +136,38 @@
                   }
                   ?>
 
-                  <h3 class="profile-username text-center"><?php echo $nama['nama_depan'].' '; echo $nama['nama_belakang'];?></h3>
+                  <h3 class="profile-username text-center"><?php echo $user['nama_depan'].' '; echo $user['nama_belakang'];?></h3>
 
-                  <p class="text-muted text-center">Dosen</p>
-
-                  <p class="text-muted text-center"><?php echo $nama['nama_univ'];?></p>
+                  <p class="text-muted text-center">Dosen</p> 
                   <br>
-                  <a href="<?php echo site_url('DosenC/ubahProfil/'.$nama['id_user']) ?>" class="btn btn-primary btn-block"><b>Edit Profil</b></a>
+                  <a href="<?php echo site_url('DosenC/ubahProfil/'.$user['id_user']) ?>" class="btn btn-primary btn-block"><b>Ubah Profil</b></a>
                 </div>
                 <!-- /.box-body -->
               </div>
               <!-- /.box -->
 
+                  <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Profil</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <strong><i class="fa fa-book margin-r-5"></i> NIM</strong>
 
-              <!-- About Me Box -->
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Kelas</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body no-padding"> 
-                  <ul class="nav nav-pills nav-stacked">
-                    <li>
-                      <?php 
-                      $length = 6;
-                      $data = 'abcdefghijklmnopqrstuvwxyz1234567890';
-                      $string = '';
-                      for($i = 0; $i < $length; $i++) {
-                        $pos = rand(0, strlen($data)-1);
-                        $string .= $data{$pos};
-                      } 
-                      ?>
-                      <a class="btn" data-toggle="modal" data-target="#modal-add-<?php echo $string; ?>-<?php echo $getdosen['id_dosen']?>-<?php echo $getuniv['id_univ']?>"><i class="fa fa-plus-square-o"></i> Buat Kelas</a>
-                    </li>
-                    <li class="text-center"><a href="<?php echo site_url('DosenC/daftarKelas/'.$nama['id_user']) ?>"><i class="fa fa-inbox"></i> Kelola Kelas</a></li>
-               <!--  <li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
-               </li> -->
-             </ul>
-           </div>
-           <!-- /.box-body -->
-         </div>
-         <!-- /.box -->
+              <p class="text-muted">
+                <?php echo $user['nip']; ?>
+              </p>
 
-         <!-- modal untuk tambah manual -->
-<div class="modal fade" id="modal-add-<?php echo $string; ?>-<?php echo $getdosen['id_dosen']?>-<?php echo $getuniv['id_univ']?>">
-  <div class="modal-dialog">
-    <div class="modal-content"> 
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><center>Tambah Kelas</center></h4>
-        </div>
-        <div class="modal-body">
-         <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/tambahKelas/')?>">
-          <input type="hidden" name="id_dosen" id="id_dosen" value="<?php echo $getdosen['id_dosen']?>">
-          <input type="hidden" name="id_univ" id="id_univ" value="<?php echo $getuniv['id_univ']?>">
-          <div class="form-group">
-           <label for="" class="col-sm-3 control-label">Nama Kelas</label>
-           <div class="col-sm-8">
-             <input type="text" class="col-sm-10 form-control" name="nama_kelas" placeholder="Nama Kelas" required oninvalid="this.setCustomValidity('Isi nama kelas.')" oninput="setCustomValidity('')">
-           </div>
-         </div>
-         <div class="form-group">
-          <label class="col-sm-3 control-label">Fakultas</label> 
-          <div class="col-sm-8">
-            <select name="nama_fakultas" id="nama_fakultas" class="form-control select2" style="width: 100%;">
-              <option disabled selected><i>---Pilih Fakultas---</i></option>
-              <?php foreach ($fakultas as $data) {  ?> 
-                <option value="<?php echo $data->id_det_univfakultas;?>"><?php echo $data->nama_fakultas;?></option>
-              <?php  } ?>
-            </select>
+              <hr>
+
+              <strong><i class="fa fa-university margin-r-5"></i> Universitas</strong>
+
+              <p class="text-muted"><?php echo $user['nama_univ']; ?></p>
+            </div>
+            <!-- /.box-body -->
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Program Studi</label>
-          <div class="col-sm-8">
-            <select name="nama_prodi" id="nama_prodi" class="form-control select2" style="width: 100%;">
-              <option disabled selected><i>---Pilih Program Studi---</i></option>
-              <?php if(count($prodi->result())>0) { ?>
-
-                <?php foreach ($prodi->result() as $row) {  ?>
-                  <option value="<?php echo $row->id_prodi;?>"><?php echo $row->nama_prodi;?></option>
-                <?php } ?>
-              <?php  } else { ?>
-                <option value="0">- Data Belum Tersedia -</option> 
-
-              <?php } ?>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-         <label class="col-sm-3 control-label">Kode</label>
-         <div class="col-sm-3">
-          <span class="label label-primary" style="font-size: 23px"><b><?php echo $string; ?></b></span>
-          <input type="hidden" name="kode" value="<?php echo $string; ?>"></input>
-        </div>
-        <div class="col-sm-5">
-         <span>Bagikan kode kepada mahasiswa untuk dapat bergabung di kelas Anda.</span>
-       </div>
-
-     </div>
-     <div class="form-group">
-      <label for="" class="col-sm-3 control-label">Status</label>
-      <div class="col-sm-8">
-        <select name="status_kelas" class="form-control required" required="">
-          <option value="Aktif">Aktif</option>
-          <option value="Tidak Aktif">Tidak Aktif</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="submit" class="btn btn-primary">Simpan</button>
-  </div>
-</div>
-<!-- /.modal-content -->
-</form>  
-</div>
-<!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-
-         <!-- About Me Box -->
-         <!-- <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Tugas</h3>
-          </div> -->
-          <!-- /.box-header -->
-          <!-- <div class="box-body no-padding"> 
-            <ul class="nav nav-pills nav-stacked">
-              <li><a href=""><i class="fa fa-inbox"></i> Daftar Tugas</a></li>
-              <li><a href=""><i class="fa fa-file-text-o"></i> Kelola Tugas</a></li>
-            </ul> 
-          </div> -->
-          <!-- /.box-body -->
-        <!-- </div> -->
-        <!-- /.box -->
+          <!-- /.box -->
 
       </div>
       <!-- /.col -->

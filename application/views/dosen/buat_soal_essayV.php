@@ -36,8 +36,8 @@ $this->load->view('head_dosen');
   <div class="box box-default"> 
     <?php echo form_open_multipart('DosenC/tambahSoalEssay/') ?>
     <div class="box-body">
-      <input type="text" class="form-control" name="id_tugas" value="<?php echo $tugas['id_tugas']; ?>">
-      <input type="text" class="form-control" name="id_kelas" value="<?php echo $id_kelas; ?>">
+      <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $tugas['id_tugas']; ?>">
+      <input type="hidden" class="form-control" name="id_kelas" value="<?php echo $id_kelas; ?>">
       <div class="form-group">
         <label for="deskripsiSoal" class="col-sm-3">Keterangan</label>
         <div class="col-sm-12">
@@ -100,15 +100,15 @@ $this->load->view('head_dosen');
   });
 </script>
 
-  <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.0
-      </div>
-      <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-      reserved.
+<footer class="main-footer">
+  <div class="container">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.4.0
     </div>
-    <!-- /.container -->
-  </footer>
+    <strong>Copyright &copy; 2018 <a>Tugas Kuliah</a>.</strong> All rights
+    reserved.
+  </div>
+  <!-- /.container -->
+</footer>
 </div>
 <!-- ./wrapper -->

@@ -101,7 +101,7 @@ class AdminM extends CI_Model{
   }
 
   public function getDosen(){
-    $q = $this->db->query("SELECT * from user u, user_role ur WHERE u.id_userrole=ur.id_userrole AND ur.id_userrole=1");
+    $q = $this->db->query("SELECT * from user u, user_role ur, dosen d WHERE u.id_userrole=ur.id_userrole AND u.id_user=d.id_user AND ur.id_userrole=1");
     return $q;
   }
 
@@ -117,7 +117,7 @@ class AdminM extends CI_Model{
 
 
   public function getMahasiswa(){
-    $q = $this->db->query("SELECT * from user u, user_role ur WHERE u.id_userrole=ur.id_userrole AND ur.id_userrole=2");
+    $q = $this->db->query("SELECT * from user u, user_role ur, mahasiswa m WHERE u.id_userrole=ur.id_userrole AND u.id_user=m.id_user AND ur.id_userrole=2");
     return $q;
   }
 

@@ -11,7 +11,7 @@ class MahasiswaM extends CI_Model{
   //untuk mengambil email sesuai yg login
 	public function getUser($email){
 		$q = $this->db->query("
-			SELECT u.id_user, nama_depan, nama_belakang, foto_profil, un.nama_univ, m.id_mhs FROM user u 
+			SELECT u.id_user, nama_depan, nama_belakang, foto_profil, un.nama_univ, m.id_mhs, m.nim, u.id_userrole FROM user u 
 			LEFT JOIN universitas un on u.id_univ=un.id_univ 
 			LEFT JOIN mahasiswa m on u.id_user = m.id_user 
 			WHERE u.email='$email'
@@ -38,6 +38,14 @@ class MahasiswaM extends CI_Model{
 		$this->db->update('user',$dataUser);
 		return true;
 	}
+
+	  public function getUniv(){
+    return $this->db->get("universitas")->result();
+  }
+
+	  public function getUnivMhs($id_user){
+    return $this->db->query("SELECT un.id_univ, un.nama_univ FROM user u, universitas un WHERE u.id_univ=un.id_univ AND u.id_user='$id_user'")->result();
+  }
 
   //untuk edit di tabel mahasiswa
 	public function ubahNIM($nim,$id_user){
@@ -229,6 +237,12 @@ class MahasiswaM extends CI_Model{
 	}
 	public function getIdMhsbyEmail($email){
 		$q = $this->db->query("SELECT id_mhs FROM mahasiswa m, user u WHERE m.id_user=u.id_user AND u.email='$email'");
+		return $q;
+	}
+
+//untuk menampilkan data tugas berdasarkan id_kelas
+	public function getMateri($id_kelas){ 
+		$q = $this->db->query("SELECT * from materi m, kelas k, dosen d, user u WHERE m.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND k.id_kelas=$id_kelas ORDER BY m.id_materi DESC");
 		return $q;
 	}
 } 

@@ -55,6 +55,23 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
+              <li class="dropdown user user-menu">
+                <a href="<?php echo site_url('MahasiswaC/index'); ?>" class="dropdown-toggle" title="Kembali ke Halaman Profil">
+                    <?php
+                    if($user['foto_profil']){
+                      ?>
+                      <img class="user-image" src="<?php echo base_url('gambar/'.$user['foto_profil'])?>" alt="User Image">
+                      <?php
+                    }else{
+                      ?> 
+                      <img class="user-image" src="<?php echo base_url('gambar/admin.png')?>" alt="User Image">
+                      <?php
+                    }
+                    ?>
+                  <span class="hidden-xs"><?php echo $user['nama_depan'].' '; echo $user['nama_belakang'];?></span>
+                </a>
+              </li>
+
               <!-- Notifications Menu -->
               <li class="dropdown notifications-menu">
                 <!-- Menu toggle button -->
@@ -79,29 +96,11 @@
                 </ul>
               </li>
 
-                            <!-- User Account: style can be found in dropdown.less -->
-<!--               <li class="dropdown user user-menu">
-                <a href="<?php echo $url ?>" class="dropdown-toggle" title="Kembali ke Halaman Pengguna">
-                    <?php
-                    if($foto){
-                      ?>
-                      <img class="user-image" src="<?php echo base_url('gambar/'.$foto)?>" alt="User Image">
-                      <?php
-                    }else{
-                      ?> 
-                      <img class="user-image" src="<?php echo base_url('gambar/admin.png')?>" alt="User Image">
-                      <?php
-                    }
-                    ?>
-                  <span class="hidden-xs"><?php echo $nama; ?></span>
-                </a>
-              </li> -->
-
               <!-- User Account Menu -->
               <li class="user">
                 <!-- Menu Toggle Button -->
-                <a href="<?php echo site_url('LoginC/logout') ?>">
-                  <span>Logout</span>
+                <a href="<?php echo site_url('LoginC/logout') ?>" title="Keluar dari Tugas Kuliah" onclick="return confirm('Apakah anda yakin ingin keluar dari sistem ini?')">
+                  <span><i class="fa fa-sign-out"></i></span> 
                 </a>
               </li>
             </ul>
@@ -140,54 +139,37 @@
 
                   <h3 class="profile-username text-center"><?php echo $user['nama_depan'].' '; echo $user['nama_belakang'];?></h3>
 
-                  <p class="text-muted text-center">Mahasiswa<?php echo $user['id_user']; ?></p>
-
-                  <p class="text-muted text-center"><?php echo $user['nama_univ'];?></p>
+                  <p class="text-muted text-center">Mahasiswa</p>
+                  
                   <br>
-                  <a href="<?php echo site_url('MahasiswaC/tampilProfil/'.$user['id_user']) ?>" class="btn btn-primary btn-block"><b>Edit Profil</b></a>
+                  <a href="<?php echo site_url('MahasiswaC/tampilProfil/'.$user['id_user']) ?>" class="btn btn-primary btn-block"><b>Ubah Profil</b></a>
                 </div>
                 <!-- /.box-body -->
               </div>
               <!-- /.box -->
 
-
-              <!-- About Me Box -->
-              <div class="box box-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Kelas</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body no-padding"> 
-                  <ul class="nav nav-pills nav-stacked">
-                    <li>
-                      <?php if(!empty($user['nim'])){ ?>
-                       <a href="<?php echo site_url('MahasiswaC/tampilProfil/'.$user['id_user']); ?>" class="btn" type="submit" data-toggle="modal" onclick="alert('Anda harus mengisi NIM terlebih dahulu')"><i class="fa fa-users"></i> Gabung Kelas</a>
-                      <?php } else{?>
-                      <a class="btn" data-toggle="modal" data-target="#modal-add"><i class="fa fa-users"></i> Gabung Kelas</a>
-                      <?php } ?>
-                    </li>
-                    <li class="text-center"><a href="<?php echo site_url('MahasiswaC/tampilKelas/'.$user['id_user']) ?>"><i class="fa fa-inbox"></i> Kelola Kelas</a></li>
-             </ul>
-           </div>
-           <!-- /.box-body -->
-         </div>
-         <!-- /.box -->
-
          <!-- About Me Box -->
-         <div class="box box-primary">
-          <div class="box-header with-border">
-            <h3 class="box-title">Tugas</h3>
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Profil</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <strong><i class="fa fa-book margin-r-5"></i> NIM</strong>
+
+              <p class="text-muted">
+                <?php echo $user['nim']; ?>
+              </p>
+
+              <hr>
+
+              <strong><i class="fa fa-university margin-r-5"></i> Universitas</strong>
+
+              <p class="text-muted"><?php echo $user['nama_univ']; ?></p>
+            </div>
+            <!-- /.box-body -->
           </div>
-          <!-- /.box-header -->
-          <div class="box-body no-padding"> 
-            <ul class="nav nav-pills nav-stacked text-center">
-              <li><a href=""><i class="fa fa-tasks"></i> Daftar Tugas</a></li>
-              <li><a href=""><i class="fa fa-file-text-o"></i> Lihat Nilai</a></li>
-            </ul> 
-          </div>
-          <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
+          <!-- /.box -->
 
                  <!-- modal untuk tambah manual -->
 <div class="modal fade" id="modal-add">

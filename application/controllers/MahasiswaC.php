@@ -13,17 +13,24 @@ class MahasiswaC extends CI_Controller {
 	public function index()
 	{ 
 		$email=$this->session->userdata('email');
-		$data=array(
-			"user"=>$this->model->getUser($email)->row_array(),
-			"aktif"=>"mahasiswa"
-		);
-		$this->load->view('mahasiswa/beranda_mahasiswaV', $data);
+        $id_user=$this->model->getUser($email);
+        foreach ($id_user->result() as $key) {
+    		$data=array(
+    			"user"=>$this->model->getUser($email)->row_array(),
+                "id_mhs"=>$this->model->getIdMhs($key->id_user)->row_array(),
+                "kelas"=>$this->model->getKelasbyUser($key->id_user)->result(),
+    			"aktif"=>"mahasiswa"
+    		);
+        }
+		$this->load->view('mahasiswa/daftar_kelasV', $data);
 	}
 
 	public function tampilProfil($id_user){
 		$data=array(
 			"user"=>$this->model->getUser1($id_user)->row_array(),
             "id_mhs"=>$this->model->getIdMhs($id_user)->row_array(),
+            "univ"=>$this->model->getUniv(),
+            "univ_mhs"=>$this->model->getUnivMhs($id_user),
 			"aktif"=>"mahasiswa"
 		);
 		$this->load->view('mahasiswa/edit_profilV', $data);
@@ -188,17 +195,6 @@ class MahasiswaC extends CI_Controller {
     	}
     }
 
-    public function tampilKelas($id_user){
-    	$email=$this->session->userdata('email');
-    	$data=array(
-    		"user"=>$this->model->getUser($email)->row_array(),
-    		"id_mhs"=>$this->model->getIdMhs($id_user)->row_array(),
-    		"kelas"=>$this->model->getKelasbyUser($id_user)->result(),
-    		"aktif"=>"mahasiswa"
-    	);
-    	$this->load->view('mahasiswa/daftar_kelasV', $data);
-    }
-
     public function detailKelas($id_kelas){ 
     	$email=$this->session->userdata('email');
         $kelas=$this->model->getKelas($id_kelas);
@@ -210,10 +206,11 @@ class MahasiswaC extends CI_Controller {
         			"user"=>$this->model->getUser($email)->row_array(),
                     "id_mhs"=>$key['id_mhs'],
         			// "id_mhs"=>$this->model->getIdMhsbyEmail($email)->row_array(),
-        			"kelas"=>$this->model->getKelasbyUser($row['id_user'])->row_array(),
+        			"kelas"=>$this->model->getKelas($id_kelas)->row_array(),
         			"getFakultasProdi"=>$this->model->getFakultasProdi($id_kelas)->row_array(),
         			"pengumuman"=>$this->model->getPengumuman($id_kelas)->result(),
         			"tugas"=>$this->model->getTugas($id_kelas)->result(),
+                    "materi"=>$this->model->getMateri($id_kelas)->result(),
         			"aktif"=>"mahasiswa"
         		);
         	}
@@ -224,14 +221,17 @@ class MahasiswaC extends CI_Controller {
     public function tampilSoalPilgan($id)
     {
     	$email=$this->session->userdata('email');
+        $id_user=$this->model->getUser($email);
     	$nomor=0;
-
+        foreach ($id_user->result() as $key) {
     	$data=array(
+            "user"=>$this->model->getUser($email)->row_array(),
     		"nomor" => $nomor,
     		"nama_tugas"=>$this->model->getSoalPilgan($id)->row_array(),
     		"soal"=>$this->model->getSoalPilgan($id)->result(),
     		"aktif"=>"mahasiswa"
     	);
+        }
 
     	$this->load->view('mahasiswa/soal_pilganV',$data);
     }
@@ -292,8 +292,8 @@ public function tampilHasilPilgan($id)
 
     foreach ($id_mhs->result_array() as $row) {  
         $data=array(
+            "user"=>$this->model->getUser($email)->row_array(),
             "id_mhs"=>$row['id_mhs'],
-            // "nama_tugas"=>$this->model->getSoalPilgan($id)->row_array(),
             "jawaban"=>$this->model->getJawabanPilgan($id, $row['id_mhs'])->result(),
             "nilai"=>$this->model->getNilai($id, $row['id_mhs'])->row_array(),
             "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
@@ -312,6 +312,7 @@ public function tampilSoalEssay($id)
     foreach ($id_mhs->result_array() as $row) {
         $data=array(
             "id_mhs"=>$row['id_mhs'],
+            "user"=>$this->model->getUser($email)->row_array(),
             "soal"=>$this->model->getSoalEssay($id)->row_array(),
             "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
             "aktif"=>"mahasiswa"
@@ -372,6 +373,7 @@ public function tampilHasilEssay($id)
 
     foreach ($id_mhs->result_array() as $row) {  
         $data=array(
+            "user"=>$this->model->getUser($email)->row_array(),
             "id_mhs"=>$row['id_mhs'],
             "jawaban"=>$this->model->getJawabanEssay($id, $row['id_mhs'])->row_array(),
             "nilai"=>$this->model->getNilai($id, $row['id_mhs'])->row_array(),

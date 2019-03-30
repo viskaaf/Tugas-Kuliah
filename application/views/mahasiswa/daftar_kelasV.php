@@ -4,15 +4,12 @@ $this->load->view('head_mahasiswa');
 
 <div class="col-md-9">
   <div class="box-header with-border">
-    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-list"></i> Daftar Kelas</h3>
+    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-user"></i> Profil</h3>
   </div>
-  <ol class="breadcrumb">
-    <li><a href="<?php echo base_url('MahasiswaC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
-    <li class="active">Daftar Kelas</li>
-  </ol>
+  <br>
 
   <?php
-  $this->load->helper('form');
+  $this->load->helper('form'); 
   $error = $this->session->flashdata('error');
   if($error)
   {
@@ -33,94 +30,74 @@ $this->load->view('head_mahasiswa');
     </div>
   <?php } ?>
 
-  <?php if(empty($kelas)){ ?>
-    <div class="box box-primary" style="padding-bottom: 30px; padding-top: 30px;">
-      <div class="box-body" style="color: #525252">
-        <center>
-          <img class="img" style="width: 70px;" src="<?php echo base_url('gambar/list.png')?>">
-        </center>
-        <h4 style="padding-top: 10px; text-align: center;">
-          Anda belum memiliki kelas
-        </h4>
-        <h5 style="padding-top: 30px; text-align: center;">
-          <b>Langkah berikutnya: Bergabung ke Kelas</b>
-        </h5>
-        <h5 style="text-align: center;">
-          Anda dapat bergabung ke kelas dengan klik tombol <b>Gabung Kelas</b> 
-        </h5>
-        <h5 style="text-align: center;">
-          di samping kiri.
-        </h5>
-      </div>
-      <!-- /.box-body -->
-    </div>
-    <!-- /. box -->
-    <?php
-  } else { ?>
     <div class="col-md-6">
-    <div class="box box-primary">
-      <div class="box-body table-responsive no-padding">
-        <div style="padding-bottom: 10px;">
-
-      </div>
-
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <!-- <th><center>No</center></th> -->
-            <th><center>Kelas Aktif</center></th>
-            <!-- <th><center>Status</center></th> -->
-            <!-- <th><center>Opsi</center></th> -->
-          </tr>
-        </thead>
-        <tbody>
-         <?php foreach ($kelas as $value); ?>
-         <tr>
-          <!-- <td><center><?php echo $no; ?></center></td> --> 
-          <td><center><a href="<?php echo site_url('MahasiswaC/detailKelas/'.$value->id_kelas) ?>"><?php echo $value->nama_kelas; ?></a></center></td>
-  <!--         <td><center>
-            <?php if($value->status_kelas == 'Aktif') { ?>
-              <span class="label label-success"><?php echo $value->status_kelas; ?></span>
-            <?php }else { ?>
-              <span class="label label-danger"><?php echo $value->status_kelas; ?></span>
+      <div class="box box-widget widget-user-2">
+        <div class="widget-user-header bg-primary" > 
+          <h4 style="padding-left: 10px;">Daftar Kelas
+            <a class="btn btn-primary btn-xs tooltips pull-right" style="margin-right: 10px;" data-toggle="modal" data-target="#modal-add">
+          <span data-toggle="tooltip" data-original-title="Gabung Kelas" <i class="fa fa-plus"></i></span></a></h4>
+        </div>
+        <div class="box-footer no-padding">
+          <?php if(empty($kelas)) { ?>
+            <ul class="nav nav-stacked text-center">
+              <li><a><i>-Tidak ada-</i></a></li>
+            </ul>
+          <?php }else{ ?>
+            <?php foreach ($kelas as $value) { ?>
+              <ul class="nav nav-stacked">
+                <li><a href="<?php echo site_url('MahasiswaC/detailKelas/'.$value->id_kelas) ?>" style="padding-left: 30px;"><?php echo $value->nama_kelas;?><i class="fa fa-mortar-board pull-right" style="color: #5F9EA0; padding-right: 20px;"></i></a></li>
+              </ul>
             <?php } ?>
-          </center></td> -->
-<!--           <td><center>
-            <a class="btn btn-primary btn-xs tooltips" href="<?php echo site_url('MahasiswaC/detailKelas/'.$value->id_kelas) ?>">
-              <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-eye"></i></span>
-            </a></center>
-          </td> -->
-        </tr>
-      <?php ?>
-    </tbody>
-  </table>
-</div>
-</div> 
-</div>
-
-        <div class="col-md-6">
-    <div class="box box-primary">
-      <div class="box-body table-responsive no-padding">
-        <div style="padding-bottom: 10px;">
-
+          <?php } ?>
+        </div>
       </div>
+    </div>
 
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th><center>Menunggu Pengesahan</center></th>
-          </tr>
-        </thead>
-        <tbody>
-         <tr>
-          <td><center><a href="<?php echo site_url('MahasiswaC/detailKelas/'.$value->id_kelas) ?>"></a></center></td>
-        </tr>
-    </tbody>
-  </table>
+<!-- modal untuk tambah manual -->
+<div class="modal fade" id="modal-add">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content"> 
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><center>Gabung Kelas</center></h4>
+        </div>
+        <div class="modal-body">
+         <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('MahasiswaC/gabungKelas/')?>">
+          <input type="hidden" class="col-sm-10 form-control" name="id_mhs" <?php if(!empty($id_mhs['id_mhs'])){ ?> value="<?php echo $id_mhs['id_mhs']; ?>" <?php } ?>>
+          <div class="form-group" style="padding-left: 20px;">
+           <label for="" class="col-sm-4 control-label">Kode Kelas</label>
+           <div class="col-sm-6">
+             <input type="text" class="col-sm-10 form-control" name="kode" placeholder="Masukkan kode kelas" required oninvalid="this.setCustomValidity('Isi kode kelas.')" oninput="setCustomValidity('')">
+           </div>
+         </div>      
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Gabung</button>
+  </div>
 </div>
-</div> 
+<!-- /.modal-content --> 
+</form>  
 </div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
+    <div class="col-md-6">
+    <div class="box box-widget widget-user-2">
+      <div class="widget-user-header bg-primary" > 
+        <center><h4>Menunggu Pengesahan</h4></center>
+      </div>
+        <div class="box-footer no-padding text-center"> 
+          <ul class="nav nav-stacked">
+            
+              <li><a><i>-Tidak ada-</i></a></li>
+            
+          </ul>
+        </div>
+    </div>
+    </div>
+</div>
 </div>
 <!-- /.col -->
 </div>
@@ -129,15 +106,11 @@ $this->load->view('head_mahasiswa');
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<?php } ?>
 
 <footer class="main-footer">
-  <div class="container">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2018 <a>Tugas Kuliah</a>.</strong> All rights
-    reserved.
+  <div class="container text-center">
+    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
+    All rights reserved
   </div>
   <!-- /.container -->
 </footer>

@@ -78,7 +78,9 @@
               </a>
               <!-- <ul class="dropdown-menu" style="width: 10px;"> -->
                 <li class="user-footer">
-                  <a href="<?php echo base_url('LoginC/logout')?>" onclick="return confirm('Apakah anda yakin ingin keluar?');">Keluar <i class="fa fa-sign-out"></i></a>
+                  <a href="<?php echo site_url('LoginC/logout') ?>" title="Keluar dari Tugas Kuliah" onclick="return confirm('Apakah anda yakin ingin keluar dari sistem ini?')">
+                  <span><i class="fa fa-sign-out"></i></span> 
+                </a>
                 </li>
                 <!-- </ul> -->
               </li>

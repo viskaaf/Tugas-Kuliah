@@ -7,40 +7,63 @@ class DosenC extends CI_Controller {
     parent::__construct();
     $this->load->helper('url','form');
     $this->load->model('DosenM');
-    $this->model = $this->DosenM;
+    $this->model = $this->DosenM; 
     $this->load->library('Excel');
   }
 
   public function index() 
   {
     $email=$this->session->userdata('email');
-    $id = $this->model->getUnivId_byEmail($email);
-    foreach ($id->result() as $key) {
+    $id_user=$this->model->getUser($email);
+    foreach ($id_user->result() as $key) {
       $data=array(
-       "nama"=>$this->model->getUser($email)->row_array(),
-       "fakultas"=>$this->model->getFakultas($key->id_univ),
+       "user"=>$this->model->getUser($email)->row_array(),
+       "fakultas"=>$this->model->getFakultas($key->id_user),
        "prodi"=>$this->model->getProdiAll(),
-       "getdosen"=>$this->model->getDosenId($key->id_univ)->row_array(),
-       "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
-       "kelas"=>$this->model->getKelas_byUser($key->id_user)->result(),
-       "pengumuman"=>$this->model->getPengumuman($key->id_user)->result(),
+       "id_dosen"=>$this->model->getIdDosen($key->id_user)->row_array(),
+       "id_univ"=>$this->model->getIdUniv($key->id_user)->row_array(),
+       "kelasaktif"=>$this->model->getKelasAktif($key->id_user)->result(),
+       "kelasnonaktif"=>$this->model->getKelasNonAktif($key->id_user)->result(),
        "aktif"=>"user"
      );
-    }
-    $this->load->view('dosen/beranda_dosenV',$data);
+    } 
+    $this->load->view('dosen/daftar_kelasV',$data);
+  }
+
+    public function get_prodi($id_fakultas){
+    $dataProdi=$this->model->getProdi($id_fakultas);
+    $output   = '<option value=""></option>';
+
+    if(! empty($dataProdi)){
+      foreach ($dataProdi->result() as $row) {
+        $output .='<option value="'.$row->id_det_fakultasprodi.'">'.$row->nama_prodi.'</option>';
+      }
+    }else{
+      $output .='<option value="">- Data Belum Tersedia -</option>';
+    } 
+    echo $output;
   }
 
   public function ubahProfil($id){
+    $email=$this->session->userdata('email');
+    $id_user=$this->model->getUser($email);
+    foreach ($id_user->result() as $key) {
     $data=array(
-      "nama"=>$this->model->getUser1($id)->row_array(),
+      "user"=>$this->model->getUser($email)->row_array(),
+       "fakultas"=>$this->model->getFakultas($key->id_user),
+       "prodi"=>$this->model->getProdiAll(),
+       "id_dosen"=>$this->model->getIdDosen($key->id_user)->row_array(),
+       "id_univ"=>$this->model->getIdUniv($key->id_user)->row_array(),
+      // "nama"=>$this->model->getUser1($id)->row_array(),
       "univ"=>$this->model->getUniv(),
       "univ_dosen"=>$this->model->getUnivDosen($id),
-      "fakultas"=>$this->model->getFakultas($id),
-      "prodi"=>$this->model->getProdiAll(),
-      "getdosen"=>$this->model->getDosenId($id)->row_array(),
-      "getuniv"=>$this->model->getUnivId($id)->row_array(),
+      // "fakultas"=>$this->model->getFakultas($id),
+      // "prodi"=>$this->model->getProdiAll(),
+      // "getdosen"=>$this->model->getDosenId($id)->row_array(),
+      // "getuniv"=>$this->model->getUnivId($id)->row_array(),
       "aktif"=>"user"
     );
+    }
     $this->load->view('dosen/edit_dosenV', $data);
   }
 
@@ -169,21 +192,20 @@ class DosenC extends CI_Controller {
     }
 
     public function tambahPengumuman() {
-    // $id=$this->input->post('id_univ');
+    $id_kelas=$this->input->post('id_kelas');
 
       $this->load->library('form_validation');
-      $this->form_validation->set_rules('nama_kelas', 'nama_kelas','required');
       $this->form_validation->set_rules('pengumuman', 'pengumuman','required');
       if($this->form_validation->run() == FALSE) {
-       redirect('DosenC/'.$id);
+       redirect('DosenC/detailKelas/'.$id_kelas);
      }else{
 
-       $nama_kelas =    $this->input->post('nama_kelas');
+       // $nama_kelas =    $this->input->post('nama_kelas');
        $pengumuman =    $this->input->post('pengumuman');
 
        $data =  array(
         "pengumuman"=>$pengumuman,
-        "id_kelas"=>$nama_kelas,
+        "id_kelas"=>$id_kelas,
         "createDtm"=>date('Y-m-d H:s:i')
       );
 
@@ -198,47 +220,22 @@ class DosenC extends CI_Controller {
         $this->session->set_flashdata('error', 'Pengumuman gagal ditambahkan');
       }
 
-      redirect('DosenC/'.$id);
+      redirect('DosenC/detailKelas/'.$id_kelas);
     }
   }
 
-  public function daftarKelas($id)
-  {
-    $email=$this->session->userdata('email');
-    $id_univ = $this->model->getUnivId_byEmail($email);
-    foreach ($id_univ->result() as $key) {
-      $data=array(
-        "nama"=>$this->model->getUser($email)->row_array(),
-        "kelas"=>$this->model->getKelas_byUser($key->id_user)->result(),
-        "fakultas"=>$this->model->getFakultas($key->id_univ),
-        "fakultas_kelas"=>$this->model->getFakKelas($id),
-        "prodi"=>$this->model->getProdiAll(),
-        "getdosen"=>$this->model->getDosenId($key->id_univ)->row_array(),
-        "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
-        "aktif"=>"dosen"
-      );
-    }
-    $this->load->view('dosen/daftar_kelasV',$data);
+  public function hapusPengumuman($id_pengumuman){
+  $id_kelas=$this->input->post('id_kelas');
+
+  if($this->model->hapusPengumuman($id_pengumuman)){
+    $this->session->set_flashdata('sukses','Pengumuman telah dihapus!');
+    redirect('DosenC/detailKelas/'.$id_kelas);
   }
 
-  public function get_prodi($id_fakultas){
-    $dataProdi=$this->model->getProdi($id_fakultas);
-    $output   = '<option value=""></option>';
-
-    if(! empty($dataProdi)){
-      foreach ($dataProdi->result() as $row) {
-        $output .='<option value="'.$row->id_det_fakultasprodi.'">'.$row->nama_prodi.'</option>';
-      }
-    }else{
-      $output .='<option value="">- Data Belum Tersedia -</option>';
-    } 
-    echo $output;
-  }
+}
 
   public function tambahKelas() { 
-      //get id jadwal yang ingin di edit
-   $id=$this->input->post('id_univ');
-   // $id_kelas = $this->input->post('id_kelas');
+   $id_dosen=$this->input->post('id_dosen'); //get id dosen yang ingin di edit
 
    $this->load->library('form_validation');
    $this->form_validation->set_rules('nama_kelas', 'nama_kelas','required');
@@ -246,13 +243,12 @@ class DosenC extends CI_Controller {
    $this->form_validation->set_rules('nama_prodi', 'nama_prodi','required');
    $this->form_validation->set_rules('kode', 'kode','required');
    $this->form_validation->set_rules('status_kelas', 'status_kelas','required');
-   $this->form_validation->set_rules('id_dosen', 'id_dosen','required');
-   $this->form_validation->set_rules('id_univ', 'id_univ','required');
    if($this->form_validation->run() == FALSE) {
-     redirect('DosenC/daftarKelas/'.$id);
+     redirect('DosenC/index/'.$id_dosen);
    }else{
 
     $nama_kelas =    $this->input->post('nama_kelas');
+    //untuk cek nama kelas apakah ada yang sama
     $q = $this->db->query("SELECT * FROM kelas WHERE nama_kelas = '$nama_kelas'");
 
     if($q->num_rows() == 0){
@@ -260,8 +256,7 @@ class DosenC extends CI_Controller {
      $nama_prodi =    $this->input->post('nama_prodi');
      $kode =    $this->input->post('kode');
      $status_kelas =    $this->input->post('status_kelas');
-     $id_dosen = $this->input->post('id_dosen');
-
+     //untuk mengambil data fakultas dan prodi sesuai universitas yang telah dibuat
      $getDetailId = $this->model->getDetailId($nama_fakultas,$nama_prodi);
 
      foreach ($getDetailId->result_array() as $key) {
@@ -289,7 +284,7 @@ class DosenC extends CI_Controller {
     }
   }else{
     $this->session->set_flashdata('error', 'Nama kelas sudah digunakan.');
-    redirect('DosenC/daftarKelas/'.$id);
+    redirect('DosenC/index/'.$id_dosen);
   }
 }
 }
@@ -345,31 +340,32 @@ public function hapusKelas($id){
     $this->session->set_flashdata('sukses','Kelas telah dihapus!');
     redirect('DosenC/daftarKelas/');
   }
-
 }
-
-public function detailKelas($id)
-{
+ 
+public function detailKelas($id_kelas) {
   $email=$this->session->userdata('email');
-  $id_univ = $this->model->getUnivId_byEmail($email);
-  foreach ($id_univ->result() as $key) {
+  $kelas=$this->model->getKelas($id_kelas);
+  $id_user=$this->model->getUser($email);
+
+  foreach ($id_user->result() as $key) {
+    foreach ($kelas->result_array() as $row) {
     $data=array(
-      "nama"=>$this->model->getUser($email)->row_array(),
-      "fakultas"=>$this->model->getFakultas($key->id_univ),
-      "prodi"=>$this->model->getProdiAll(),
-      "getdosen"=>$this->model->getDosenId($key->id_univ)->row_array(),
-      "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
-      "kelas"=>$this->model->getKelas($id)->row_array(),
-      // "getKelas"=>$this->model->getKelasId($id)->row_array(),
-      "getFakultasProdi"=>$this->model->getFakultasProdi($id)->row_array(),
-      // "fakultas_kelas"=>$this->model->getFakKelas($id),
-      "mahasiswa"=>$this->model->daftarMahasiswa($id)->result(),
-      "tugas"=>$this->model->getTugas($id)->result(),
+      "user"=>$this->model->getUser($email)->row_array(),
+      "id_dosen"=>$this->model->getIdDosen($key->id_user)->row_array(),
+      "id_univ"=>$this->model->getIdUniv($key->id_user)->row_array(),
+      "kelas"=>$this->model->getKelas($id_kelas)->row_array(),
+      "getFakultasProdi"=>$this->model->getFakultasProdi($id_kelas)->row_array(),
+      "pengumuman"=>$this->model->getPengumuman($id_kelas)->result(),
+      "mahasiswa"=>$this->model->daftarMahasiswa($id_kelas)->result(),
+      "tugas"=>$this->model->getTugas($id_kelas)->result(),
+      "materi"=>$this->model->getMateri($id_kelas)->result(),
+      "anggota"=>$this->model->getAnggota($id_kelas)->result(),
       "id_user"=>$this->model->getUser($email)->row_array(),
       "aktif"=>"user"
     );
   }
   $this->load->view('dosen/detail_kelasV',$data);
+}
 }
 
 public function tambahTugas() {
@@ -431,24 +427,24 @@ public function ubahTugas() {
     //get id jadwal yang ingin di edit
   $id_kelas = $this->input->post('id_kelas');
   $id_tugas = $this->input->post('id_tugas');
-  $id=$this->input->post('id_univ');
 
   $this->load->library('form_validation');
-  $this->form_validation->set_rules('nama_tugas', 'nama_tugas');
-  $this->form_validation->set_rules('tgl_mulai', 'tgl_mulai');
-  $this->form_validation->set_rules('tgl_selesai', 'tgl_selesai');
-  $this->form_validation->set_rules('jenis_tugas', 'jenis_tugas');
-  $this->form_validation->set_rules('status_tugas', 'status_tugas');
+  $this->form_validation->set_rules('nama_tugas', 'nama_tugas','required');
+  $this->form_validation->set_rules('tgl_mulai', 'tgl_mulai','required');
+  $this->form_validation->set_rules('tgl_selesai', 'tgl_selesai','required');
+  $this->form_validation->set_rules('jenis_tugas', 'jenis_tugas','required');
+  $this->form_validation->set_rules('waktu', 'waktu','required');
+  $this->form_validation->set_rules('status_tugas', 'status_tugas','required');
   if($this->form_validation->run() == FALSE)
   {
-    redirect('DosenC/detailKelas/');
+    redirect('DosenC/detailKelas/'.$id_kelas);
   }
   else
   {
     $nama_tugas =    $this->input->post('nama_tugas');
-    $tgl_mulai =    $this->input->post('tgl_mulai');
     $tgl_selesai =    $this->input->post('tgl_selesai');
     $jenis_tugas =    $this->input->post('jenis_tugas');
+    $waktu =    $this->input->post('waktu');
     $status_tugas =    $this->input->post('status_tugas');
 
     $data =  array(
@@ -456,35 +452,50 @@ public function ubahTugas() {
       "tgl_mulai"=>$tgl_mulai,
       "tgl_selesai"=>$tgl_selesai,
       "jenis_tugas"=>$jenis_tugas,
+      "waktu"=>$waktu,
       "status_tugas"=>$status_tugas,
+      "id_kelas"=>$id_kelas,
       "updateDtm"=>date('Y-m-d H:s:i')
     );
 
     $result = $this->model->editTugas($data, $id_tugas);
 
     if($result == TRUE)
-    {
-      $this->session->set_flashdata('sukses', 'Tugas berhasil diubah.');
-    }
-    else
-    {
-      $this->session->set_flashdata('error', 'Tugas gagal diubah.');
-    } 
+          {
+           $this->session->set_flashdata('sukses', 'Tugas berhasil diubah.');
+         }
+         else
+         {
+           $this->session->set_flashdata('error', 'Tugas gagal diubah.');
+         } 
 
     redirect('DosenC/detailKelas/'.$id_kelas);
   }
 }
 
-public function hapusTugas($id,$id_kelas){
-  if($this->model->hapusTugas($id)){
+public function hapusTugas($id_tugas){
+  $id_kelas=$this->input->post('id_kelas');
+
+  if($this->model->hapusTugas($id_tugas)){
     $this->session->set_flashdata('sukses','Tugas telah dihapus!');
     redirect('DosenC/detailKelas/'.$id_kelas);
+  } 
+}
+
+public function hapusAnggota($id){
+  $id_kelas=$this->input->post('id_kelas');
+
+  if($this->model->hapusAnggota($id)){
+    $this->session->set_flashdata('sukses','Anggota telah dihapus dari kelas ini!');
+    redirect('DosenC/detailKelas/'.$id_kelas);
   }
 }
 
-public function hapusMahasiswa($id,$id_kelas){
-  if($this->model->hapusMahasiswa($id)){
-    $this->session->set_flashdata('sukses','Mahasiswa telah dihapus dari kelas ini!');
+public function hapusMateri($id_materi){
+  $id_kelas=$this->input->post('id_kelas');
+
+  if($this->model->hapusMateri($id_materi)){
+    $this->session->set_flashdata('sukses','Materi telah dihapus!');
     redirect('DosenC/detailKelas/'.$id_kelas);
   }
 }
@@ -510,14 +521,14 @@ public function tampilSoal($id)
 public function buatSoal($id,$id_kelas)
 {
   $email=$this->session->userdata('email');
-  $id_univ = $this->model->getUnivId_byEmail($email);
-  foreach ($id_univ->result() as $key) { 
+  $id_user=$this->model->getUser($email);
+  foreach ($id_user->result() as $key) { 
     $data=array(
-      "nama"=>$this->model->getUser($email)->row_array(),
-      "fakultas"=>$this->model->getFakultas($key->id_univ),
+      "user"=>$this->model->getUser($email)->row_array(),
+      "fakultas"=>$this->model->getFakultas($key->id_user),
       "prodi"=>$this->model->getProdiAll(),
-      "getdosen"=>$this->model->getDosenId($key->id_univ)->row_array(),
-      "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
+      "id_dosen"=>$this->model->getIdDosen($key->id_user)->row_array(),
+      "id_univ"=>$this->model->getIdUniv($key->id_user)->row_array(),
 
       "kelas"=>$this->model->getKelas($id)->result(),
       "tugas"=>$this->model->getTugasMax()->row_array(),
@@ -532,8 +543,8 @@ public function buatSoal($id,$id_kelas)
 public function soalPilgan($id_kelas,$id_tugas)
 {
   $email=$this->session->userdata('email');
-  $id_univ = $this->model->getUnivId_byEmail($email);
-  foreach ($id_univ->result() as $key) {
+  $id_user=$this->model->getUser($email);
+  foreach ($id_user->result() as $key) {
     $nomor = $this->model->getNomor_byTugas($id_tugas)->num_rows();
     if($nomor == '0'){
       $nomor_soal = '1';
@@ -542,11 +553,11 @@ public function soalPilgan($id_kelas,$id_tugas)
     }
 
     $data=array(
-      "nama"=>$this->model->getUser($email)->row_array(),
-      "fakultas"=>$this->model->getFakultas($key->id_univ),
+      "user"=>$this->model->getUser($email)->row_array(),
+      "fakultas"=>$this->model->getFakultas($key->id_user),
       "prodi"=>$this->model->getProdiAll(),
-      "getdosen"=>$this->model->getDosenId($key->id_univ)->row_array(),
-      "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
+      "id_dosen"=>$this->model->getIdDosen($key->id_user)->row_array(),
+      "id_univ"=>$this->model->getIdUniv($key->id_user)->row_array(),
 
     // "kelas"=>$this->model->getKelas($id)->result(),
       "tugas"=>$id_tugas,
@@ -563,14 +574,14 @@ public function soalPilgan($id_kelas,$id_tugas)
 public function soalEssay($id_kelas)
 {
   $email=$this->session->userdata('email');
-  $id_univ = $this->model->getUnivId_byEmail($email);
-  foreach ($id_univ->result() as $key) {
+  $id_user=$this->model->getUser($email);
+  foreach ($id_user->result() as $key) {
     $data=array(
-      "nama"=>$this->model->getUser($email)->row_array(),
-      "fakultas"=>$this->model->getFakultas($key->id_univ),
+      "user"=>$this->model->getUser($email)->row_array(),
+      "fakultas"=>$this->model->getFakultas($key->id_user),
       "prodi"=>$this->model->getProdiAll(),
-      "getdosen"=>$this->model->getDosenId($key->id_univ)->row_array(),
-      "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
+      "getdosen"=>$this->model->getIdDosen($key->id_user)->row_array(),
+      "getuniv"=>$this->model->getIdUniv($key->id_user)->row_array(),
 
     // "kelas"=>$this->model->getKelas($id)->result(),
       "tugas"=>$this->model->getTugasMax()->row_array(),
@@ -628,6 +639,24 @@ public function tambahSoalEssay() {
 
   redirect('DosenC/');
 }
+}
+
+public function tampilSoalEssay($id) 
+{
+    $email=$this->session->userdata('email');
+    $id_user=$this->model->getUser($email);
+
+    foreach ($id_user->result() as $key) {
+        $data=array(
+            // "id_mhs"=>$row['id_mhs'],
+            "user"=>$this->model->getUser($email)->row_array(),
+            "soal"=>$this->model->getSoalEssay($id)->row_array(),
+            "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+            "aktif"=>"user"
+        );
+    }
+
+    $this->load->view('dosen/soal_essayV',$data);
 }
 
 public function tambahSoalPilgan($id_kelas) { 
@@ -784,14 +813,17 @@ public function importexcel(){
           public function tampilSoalPilgan($id)
           {
             $email=$this->session->userdata('email');
+            $id_user=$this->model->getUser($email);
             $nomor=0;
-
+            foreach ($id_user->result() as $key) {
             $data=array(
+              "user"=>$this->model->getUser($email)->row_array(),
               "nomor" => $nomor,
               "soal"=>$this->model->getSoalPilgan($id)->result(),
+              "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
               "aktif"=>"user"
             );
-
+            }
             $this->load->view('dosen/soal_pilganV',$data);
           }
 
@@ -800,21 +832,20 @@ public function importexcel(){
               $this->session->set_flashdata('sukses','Soal telah dihapus!');
               redirect('DosenC/tampilSoalPilgan/'.$id_tugas);
             }
-
-          }
+          } 
 
           public function editSoalPilgan($id)
           {
             $email=$this->session->userdata('email');
-            $id_univ = $this->model->getUnivId_byEmail($email);
+            $id_user=$this->model->getUser($email);
             $nomor = $this->input->post('nomor');
-            foreach ($id_univ->result() as $key) {
+            foreach ($id_user->result() as $key) {
               $data=array(
-                "nama"=>$this->model->getUser($email)->row_array(),
-                "fakultas"=>$this->model->getFakultas($key->id_univ),
+                "user"=>$this->model->getUser($email)->row_array(),
+                "fakultas"=>$this->model->getFakultas($key->id_user),
                 "prodi"=>$this->model->getProdiAll(),
-                "getdosen"=>$this->model->getDosenId($key->id_univ)->row_array(),
-                "getuniv"=>$this->model->getUnivId($key->id_univ)->row_array(),
+                "getdosen"=>$this->model->getIdDosen($key->id_user)->row_array(),
+                "getuniv"=>$this->model->getIdUniv($key->id_user)->row_array(),
                 "nomor" => $nomor,
                 "soal"=>$this->model->getSoalPilgan1($id)->row_array(),
                 "aktif"=>"dosen"
@@ -824,34 +855,55 @@ public function importexcel(){
             $this->load->view('dosen/edit_soal_pilganV',$data);
           }
 
+          public function tampilDaftarNilaiPilgan($id)
+          {
+            $email=$this->session->userdata('email');
+            $id_user=$this->model->getUser($email);
+            $id_tugas = $this->input->post('id_tugas'); 
+            foreach ($id_user->result() as $key) {
+            $data=array(
+              "user"=>$this->model->getUser($email)->row_array(),
+              "jawaban"=>$this->model->getDaftarNilaiPilgan($id)->result(),
+              "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+              "aktif"=>"dosen"
+            );
+            }
+            $this->load->view('dosen/daftar_nilai_jawaban_pilganV',$data);
+          }
+
           public function tampilDaftarKoreksiEssay($id)
           {
             $email=$this->session->userdata('email');
+            $id_user=$this->model->getUser($email);
             $id_tugas = $this->input->post('id_tugas'); 
+            foreach ($id_user->result() as $key) {
+              $data=array(
+                "user"=>$this->model->getUser($email)->row_array(),
+                "jawaban"=>$this->model->getDaftarNilaiEssay($id)->result(),
+                "belum"=>$this->model->getEssayBelum($id)->result(),
+                "sudah"=>$this->model->getEssaySudah($id)->result(),
+                "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
+                "soal"=>$this->model->getSoalEssay($id)->row_array(),
+                "aktif"=>"dosen"
+              );
+            }
 
-            $data=array(
-              "jawaban"=>$this->model->getDaftarNilaiEssay($id)->result(),
-              "belum"=>$this->model->getEssayBelum($id)->result(),
-              "sudah"=>$this->model->getEssaySudah($id)->result(),
-              "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
-              "soal"=>$this->model->getSoalEssay($id)->row_array(),
-              "aktif"=>"dosen"
-            );
-
-            $this->load->view('dosen/daftar_koreksi_jawaban_essayV',$data);
+            $this->load->view('dosen/daftar_nilai_jawaban_essayV',$data);
           }
 
           public function tampilKoreksiSoalEssay($id)
           { 
             $email=$this->session->userdata('email');
-
+            $id_user=$this->model->getUser($email);
+            foreach ($id_user->result() as $key) {
             $data=array(
+              "user"=>$this->model->getUser($email)->row_array(),
               "ket_soal"=>$this->model->getKetSoalbyIdTugas($id)->row_array(),
               "soal"=>$this->model->getSoalEssay($id)->row_array(),
               "jawaban"=>$this->model->getJawabanEssay($id)->row_array(),
               "aktif"=>"user"
             );
-
+          }
             $this->load->view('dosen/koreksi_jawaban_essayV',$data);
           }
 
@@ -892,13 +944,15 @@ public function importexcel(){
 
         public function tampilEditNilaiEssay($id) {
           $email=$this->session->userdata('email');
-
+          $id_user=$this->model->getUser($email);
+          foreach ($id_user->result() as $key) {
           $data=array(
+            "user"=>$this->model->getUser($email)->row_array(),
             "nilai"=>$this->model->getNilaibyId($id)->row_array(),
-            // "jawaban"=>$this->model->getJawabanEssay($id)->row_array(),
+            "jawaban"=>$this->model->getJawabanEssay($id)->row_array(),
             "aktif"=>"user"
           );
-
+          }
           $this->load->view('dosen/edit_koreksi_jawaban_essayV',$data);
         }
 
@@ -910,33 +964,115 @@ public function importexcel(){
 
           $this->load->library('form_validation');
           $this->form_validation->set_rules('nilai', 'nilai','required');
-            if($this->form_validation->run() == FALSE) {
-             redirect('DosenC/tampilKoreksiSoalEssay/'.$id_jawaban_essay);
+          if($this->form_validation->run() == FALSE) {
+           redirect('DosenC/tampilKoreksiSoalEssay/'.$id_jawaban_essay);
+         }
+         else
+         {
+          $nilai = $this->input->post('nilai');
+
+          $data =  array(
+            "nilai"=>$nilai,
+            "id_tugas"=>$id_tugas,
+            "id_mhs"=>$id_mhs,
+            "updateDtm"=>date('Y-m-d H:s:i')
+          );
+
+          $result = $this->model->editNilaiEssay($data, $id_nilai);
+
+          if($result == TRUE)
+          {
+            $this->session->set_flashdata('sukses', 'Nilai berhasil diubah.');
           }
           else
           {
-            $nilai = $this->input->post('nilai');
+            $this->session->set_flashdata('error', 'Nilai gagal diubah.');
+          } 
 
-             $data =  array(
-              "nilai"=>$nilai,
-              "id_tugas"=>$id_tugas,
-              "id_mhs"=>$id_mhs,
-              "updateDtm"=>date('Y-m-d H:s:i')
-            );
+          redirect('DosenC/tampilDaftarKoreksiEssay/'.$id_tugas);
+        }
+      }
+      public function tambahMateri() {
+        $id_kelas=$this->input->post('id_kelas');
 
-            $result = $this->model->editNilaiEssay($data, $id_nilai);
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('nama_materi', 'nama_materi','required');
+        if($this->form_validation->run() == FALSE) {
+          $this->session->set_flashdata('error', 'File gagal diunggah!');
+          redirect('DosenC/detailKelas/'.$id_kelas);
+        }else{
 
-            if($result == TRUE)
-            {
-              $this->session->set_flashdata('sukses', 'Nilai berhasil diubah.');
-            }
-            else
-            {
-              $this->session->set_flashdata('error', 'Nilai gagal diubah.');
-            } 
+          $nama_materi =    $this->input->post('nama_materi');
 
-            redirect('DosenC/tampilDaftarKoreksiEssay/'.$id_tugas);
+          $config['upload_path'] = FCPATH.'file_upload'; //path folder
+          $config['allowed_types'] = "pdf|zip|rar"; //type yang dapat diakses bisa anda sesuaikan
+          $config['overwrite'] = TRUE;
+          $config['max_size'] = 5048;
+          $config['remove_spaces'] = TRUE;
+
+          $this->load->library('upload');
+          $this->upload->initialize($config);
+
+          $this->upload->do_upload('file_materi');
+          $file_materi = $this->upload->data('file_name');
+
+          $data =  array(
+            "nama_materi"=>$nama_materi,
+            "path_file"=>$file_materi,
+            "id_kelas"=>$id_kelas,
+            "createDtm"=>date('Y-m-d H:s:i')
+          );
+
+          $result = $this->model->insertMateri($data);
+ 
+          if($result == TRUE)
+          {
+            $this->session->set_flashdata('sukses', 'Materi berhasil ditambahkan');
           }
+          else
+          {
+            $this->session->set_flashdata('error', 'Materi gagal ditambahkan');
+          }
+
+          redirect('DosenC/detailKelas/'.$id_kelas);
+        }
         }
 
-      }
+  public function ubahMateri()
+  {
+    //get id user yang ingin di edit
+    $id_kelas = $this->input->post('id_kelas');
+    $id_materi = $this->input->post('id_materi');
+    
+    $this->load->library('form_validation');
+    
+    $this->form_validation->set_rules('nama_materi','nama_materi','required');
+
+    if($this->form_validation->run() == FALSE){
+      //jika form tidak lengkap maka akan dikembalikan ke route "akunAdminR"
+      redirect('DosenC/detailKelas/'.$id_kelas);
+    }else{
+            $nama_materi = $this->input->post('nama_materi');
+
+             $data =  array(
+                "nama_materi"=>$nama_materi,
+                "id_kelas"=>$id_kelas,
+                "updateDtm"=>date('Y-m-d H:s:i')
+             );
+
+             $result = $this->model->ubahMateri($data,$id_materi);
+
+          if($result == TRUE)
+          {
+           $this->session->set_flashdata('sukses', 'Nama Materi berhasil diubah.');
+         }
+         else
+         {
+           $this->session->set_flashdata('error', 'Nama Materi gagal diubah.');
+         } 
+
+         redirect('DosenC/detailKelas/'.$id_kelas);
+       }
+     }
+
+}

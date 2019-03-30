@@ -12,7 +12,6 @@ class LoginM extends CI_Model{
     $this->db->select("id_userrole, status");
     $this->db->where('email', $email);
     $this->db->where('password', $password);
-    $this->db->where("isDeleted",0);
     return $this->db->get('user'); 
   }
   

@@ -81,7 +81,7 @@ $this->load->view('head_mahasiswa');
     <!-- /. box -->
   <?php } ?>
 <?php } ?>
-
+</div>
 </div>
 <!-- /.col -->
 </div>
@@ -121,12 +121,9 @@ $this->load->view('head_mahasiswa');
 </script>
 
 <footer class="main-footer">
-  <div class="container">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
+  <div class="container text-center">
+    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
+    All rights reserved
   </div>
   <!-- /.container -->
 </footer>

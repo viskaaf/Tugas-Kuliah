@@ -567,7 +567,6 @@ html {
   /* Remove me some day */
 }
 .content div.todo:before {
-  content: "TODO";
   font-weight: bold;
 }
 body a.button-a,

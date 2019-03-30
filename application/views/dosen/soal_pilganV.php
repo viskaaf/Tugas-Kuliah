@@ -5,20 +5,17 @@ $this->load->view('head_soal');
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>
-    Top Navigation
-  </h1>
-</section><br>
-<ol class="breadcrumb">
-  <li><a href="<?php echo base_url('DosenC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
-  <li><a href="#">Buat Soal</a></li>
-  <li class="active">Soal Pilihan Ganda</li>
-</ol>
-<!-- /.content-header -->
-
 <!-- Main content -->
 <div class="box box-primary">
-
+  <center>
+  <div class="box-header with-border">
+      <!-- <center> -->
+        <h3><b><?php echo $ket_soal['nama_tugas'];?></b></h3>
+        <p><i class="fa fa-clock-o" ></i> Waktu: <?php echo $ket_soal['waktu'];?> menit</p>
+        <p><i class="fa fa-calendar" ></i> Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
+      <!-- </center>  -->
+    </div>
+  </center>
   <?php foreach($soal as $value) { $nomor=$nomor+1; ?>
    <!-- form start -->
    <table width="100%" class="table table-striped">

@@ -4,12 +4,8 @@ $this->load->view('head_dosen');
 
 <div class="col-md-9">
   <div class="box-header with-border">
-    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-list"></i> Daftar Kelas</h3>
-  </div>
-  <ol class="breadcrumb">
-    <li><a href="<?php echo base_url('DosenC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
-    <li class="active">Daftar Kelas</li>
-  </ol>
+    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-user"></i> Profil</h3>
+  </div><br>
 
   <?php
   $this->load->helper('form');
@@ -33,91 +29,103 @@ $this->load->view('head_dosen');
     </div>
   <?php } ?>
 
-  <?php if(empty($kelas)){ ?>
-    <div class="box box-primary" style="padding-bottom: 30px; padding-top: 30px;">
-      <div class="box-body" style="color: #525252">
-        <center>
-          <img class="img" style="width: 70px;" src="<?php echo base_url('gambar/list.png')?>">
-        </center>
-        <h4 style="padding-top: 10px; text-align: center;">
-          Tidak ada kelas yang dibuat.
-        </h4>
-        <h5 style="padding-top: 30px; text-align: center;">
-          <b>Langkah berikutnya: Membuat Kelas</b>
-        </h5>
-        <h5 style="text-align: center;">
-          Anda dapat membuat kelas dengan klik tombol <b>Buat Kelas</b> 
-        </h5>
-        <h5 style="text-align: center;">
-          di samping kiri.
-        </h5>
+    <?php 
+                      $length = 6;
+                      $data = 'abcdefghijklmnopqrstuvwxyz1234567890';
+                      $string = '';
+                      for($i = 0; $i < $length; $i++) {
+                        $pos = rand(0, strlen($data)-1);
+                        $string .= $data{$pos};
+                      } 
+                      ?>
+
+  <div class="col-md-6">
+    <div class="box box-widget widget-user-2">
+      <div class="widget-user-header bg-primary" > 
+        <h4 style="padding-left: 10px;">Kelas Aktif
+        <a class="btn btn-primary btn-xs tooltips pull-right" style="margin-right: 10px;" data-toggle="modal" data-target="#modal-add-<?php echo $string; ?>-<?php echo $id_dosen['id_dosen']?>-<?php echo $id_univ['id_univ']?>">
+        <span data-toggle="tooltip" data-original-title="Buat Kelas" <i class="fa fa-plus"></i></span></a></h4>
       </div>
-      <!-- /.box-body -->
+      <div class="box-footer no-padding">
+        <?php if(empty($kelasaktif)) { ?> 
+          <ul class="nav nav-stacked text-center">
+            <li><a><i>-Tidak ada-</i></a></li>
+          </ul>
+        <?php }else{ ?>
+          <?php foreach ($kelasaktif as $value) { ?>
+            <div class="mailbox-messages">
+                <table class="table table-hover">
+                  <tbody> 
+                    <tr>
+                      <td>
+                        <a href="<?php echo site_url('DosenC/detailKelas/'.$value->id_kelas); ?>"style="padding-left: 20px;"><?php echo $value->nama_kelas; ?></a>
+                      </td>
+                      <td>
+                        <div class="box-tools pull-right" style="margin-right: 20px;">
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-toggle-down"></i></button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a data-toggle="modal" data-target="#modal-edit-<?php echo $value->id_kelas; ?>">Ubah Kelas</a></li>
+                              <li><a data-toggle="modal" data-target="#modal-delete")">Non-aktifkan</a></li>
+                              <li><a data-toggle="modal" data-target="#modal-edit-<?php echo $value->id_kelas; ?>">Hapus</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          <?php } ?>
+        <?php } ?>
+      </div>
     </div>
-    <!-- /. box -->
-    <?php
-  } else { ?>
-    <div class="box box-primary">
-      <div class="box-body">
-        <div style="padding-bottom: 10px;">
-        <!-- <?php 
-        $length = 6;
-        $data = 'abcdefghijklmnopqrstuvwxyz1234567890';
-        $string = '';
-        for($i = 0; $i < $length; $i++) {
-          $pos = rand(0, strlen($data)-1);
-          $string .= $data{$pos};
-        } 
-        ?>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add-<?php echo $string; ?>-<?php echo $getdosen['id_dosen']?>-<?php echo $getuniv['id_univ']?>"><i class="fa fa-plus-square"></i>  Tambah</button> -->
+  </div>
+
+  <div class="col-md-6">
+    <div class="box box-widget widget-user-2">
+      <div class="widget-user-header bg-primary" > 
+        <h4 style="padding-left: 10px;">Kelas Tidak Aktif
       </div>
+      <div class="box-footer no-padding">
+        <?php if(empty($kelasnonaktif)) { ?>
+          <ul class="nav nav-stacked text-center"> 
+            <li><a><i>-Tidak ada-</i></a></li>
+          </ul>
+        <?php }else{ ?>
+          <?php foreach ($kelasnonaktif as $value) { ?>
+            <div class="mailbox-messages">
+                <table class="table table-hover">
+                  <tbody> 
+                    <tr>
+                      <td>
+                        <a href="<?php echo site_url('DosenC/detailKelas/'.$value->id_kelas); ?>"style="padding-left: 20px;"><?php echo $value->nama_kelas; ?></a>
+                      </td>
+                      <td>
+                        <div class="box-tools pull-right" style="margin-right: 20px;">
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                              <i class="fa fa-toggle-down"></i></button>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a data-toggle="modal" data-target="#modal-edit">Ubah Kelas</a></li>
+                              <li><a data-toggle="modal" data-target="#modal-delete")">Aktifkan</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          <?php } ?>
+        <?php } ?>
+      </div>
+    </div>
+  </div>
 
-      <table id="datakelas" class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th><center>No</center></th>
-            <th><center>Nama Kelas</center></th>
-            <th><center>Status</center></th>
-            <th><center>Opsi</center></th>
-          </tr>
-        </thead>
-        <tbody>
-         <?php $no=0; foreach ($kelas as $value): $no++; ?>
-         <tr>
-          <td><center><?php echo $no; ?></center></td>
-          <td><center><?php echo $value->nama_kelas; ?></center></td>
-          <td><center>
-            <?php if($value->status_kelas == 'Aktif') { ?>
-              <span class="label label-success"><?php echo $value->status_kelas; ?></span>
-            <?php }else { ?>
-              <span class="label label-danger"><?php echo $value->status_kelas; ?></span>
-            <?php } ?>
-          </center></td>
-          <td><center>
-            <a class="btn btn-primary btn-xs tooltips" data-toggle="modal" data-target="#modal-<?php echo $value->id_kelas; ?>">
-              <span data-toggle="tooltip" data-original-title="Ubah Kelas" <i class="fa fa-edit"></i></span>
-            </a>
-            <a class="btn btn-info btn-xs tooltips" href="<?php echo site_url('DosenC/detailKelas/'.$value->id_kelas) ?>">
-              <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-eye"></i></span>
-            </a>
-            <a class="btn btn-danger btn-xs tooltips" href="<?php echo site_url('DosenC/hapusKelas/'.$value->id_kelas) ?>" onclick="return confirm('Apakah anda yakin ingin menghapus kelas?')">
-              <span data-toggle="tooltip" data-original-title="Hapus Kelas" <i class="fa fa-trash"></i></span>
-            </a></center>
-          </td>
-        </tr>
-      <?php  endforeach; ?>
-    </tbody>
-  </table>
-
-</div>
-</div> 
-</div>
-<!-- /.col -->
-</div>
-<!-- /.row -->
-
-<!-- modal untuk tambah manual -->
-<div class="modal fade" id="modal-add-<?php echo $string; ?>-<?php echo $getdosen['id_dosen']?>-<?php echo $getuniv['id_univ']?>">
+  <!-- modal untuk tambah manual -->
+<div class="modal fade" id="modal-add-<?php echo $string; ?>-<?php echo $id_dosen['id_dosen']?>-<?php echo $id_univ['id_univ']?>">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -127,8 +135,8 @@ $this->load->view('head_dosen');
         </div>
         <div class="modal-body">
          <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/tambahKelas')?>">
-          <input type="text" name="id_dosen" id="id_dosen" value="<?php echo $getdosen['id_dosen']?>">
-          <input type="text" name="id_univ" id="id_univ" value="<?php echo $getuniv['id_univ']?>">
+          <input type="hidden" name="id_dosen" value="<?php echo $id_dosen['id_dosen']?>">
+          <input type="hidden" name="id_univ" value="<?php echo $id_univ['id_univ']?>">
           <div class="form-group">
            <label for="" class="col-sm-3 control-label">Nama Kelas</label>
            <div class="col-sm-8">
@@ -193,15 +201,12 @@ $this->load->view('head_dosen');
 </div>
 <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
-</section>
-<!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
+<!-- /.modal -->
 
-<?php $no=0; foreach ($kelas as $value): $no++; ?>
+                      <?php foreach ($kelasaktif as $value) { ?>
 <!-- modal untuk ubah manual -->
-<div class="modal fade" id="modal-<?php echo $value->id_kelas; ?>">
+<div class="modal fade" id="modal-edit-<?php echo $value->id_kelas; ?>">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -269,7 +274,7 @@ $this->load->view('head_dosen');
           if ($status_kelas== "Aktif") echo "<option value='Aktif' selected>Aktif</option>";
           else echo "<option value='Aktif'>Aktif</option>";
           if ($status_kelas== "Tidak Aktif") echo "<option value='Tidak Aktif' selected>Tidak Aktif</option>";
-          else echo "<option value='Tidak Aktif'>Tidak Aktif</option>";                      
+          else echo "<option value='Tidak Aktif'>Tidak Aktif</option>";
           ?>
         </select>
       </div>
@@ -285,17 +290,23 @@ $this->load->view('head_dosen');
 </div>
 <!-- /.modal-dialog -->
 </div>
-<?php  endforeach; ?>
-<!-- /.modal -->
 <?php } ?>
+<!-- /.modal -->
+
+</div>
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
 <footer class="main-footer">
-  <div class="container">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
+  <div class="container text-center">
+    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
+    All rights reserved
   </div>
   <!-- /.container -->
 </footer>

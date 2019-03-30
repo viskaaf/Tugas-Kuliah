@@ -69,9 +69,6 @@
                   Perempuan
                 </label>
       </div> 
-      <?php
-        if($level == 1){
-      ?>
       <div class="form-group">
         <select class="form-control select2" name="nama_univ" id="nama_univ" required>
           <option></option>
@@ -80,7 +77,6 @@
           <?php  } ?>
         </select>
       </div>
-      <?php } ?>
       <div class="form-group has-feedback">
         <input type="email" class="form-control" name="email" value="<?php echo set_value('email'); ?>" placeholder="Email" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

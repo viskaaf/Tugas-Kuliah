@@ -52,38 +52,23 @@ $this->load->view('head_home');
               </center>
             </div>
 
+
             <div class="box box-solid" style="margin-top: 30px; border-radius: 10px; background:rgba(255,255,255,0.7); padding-bottom: 30px;"> 
               <div class="row">
                 <div class="col-lg-12 text-center box-header with-border">
-                  <h2 class="section-heading text-uppercase">Kelebihan</h2>
+                  <h2 class="section-heading text-uppercase">Hasil Pencarian</h2>
                 </div> 
-              </div> 
-              <div class="row text-center">
-                <div class="col-md-4">
-                  <span class="fa-stack fa-4x">
-                    <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                    <i class="fa fa-clock-o fa-stack-1x fa-inverse"></i>
-                  </span>
-                  <h4 class="service-heading">24/7</h4>
-                  <p class="text-muted">Dapat membuat dan mengerjakan tugas kapan pun dan dimana pun</p>
-                </div>
-                <div class="col-md-4">
-                  <span class="fa-stack fa-4x">
-                    <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                    <i class="fa fa-book fa-stack-1x fa-inverse"></i>
-                  </span>
-                  <h4 class="service-heading">Materi</h4>
-                  <p class="text-muted">Materi mudah didapatkan sesuai bidangnya masing-masing</p>
-                </div>
-                <div class="col-md-4">
-                  <span class="fa-stack fa-4x">
-                    <i class="fa fa-circle fa-stack-2x text-success"></i>
-                    <i class="fa fa-check fa-stack-1x fa-inverse"></i>
-                  </span>
-                  <h4 class="service-heading">Penilaian</h4>
-                  <p class="text-muted">Dapat memberikan dan melihat nilai secara langsung</p>
-                </div>
               </div>
+              <div class="no-padding">
+              <ul class="nav nav-stacked">
+                
+                <li>
+                  <a href="" style="font-size: 20px;"><b></b>
+                  <div style="font-size: 15px;">Viska Ayu F</div></a>
+                </li>
+                
+              </ul>
+
             </div>
           </div>
           <!-- /.row -->
@@ -94,13 +79,13 @@ $this->load->view('head_home');
     </div>
     <!-- /.content-wrapper -->
 
-<footer class="main-footer">
-  <div class="container text-center">
-    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
-    All rights reserved
-  </div>
-  <!-- /.container -->
-</footer>
+    <footer class="main-footer">
+      <div class="container">
+        <strong>Copyright &copy; 2018 <a>Tugas Kuliah</a>.</strong> All rights
+        reserved.
+      </div>
+      <!-- /.container -->
+    </footer>
   </div>
   <!-- ./wrapper -->
 

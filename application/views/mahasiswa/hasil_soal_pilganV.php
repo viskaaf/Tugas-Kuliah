@@ -182,12 +182,9 @@ $this->load->view('head_soal');
 <!-- /.content-wrapper -->
 
 <footer class="main-footer">
-  <div class="container">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2018 <a>Tugas Kuliah</a>.</strong> All rights
-    reserved.
+  <div class="container text-center">
+    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
+    All rights reserved
   </div>
   <!-- /.container -->
 </footer>

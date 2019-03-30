@@ -67,7 +67,7 @@ $this->load->view('head_soal');
           <td style="border: none;"></td>
           <td width="1500" style="border: none;">
             <font>A.
-              <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="A" required> <?php echo "$value->pil_a";?>
+              <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="A" class="pilihan[<?php echo $nomor;?>]" id="pilihan[<?php echo $nomor;?>][jawaban]" required> <?php echo "$value->pil_a";?>
             </font>
           </td>
         </tr>
@@ -75,7 +75,7 @@ $this->load->view('head_soal');
           <td style="border: none;"></td>
           <td width="1500" style="border: none;">
             <font>B.
-              <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="B" required> <?php echo "$value->pil_b";?>
+              <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="B" class="pilihan[<?php echo $nomor;?>]" required> <?php echo "$value->pil_b";?>
             </font>
           </td>
         </tr>
@@ -84,7 +84,7 @@ $this->load->view('head_soal');
             <td style="border: none;"></td>
             <td width="1500" style="border: none;">
               <font>C.
-                <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="C" required> <?php echo "$value->pil_c";?>
+                <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="C" class="pilihan[<?php echo $nomor;?>]" required> <?php echo "$value->pil_c";?>
               </font>
             </td>
           </tr>
@@ -94,7 +94,7 @@ $this->load->view('head_soal');
             <td style="border: none;"></td>
             <td width="1500" style="border: none;">
               <font>D.
-                <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="D" required> <?php echo "$value->pil_d";?>
+                <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="D" class="pilihan[<?php echo $nomor;?>]" required> <?php echo "$value->pil_d";?>
               </font>
             </td>
           </tr>
@@ -104,7 +104,7 @@ $this->load->view('head_soal');
             <td style="border: none;"></td>
             <td width="1500" style="border: none;">
               <font>E.
-                <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="E" required> <?php echo "$value->pil_e";?>
+                <input name="pilihan[<?php echo $nomor;?>][jawaban]" type="radio" value="E" class="pilihan[<?php echo $nomor;?>]" required> <?php echo "$value->pil_e";?>
               </font>
             </td>
           </tr>
@@ -158,7 +158,7 @@ $this->load->view('head_soal');
   
                 /** Menampilkan Waktu Timer pada Tag #Timer di HTML yang tersedia */
                 $('#timer').html(
-                    '<div><h3 align="center"'+peringatan+'>Sisa waktu anda <br />' + jam + ' jam : ' + menit + ' menit : ' + detik + ' detik</h3><div><hr>'
+                    '<div><h3 align="center"'+peringatan+'>Sisa waktu <br />' + jam + ' jam : ' + menit + ' menit : ' + detik + ' detik</h3><div><hr>'
                 );
   
                 /** Melakukan Hitung Mundur dengan Mengurangi variabel detik - 1 */
@@ -198,15 +198,22 @@ $this->load->view('head_soal');
             hitung();
       }); 
       // ]]>
+      $(function(){
+        var nomor = 0;
+        nomor += 1;
+        $(":radio.pilihan[nomor]").click(function(){
+          var pilihan = $(this).val();
+          var temp = JSON.parse(sessionStorage.temp) || [];
+          temp.push(pilihan);
+          sessionStorage.temp = JSON.stringify(temp);
+        })
+      })
     </script>
 
 <footer class="main-footer">
-  <div class="container">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2018 <a>Tugas Kuliah</a>.</strong> All rights
-    reserved.
+  <div class="container text-center">
+    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
+    All rights reserved
   </div>
   <!-- /.container -->
 </footer>

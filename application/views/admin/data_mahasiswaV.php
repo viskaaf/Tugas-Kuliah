@@ -43,11 +43,10 @@ $this->load->view('head_admin');
               <thead>
                 <tr>
                   <th><center>No</center></th>
+                  <th><center>NIM</center></th>
                   <th><center>Nama Depan</center></th>
                   <th><center>Nama Belakang</center></th>
                   <th><center>Jenis Kelamin</center></th>
-                  <th><center>Email</center></th>
-                  <th><center>Foto Profil</center></th>
                   <th><center>Status</center></th>
                   <th><center>Opsi</center></th>
                 </tr>
@@ -56,20 +55,28 @@ $this->load->view('head_admin');
                 <?php $no=0; foreach ($mahasiswa as $value): $no++; ?> 
                 <tr>
                   <td><center><?php echo $no; ?></center></td>
+                  <td><center><?php echo $value->nim; ?></center></td>
                   <td><center><?php echo $value->nama_depan; ?></center></td>
                   <td><center><?php echo $value->nama_belakang; ?></center></td>
                   <td><center><?php echo $value->jenis_kelamin; ?></center></td>
-                  <td><center><?php echo $value->email; ?></center></td>
-                  <td><center><?php echo $value->foto_profil; ?></center></td>
-                  <td><center><?php echo $value->status; ?></center></td>
                   <td><center>
-                    <a class="btn btn-primary btn-xs tooltips" data-toggle="modal" data-target="#modal">
-                      <span data-toggle="tooltip" data-original-title="Ubah Kelas" <i class="fa fa-edit"></i></span>
+                    <?php if($value->status == 'Aktif') { ?>
+                      <span class="label label-success"><?php echo $value->status; ?></span>
+                    <?php }else { ?>
+                      <span class="label label-danger"><?php echo $value->status; ?></span>
+                    <?php } ?>
+                  </center></td>
+                  <td><center>
+                    <a class="btn btn-danger btn-xs tooltips" data-toggle="modal" data-target="#modal">
+                      <span data-toggle="tooltip" data-original-title="Non-aktifkan Pengguna" <i class="fa fa-close"></i></span>
                     </a>
-                    <a class="btn btn-success btn-xs tooltips" href="">
-                      <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-search"></i></span>
+                    <!-- <a class="btn btn-success btn-xs tooltips" data-toggle="modal" data-target="#modal">
+                      <span data-toggle="tooltip" data-original-title="Aktifkan Pengguna" <i class="fa fa-check"></i></span>
+                    </a> -->
+                    <a class="btn btn-info btn-xs tooltips" href="">
+                      <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-eye"></i></span>
                     </a></center>
-                  </td>
+                  </td> 
                 </tr>
               <?php  endforeach; ?>
             </tbody>

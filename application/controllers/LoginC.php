@@ -37,6 +37,7 @@ class LoginC extends CI_Controller{
 			$status=$cekuser2[0]->status;
 			// $this->session->set_userdata('id_user', $id_user);
 			$this->session->set_userdata('email', $email);
+			$this->session->set_userdata('id_user', $id_user);
 			$this->session->set_userdata('id_userrole', $id_userrole);
 			$this->session->set_userdata('status', $status);
 			$this->session->set_userdata('akses',"user");

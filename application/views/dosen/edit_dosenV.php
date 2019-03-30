@@ -6,10 +6,6 @@ $this->load->view('head_dosen');
   <div class="box-header with-border">
     <h3 class="box-title" style="font-size: 25px"><i class="fa fa-user"></i> Ubah Profil</h3>
   </div>
-  <ol class="breadcrumb">
-    <li><a href="<?php echo base_url('DosenC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
-    <li class="active">Ubah Profil</li>
-  </ol>
 
   <div class="callout callout-info">
     <h4><i class="fa fa-info-circle"></i> PERHATIAN!</h4>
@@ -47,18 +43,18 @@ $this->load->view('head_dosen');
         <!-- form start -->
         <?php echo form_open_multipart('DosenC/ubahProfilDosen') ?>
         <div class="box-body">
-         <input type="hidden" class="form-control" name="id_user" value="<?php echo $nama['id_user']; ?>">
+         <input type="hidden" class="form-control" name="id_user" value="<?php echo $user['id_user']; ?>">
          <div class="form-group">
           <label for="exampleInputEmail1">Nama Depan</label>
-          <input type="text" class="form-control" name="nama_depan" id="nama_depan" value="<?php echo $nama['nama_depan']; ?>" placeholder="Masukkan Nama Depan">
+          <input type="text" class="form-control" name="nama_depan" id="nama_depan" value="<?php echo $user['nama_depan']; ?>" placeholder="Masukkan Nama Depan">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Nama Belakang</label>
-          <input type="text" class="form-control" name="nama_belakang" id="nama_belakang" value="<?php echo $nama['nama_belakang']; ?>" placeholder="Masukkan Nama Belakang">
+          <input type="text" class="form-control" name="nama_belakang" id="nama_belakang" value="<?php echo $user['nama_belakang']; ?>" placeholder="Masukkan Nama Belakang">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">NIP</label>
-          <input type="text" class="form-control" name="nip" id="nip" value="<?php echo $nama['nip']; ?>" placeholder="Masukkan NIP" required>
+          <input type="text" class="form-control" name="nip" id="nip" value="<?php echo $user['nip']; ?>" placeholder="Masukkan NIP" required>
         </div>
         <div class="form-group">
           <label for="">Jenis Kelamin</label>
@@ -91,7 +87,7 @@ $this->load->view('head_dosen');
         </div> 
         <div class="form-group">
           <label for="exampleInputEmail1">Email</label>
-          <input type="email" class="form-control" name="email" id="email" value="<?php echo $nama['email']; ?>" placeholder="Masukkan Email" readonly>
+          <input type="email" class="form-control" name="email" id="email" value="<?php echo $user['email']; ?>" placeholder="Masukkan Email" readonly>
         </div>
         <div class="form-group">
           <label for="upload">Foto Profil</label>
@@ -114,7 +110,7 @@ $this->load->view('head_dosen');
       <!-- form start -->
       <form role="form" action="<?php echo site_url('DosenC/resetPassword') ?>" method="POST">
         <div class="box-body">
-          <input type="hidden" class="form-control" name="id_user" value="<?php echo $nama['id_user']; ?>">
+          <input type="hidden" class="form-control" name="id_user" value="<?php echo $user['id_user']; ?>">
           <div class="form-group">
             <label for="exampleInputPassword1">Password Lama</label>
             <input type="password" class="form-control" name="passlama" id="passbaru1" placeholder="Masukkan Password Lama">

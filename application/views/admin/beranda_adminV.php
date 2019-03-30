@@ -35,7 +35,7 @@ $this->load->view('head_admin');
             <div class="icon">
               <i class="ion ion-person"></i>
             </div>
-            <a href="#" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo site_url('AdminC/daftarDosen')?>" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -55,7 +55,7 @@ $this->load->view('head_admin');
             <div class="icon">
               <i class="ion ion-person"></i>
             </div>
-            <a href="#" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo site_url('AdminC/daftarMahasiswa')?>" class="small-box-footer">Lihat <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

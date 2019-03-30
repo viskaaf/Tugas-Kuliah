@@ -15,12 +15,12 @@ class HomeC extends CI_Controller {
 	{
 		$email = $this->session->userdata('email'); 
 		$q = $this->model->getUser($email)->row_array();
-        if($this->session->userdata('masuk') == TRUE){
-        	if($this->session->userdata('id_userrole') == 1){
-        		$url = site_url('DosenC/');
-        	}else{
-        		$url = site_url('MahasiswaC/');
-        	}
+		if($this->session->userdata('masuk') == TRUE){
+			if($this->session->userdata('id_userrole') == 1){
+				$url = site_url('DosenC/');
+			}else{
+				$url = site_url('MahasiswaC/');
+			}
 			$data = array(
 				'url' => $url,
 				'nama' => $q['nama_depan'].' '.$q['nama_belakang'],
@@ -131,6 +131,40 @@ class HomeC extends CI_Controller {
 			}
 		}
 	}
-	
+
+	public function cariMateri(){
+		$email = $this->session->userdata('email'); 
+		$q = $this->model->getUser($email)->row_array();
+		$keyword = $this->input->get('cari', TRUE); //mengambil nilai dari form input cari
+
+		if($this->session->userdata('masuk') == TRUE){
+			if($this->session->userdata('id_userrole') == 1){
+				$url = site_url('DosenC/');
+			}else{
+				$url = site_url('MahasiswaC/');
+			}
+			$data = array(
+				'url' => $url,
+				'nama' => $q['nama_depan'].' '.$q['nama_belakang'],
+				'foto' => $q['foto_profil'],
+				'keyword' => $keyword,
+				'querymenu' => $this->HomeM->cari($keyword) //mencari data karyawan berdasarkan inputan
+			);
+		}else{
+			$data = array(
+				'url' => site_url('LoginC/'),
+				'nama' => 'Masuk',
+				'foto' => '',
+				'keyword' => $keyword,
+				'querymenu' => $this->HomeM->cari($keyword) //mencari data karyawan berdasarkan inputan
+			);
+		}
+
+	  	$this->load->view('home_cariV', $data); //menampilkan data yang sudah dicari
+	}
+
+	public function tampilMateri(){
+		$this->load->view('tampil_materiV');
+	}
 
 }

@@ -4,12 +4,8 @@ $this->load->view('head_mahasiswa');
 
 <div class="col-md-9">
   <div class="box-header with-border">
-    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-user"></i> Ubah Profil</h3>
+    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-edit"></i> Ubah Profil</h3>
   </div>
-  <ol class="breadcrumb">
-    <li><a href="<?php echo base_url('MahasiswaC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
-    <li class="active">Ubah Profil</li>
-  </ol>
 
   <div class="callout callout-info">
     <h4><i class="fa fa-info-circle"></i> PERHATIAN!</h4>
@@ -77,8 +73,15 @@ $this->load->view('head_mahasiswa');
         <div class="form-group">
           <label for="">Universitas</label>
           <div>
-            <select name="nama_univ" class="form-control" readonly>
-
+            <select name="nama_univ" class="form-control select2" required>
+              <?php
+              foreach ($univ_mhs as $value); 
+              foreach ($univ as $data) {
+                if ($data->id_univ == $value->id_univ) {
+                  echo "<option value=".$data->id_univ." selected >".$data->nama_univ."</option>";
+                }else
+                echo "<option value=".$data->id_univ.">".$data->nama_univ."</option>";
+              } ?>
             </select>
           </div>
         </div> 
@@ -148,7 +151,7 @@ $this->load->view('head_mahasiswa');
 </div>
 <!-- /.content-wrapper -->
 
-<script>
+<script> 
   $(function () {
 
     //Initialize Select2 Elements
@@ -158,12 +161,9 @@ $this->load->view('head_mahasiswa');
 </script>
 
 <footer class="main-footer">
-  <div class="container">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2018 <a>Tugas Kuliah</a>.</strong> All rights
-    reserved.
+  <div class="container text-center">
+    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
+    All rights reserved
   </div>
   <!-- /.container -->
 </footer>

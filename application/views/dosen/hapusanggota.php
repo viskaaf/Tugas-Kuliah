@@ -137,7 +137,7 @@ if($sukses)
          </div>
       </div><br>
       <div class="modal-footer">
-        <input class="btn btn-primary" type="submit" value="Simpan">
+        <input class="btn btn-primary" type="submit" value="Simpan" >
       </div>
     </div>
     <!-- /.modal-content -->
@@ -153,20 +153,16 @@ if($sukses)
 <div class="modal fade" id="modal-delete-<?php echo $value->id_materi;?>">
   <div class="modal-dialog" style="width: 400px;">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><center>Hapus Materi</center></h4>
-        </div>
       <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/hapusMateri/'.$value->id_materi); ?>">
-      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;>
+      <div class="modal-header text-center" style="padding-top: 20px; height: 110px;">
           <input type="hidden" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
           <input type="hidden" name="id_pengumuman" value="<?php echo $value->id_materi;?>">
           <h5 class="modal-title"><b>Apakah Anda yakin untuk menghapus materi ini?</b></h5>
-      </div>
-      <div class="modal-footer">
+ 
+          <div style="padding-top: 20px;">
             <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
             <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
+          </div>
       </div>
   </form> 
 </div>
@@ -223,7 +219,7 @@ if($sukses)
                               <?php }else{ ?>
                                 <li><a href="<?php echo site_url('DosenC/tampilDaftarKoreksiEssay/'.$value->id_tugas); ?>">Lihat Nilai</a></li>
                               <?php } ?>
-                              <li><a data-toggle="modal" data-target="#modal-delete-<?php echo $value->id_tugas;?>">Hapus</a></li>
+                              <li><a href="<?php echo site_url('DosenC/hapusTugas/'.$value->id_tugas); ?>" onclick="alert('Apakah Anda yakin untuk menghapus tugas ini?')">Hapus</a></li>
                             </ul>
                           </div>
                         </div>
@@ -256,7 +252,7 @@ if($sukses)
              <input type="text" class="col-sm-10 form-control" name="nama_tugas" placeholder="Nama Tugas" required>
            </div>
          </div>
-         <input type="text" class="col-sm-10 form-control" name="tgl_mulai" id="tgl_mulai" value="<?php echo date('Y-m-d');?>" required>
+         <input type="hidden" class="col-sm-10 form-control" name="tgl_mulai" id="tgl_mulai" value="<?php echo date('Y-m-d');?>" required>
          <div class="form-group">
           <label for="" class="col-sm-3 control-label">Tanggal Selesai</label>
           <div class="col-sm-8">
@@ -306,8 +302,8 @@ if($sukses)
   <div class="box box-widget widget-user-2">
     <div class="widget-user-header bg-primary">
       <h4>Anggota 
-      <a class="btn btn-primary btn-xs tooltips pull-right" data-toggle="modal" data-target="#modal-add-anggota">
-        <span data-toggle="tooltip" data-original-title="Tambah Anggota" <i class="fa fa-plus"></i></span></a></h4>
+      <a class="btn btn-primary btn-xs tooltips pull-right" data-toggle="modal" data-target="#modal-add-materi">
+        <span data-toggle="tooltip" data-original-title="Tambah Materi" <i class="fa fa-plus"></i></span></a></h4>
     </div>
     <div class="box-footer no-padding"> 
       <?php if(empty($anggota)) { ?>
@@ -331,6 +327,7 @@ if($sukses)
                       }
                       ?>
                       <span><?php echo $value->nama_depan.' '; echo $value->nama_belakang ?></span>
+                      <a class="btn btn-xs" data-toggle="modal" data-target="#modal-delete-<?php echo $value->id_kelas_mhs;?>")">Hapus</a>
                     </li>
                     <?php } ?>
                   </ul>
@@ -346,80 +343,29 @@ if($sukses)
   </div>
 </div>
 
-<!-- modal untuk tambah pengumuman -->
-<div class="modal fade" id="modal-add-anggota">
-  <div class="modal-dialog">
+<?php foreach ($anggota as $value) { ?>
+<!-- modal untuk hapus materi -->
+<div class="modal fade" id="modal-delete-<?php echo $value->id_kelas_mhs;?>">
+  <div class="modal-dialog" style="width: 400px;">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><center>Tambah Anggota</center></h4>
-        </div>
-
-        <div class="modal-body">
-          <div class="callout callout-info">
-              <h4><i class="fa fa-info-circle"></i> PERHATIAN!</h4>
-              <p>Anda bisa menambahkan anggota dengan memasukkan alamat email anggota.</p>
-            </div>
-         <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/tambahPengumuman') ?>">
-          <input type="hidden" name="id_kelas" id="id_kelas" value="<?php echo $kelas['id_kelas']?>">
-          <div class="form-group">           
-            <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota" required></input>
-            </div>
-            <div id="tambah_email1">
-             <a class="btn btn-primary btn-xs tooltips" name="tambah_soal1" id="email1" style="margin-top: 6px;">
-              <span data-toggle="tooltip" data-original-title="Tambah" <i class="fa fa-plus-square"></i></span>
-             </a>
-            </div>
-         </div>
-         <div class="form-group" id="tambah1" hidden>           
-            <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota"></input>
-            </div>
-            <div id="tambah_email2">
-             <a class="btn btn-primary btn-xs tooltips" name="tambah_soal2" id="email2" style="margin-top: 6px;">
-              <span data-toggle="tooltip" data-original-title="Tambah" <i class="fa fa-plus-square"></i></span>
-             </a>
-            </div>
-         </div>
-         <div class="form-group" id="tambah2" hidden>           
-            <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota"></input>
-            </div>
-            <div id="tambah_email3">
-             <a class="btn btn-primary btn-xs tooltips" name="tambah_soal3" id="email3" style="margin-top: 6px;">
-              <span data-toggle="tooltip" data-original-title="Tambah" <i class="fa fa-plus-square"></i></span>
-             </a>
-            </div>
-         </div>
-         <div class="form-group" id="tambah3" hidden>           
-            <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota"></input>
-            </div>
-            <div id="tambah_email4">
-             <a class="btn btn-primary btn-xs tooltips" name="tambah_soal3" id="email4" style="margin-top: 6px;">
-              <span data-toggle="tooltip" data-original-title="Tambah" <i class="fa fa-plus-square"></i></span>
-             </a>
-            </div>
-         </div>
-         <div class="form-group" id="tambah4" hidden>           
-            <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota"></input>
-            </div>
-         </div>
-        </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+      <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/hapusAnggota/'.$value->id_kelas_mhs); ?>">
+      <div class="modal-header text-center" style="padding-top: 20px; height: 130px;">
+          <input type="hidden" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
+          <input type="hidden" name="id_kelas_mhs" value="<?php echo $value->id_kelas_mhs;?>">
+          <h5 class="modal-title"><b>Apakah Anda yakin untuk menghapus anggota dari kelas ini?</b></h5>
+ 
+          <div style="padding-top: 20px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+            <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
+          </div>
       </div>
-  </div>
-  <!-- /.modal-content -->
-</form>   
+  </form> 
+</div>
+  <!-- /.modal-content --> 
 </div>
 <!-- /.modal-dialog -->
 </div>
+<?php } ?>
 <!-- /.modal -->
 
 <?php foreach ($tugas as $value) { ?>
@@ -434,7 +380,7 @@ if($sukses)
         </div>
         <div class="modal-body">
          <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/ubahTugas') ?>">
-          <input type="text" class="col-sm-10 form-control" id="id_kelas" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
+          <input type="hidden" class="col-sm-10 form-control" id="id_kelas" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
           <input type="hidden" class="col-sm-10 form-control" id="id_tugas" name="id_tugas" value="<?php echo $value->id_tugas; ?>">
           <div class="form-group">
            <label for="" class="col-sm-3 control-label">Nama Tugas</label>
@@ -442,30 +388,13 @@ if($sukses)
              <input type="text" class="col-sm-10 form-control" id="nama_tugas" name="nama_tugas" value="<?php echo $value->nama_tugas; ?>">
            </div>
          </div>
-            <input type="text" class="col-sm-10 form-control" name="tgl_mulai" value="<?php echo date("d/m/Y",strtotime($value->tgl_mulai)); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+            <input type="hidden" class="col-sm-10 form-control" name="tgl_mulai" value="<?php echo $value->tgl_mulai; ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
           <div class="form-group">
             <label for="" class="col-sm-3 control-label">Tanggal Selesai</label>
             <div class="col-sm-8">
-              <input type="date" class="col-sm-10 form-control" name="tgl_selesai" value="<?php echo date("Y-m-d",strtotime($value->tgl_selesai)); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask> 
+              <input type="date" class="col-sm-10 form-control" name="tgl_selesai" value="<?php echo $value->tgl_selesai; ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
             </div>
-          </div> 
-          <?php if($value->jenis_tugas == "Pilihan Ganda") { ?>
-          <div class="form-group" id="waktu">
-             <label for="" class="col-sm-3 control-label">Waktu</label>
-             <div class="col-sm-2">
-               <input type="text" class="col-sm-10 form-control" style="text-align: center;" name="waktu" value="<?php echo $value->waktu; ?>" required>
-             </div>
-             <label class="control-label">menit</label>
-           </div>
-           <?php }else{ ?>
-            <div class="form-group" id="waktu" hidden>
-             <label for="" class="col-sm-3 control-label">Waktu</label>
-             <div class="col-sm-2">
-               <input type="text" class="col-sm-10 form-control" style="text-align: center;" name="waktu" value="0" required>
-             </div>
-             <label class="control-label">menit</label>
-           </div>
-           <?php } ?>
+          </div>
         <div class="form-group">
           <label for="" class="col-sm-3 control-label">Status</label>
           <div class="col-sm-8">
@@ -483,40 +412,11 @@ if($sukses)
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button class="btn btn-primary" id="" type="submit">Simpan</button>
       </div>
     </div>
   </form> 
   <!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
-</div>
-<?php } ?>
-<!-- /.modal -->
-
-<?php foreach ($tugas as $value) { ?>
-<!-- modal untuk tambah pengumuman -->
-<div class="modal fade" id="modal-delete-<?php echo $value->id_tugas;?>">
-  <div class="modal-dialog" style="width: 400px;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><center>Hapus Tugas</center></h4>
-        </div>
-      <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/hapusTugas/'.$value->id_tugas); ?>">
-      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;>
-          <input type="hidden" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
-          <input type="hidden" name="id_pengumuman" value="<?php echo $value->id_tugas;?>">
-          <h5 class="modal-title"><b>Apakah Anda yakin untuk menghapus tugas ini?</b></h5>
-      </div>
-      <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
-            <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
-      </div>
-  </form> 
-</div>
-  <!-- /.modal-content --> 
 </div>
 <!-- /.modal-dialog -->
 </div>
@@ -541,12 +441,11 @@ if($sukses)
              <textarea type="text" class="form-control" rows="4" name="pengumuman" placeholder="Tulis sesuatu..." required></textarea>
            </div> 
          </div>
-        </div>
+    </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-primary">Simpan</button>
-      </div>
+    <div class="modal-footer">
+      <input class="btn btn-primary" id="" type="submit" value="Simpan" >
+    </div>
   </div>
   <!-- /.modal-content -->
 </form>  
@@ -560,20 +459,16 @@ if($sukses)
 <div class="modal fade" id="modal-delete-<?php echo $value->id_pengumuman;?>">
   <div class="modal-dialog" style="width: 400px;">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title"><center>Hapus Pengumuman</center></h4>
-        </div>
       <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/hapusPengumuman/'.$value->id_pengumuman); ?>">
-      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;">
+      <div class="modal-header text-center" style="padding-top: 20px; height: 110px;">
           <input type="hidden" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
           <input type="hidden" name="id_pengumuman" value="<?php echo $value->id_pengumuman;?>">
           <h5 class="modal-title"><b>Apakah Anda yakin untuk menghapus pengumuman ini?</b></h5>
-      </div>
-     <div class="modal-footer">
+ 
+          <div style="padding-top: 20px;">
             <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
             <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
+          </div>
       </div>
   </form> 
 </div>
@@ -646,36 +541,8 @@ if($sukses)
     //Initialize Select2 Elements
     $('.select2').select2();
 
-    $("#email1").click(function() {
-      $("#tambah1").show();
-      $("#tambah_email1").hide();
-      $("#tambah_email2").show();
-    });
-
-    $("#email2").click(function() {
-      $("#tambah2").show();
-      $("#tambah_email2").hide();
-      $("#tambah_email3").show();
-    });
-
-    $("#email3").click(function() {
-      $("#tambah3").show();
-      $("#tambah_email3").hide();
-      $("#tambah_email4").show();
-    });
-
-    $("#email4").click(function() {
-      $("#tambah4").show();
-      $("#tambah_email4").hide();
-      $("#tambah_email5").show();
-    });
-
-    $("#email5").click(function() {
-      $("#tambah4").show();
-    });
-
     $("#tgl_selesai").datepicker({ minDate: 0 });
-    $('#tgl_selesai').datepicker({dateFormat: 'yyyy-mm-dd'});
+    $('#tgl_selesai').datepicker({dateFormat: 'yy-mm-dd'});
 
     $("#jenis_tugas").change(function(){
         // $("#waktu").hide()

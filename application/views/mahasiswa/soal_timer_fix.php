@@ -43,8 +43,7 @@ $this->load->view('head_soal');
             $jam = (int)($value->waktu/60); //dijadikan integer
         } 
     }
-
-
+    
     ?>
    
    <div id='timer'></div>

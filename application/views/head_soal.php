@@ -58,16 +58,42 @@
                             <!-- User Account Menu -->
               <li class="user">
                 <!-- Menu Toggle Button -->
-                <?php if($this->session->userdata("id_userrole") == 1){ ?>
-                  <a href="<?php echo site_url('DosenC/index') ?>"> 
-                    <span>Beranda</span>
-                  </a>
-                <?php }else{ ?>
-                  <a href="<?php echo site_url('MahasiswaC/index') ?>"> 
-                  <span>Beranda</span>
+                <?php if($user['id_userrole'] == 1){ ?>
+                <li class="dropdown user user-menu">
+                <a href="<?php echo site_url('DosenC/index'); ?>" class="dropdown-toggle" title="Kembali ke Halaman Profil">
+                    <?php
+                    if($user['foto_profil']){
+                      ?>
+                      <img class="user-image" src="<?php echo base_url('gambar/'.$user['foto_profil'])?>" alt="User Image">
+                      <?php
+                    }else{
+                      ?> 
+                      <img class="user-image" src="<?php echo base_url('gambar/admin.png')?>" alt="User Image">
+                      <?php
+                    }
+                    ?>
+                  <span class="hidden-xs"><?php echo $user['nama_depan'].' '; echo $user['nama_belakang'];?></span>
                 </a>
-                <?php } ?>
               </li>
+              <?php
+              }else{ ?> 
+                <li class="dropdown user user-menu">
+                <a href="<?php echo site_url('MahasiswaC/index'); ?>" class="dropdown-toggle" title="Kembali ke Halaman Profil">
+                    <?php
+                    if($user['foto_profil']){
+                      ?>
+                      <img class="user-image" src="<?php echo base_url('gambar/'.$user['foto_profil'])?>" alt="User Image">
+                      <?php
+                    }else{
+                      ?> 
+                      <img class="user-image" src="<?php echo base_url('gambar/admin.png')?>" alt="User Image">
+                      <?php
+                    }
+                    ?>
+                  <span class="hidden-xs"><?php echo $user['nama_depan'].' '; echo $user['nama_belakang'];?></span>
+                </a>
+              </li>
+              <?php } ?>
 
               <!-- Notifications Menu -->
               <li class="dropdown notifications-menu">
@@ -96,8 +122,8 @@
               <!-- User Account Menu -->
               <li class="user">
                 <!-- Menu Toggle Button -->
-                <a href="<?php echo site_url('LoginC/logout') ?>">
-                  <span>Logout</span>
+                <a href="<?php echo site_url('LoginC/logout') ?>" title="Keluar dari Tugas Kuliah" onclick="return confirm('Apakah anda yakin ingin keluar dari sistem ini?')">
+                  <span><i class="fa fa-sign-out"></i></span> 
                 </a>
               </li>
             </ul>
