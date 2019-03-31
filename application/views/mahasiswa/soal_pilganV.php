@@ -23,25 +23,25 @@ $this->load->view('head_soal');
   <?php foreach($soal as $value) { 
     $nomor=$nomor+1;
      /* Apabila data di database kosong, maka waktu awal di set 0 jam, 10 menit dan 0 detik */
-    if(count($value->waktu) == 0){
-        $jam    = 0;
-        $menit  = 10;
+    if($value->waktu == 0){
+      $waktu = 10; // menit
     }else{
+      $waktu = $value->waktu;
         // $data   = mysql_fetch_array($value);
          
-         if($value->waktu < 60){ 
-             /* Apabila waktu yang diiputkan kurang dari 60 menit, maka waktu dijadikan menit dan 0 jam */
-             $menit = $value->waktu; 
-             $jam = 0; 
-        }else{ 
-             /* Apabila waktu yang diiputkan lebih dari 60 menit, maka waktu/60 dan sisa bagi dijadikan menit serta hasil bagi dijadikan jam */
-             $menit = $value->waktu%60;
+        //  if($value->waktu < 60){ 
+        //      /* Apabila waktu yang diiputkan kurang dari 60 menit, maka waktu dijadikan menit dan 0 jam */
+        //      $menit = $value->waktu; 
+        //      $jam = 0; 
+        // }else{ 
+        //      /* Apabila waktu yang diiputkan lebih dari 60 menit, maka waktu/60 dan sisa bagi dijadikan menit serta hasil bagi dijadikan jam */
+        //      $menit = $value->waktu%60;
  
-             //awalnya seperti ini 
-            //$jam = substr(($data['waktu']/60),0,1); //substr berfungsi untuk mengambil string, 0 dimulai dari string ke-0 dan 1 jumlah string yang akan diambil
-            //saya ganti menjadi
-            $jam = (int)($value->waktu/60); //dijadikan integer
-        } 
+        //      //awalnya seperti ini 
+        //     //$jam = substr(($data['waktu']/60),0,1); //substr berfungsi untuk mengambil string, 0 dimulai dari string ke-0 dan 1 jumlah string yang akan diambil
+        //     //saya ganti menjadi
+        //     $jam = (int)($value->waktu/60); //dijadikan integer
+        // } 
     }
 
 
@@ -132,14 +132,37 @@ $this->load->view('head_soal');
     <!-- Script Timer -->
     <script type="text/javascript">
         $(document).ready(function() {
+            var now = new Date();
+            var end = now.setMinutes( now.getMinutes() + <?php echo $waktu?>);
+            var selesai_test = {
+              jam_selesai: end, 
+              isFinish: false,
+            };
+            var getDataTimer = JSON.parse(localStorage.getItem('selesai_test'));
+            if (getDataTimer) {
+              // jika
+              if (getDataTimer.isFinish) {              
+                var frmSoal = document.getElementById("form_soal");                 
+                localStorage.removeItem('selesai_test'); 
+                alert('Waktu Anda telah habis.');
+                frmSoal.submit(); 
+              }
+            }else{
+              // simpan ke localStorage browser bentuk string
+              localStorage.setItem('selesai_test',JSON.stringify(selesai_test));
+            }
+            getDataTimer = JSON.parse(localStorage.getItem('selesai_test'));
+            selisih_milisecond = new Date(getDataTimer.jam_selesai) - new Date();
+            
+
             /** Membuat Waktu Mulai Hitung Mundur Dengan 
                 * var detik = 0,
                 * var menit = 1,
                 * var jam = 1
             */
-            var detik = 0;
-            var menit = <?php echo $menit; ?>;
-            var jam     = <?php echo $jam; ?>;
+            var detik = Math.floor(selisih_milisecond / 1000) % 60;
+            var menit = Math.floor(selisih_milisecond / 1000 / 60) % 60;
+            var jam     = Math.floor(selisih_milisecond / 1000 / 60 / 60) % 24;
             var hari    = 2;
                   
             /**
@@ -187,7 +210,8 @@ $this->load->view('head_soal');
                         if(jam < 0) { 
                             clearInterval(); 
                             /** Variable yang digunakan untuk submit secara otomatis di Form */
-                            var frmSoal = document.getElementById("form_soal"); 
+                            var frmSoal = document.getElementById("form_soal");                 
+                            localStorage.removeItem('selesai_test'); 
                             alert('Waktu Anda telah habis.');
                             frmSoal.submit(); 
                         } 
