@@ -67,8 +67,8 @@ $this->load->view('head_dosen');
                               <i class="fa fa-toggle-down"></i></button>
                             <ul class="dropdown-menu" role="menu">
                               <li><a data-toggle="modal" data-target="#modal-edit-<?php echo $value->id_kelas; ?>">Ubah Kelas</a></li>
-                              <li><a data-toggle="modal" data-target="#modal-delete")">Non-aktifkan</a></li>
-                              <li><a data-toggle="modal" data-target="#modal-edit-<?php echo $value->id_kelas; ?>">Hapus</a></li>
+                              <li><a data-toggle="modal" data-target="#modal-nonaktif-<?php echo $value->id_kelas;?>">Non-aktifkan</a></li>
+                              <li><a data-toggle="modal" data-target="#modal-delete-<?php echo $value->id_kelas;?>">Hapus</a></li>
                             </ul>
                           </div>
                         </div>
@@ -109,7 +109,7 @@ $this->load->view('head_dosen');
                               <i class="fa fa-toggle-down"></i></button>
                             <ul class="dropdown-menu" role="menu">
                               <li><a data-toggle="modal" data-target="#modal-edit">Ubah Kelas</a></li>
-                              <li><a data-toggle="modal" data-target="#modal-delete")">Aktifkan</a></li>
+                              <li><a data-toggle="modal" data-target="#modal-aktif-<?php echo $value->id_kelas;?>">Aktifkan</a></li>
                             </ul>
                           </div>
                         </div>
@@ -202,6 +202,90 @@ $this->load->view('head_dosen');
 <!-- /.modal-dialog -->
 </div>
 </div>
+<!-- /.modal -->
+
+<?php foreach ($kelasaktif as $value) { ?>
+<!-- modal untuk tambah pengumuman -->
+<div class="modal fade" id="modal-delete-<?php echo $value->id_kelas;?>">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><center>Hapus Kelas</center></h4>
+        </div>
+      <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/hapusKelas/'.$value->id_kelas); ?>">
+      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;">
+          <input type="hidden" name="id_kelas" value="<?php echo $value->id_kelas;?>">
+          <h5 class="modal-title"><b>Apakah Anda yakin untuk menghapus kelas ini?</b></h5>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+            <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
+      </div>
+  </form> 
+</div>
+  <!-- /.modal-content --> 
+</div>
+<!-- /.modal-dialog -->
+</div>
+<?php } ?>
+<!-- /.modal -->
+
+<?php foreach ($kelasaktif as $value) { ?>
+<!-- modal untuk tambah pengumuman -->
+<div class="modal fade" id="modal-nonaktif-<?php echo $value->id_kelas;?>">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><center>Non-Aktifkan Kelas</center></h4>
+        </div>
+      <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/nonAktifKelas/'.$value->id_kelas); ?>">
+      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;">
+          <input type="hidden" name="id_kelas" value="<?php echo $value->id_kelas;?>">
+          <h5 class="modal-title"><b>Apakah Anda yakin untuk menonaktifkan kelas ini?</b></h5>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+            <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
+      </div>
+  </form> 
+</div>
+  <!-- /.modal-content --> 
+</div>
+<!-- /.modal-dialog -->
+</div>
+<?php } ?>
+<!-- /.modal -->
+
+<?php foreach ($kelasnonaktif as $value) { ?>
+<!-- modal untuk tambah pengumuman -->
+<div class="modal fade" id="modal-aktif-<?php echo $value->id_kelas;?>">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><center>Aktifkan Kelas</center></h4>
+        </div>
+      <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/aktifkanKelas/'.$value->id_kelas); ?>">
+      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;">
+          <input type="text" name="id_kelas" value="<?php echo $value->id_kelas;?>">
+          <h5 class="modal-title"><b>Apakah Anda yakin untuk mengaktifkan kelas ini?</b></h5>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+            <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
+      </div>
+  </form> 
+</div>
+  <!-- /.modal-content --> 
+</div>
+<!-- /.modal-dialog -->
+</div>
+<?php } ?>
 <!-- /.modal -->
 
                       <?php foreach ($kelasaktif as $value) { ?>

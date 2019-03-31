@@ -3,63 +3,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MahasiswaC extends CI_Controller {
 
-    function __construct(){
-        parent::__construct();
-        $this->load->helper('url','form');
-        $this->load->model('MahasiswaM');
-        $this->model = $this->MahasiswaM;
-    }
+	function __construct(){
+		parent::__construct();
+		$this->load->helper('url','form');
+		$this->load->model('MahasiswaM');
+		$this->model = $this->MahasiswaM;
+	}
 
-    public function index()
-    { 
-        $email=$this->session->userdata('email');
+	public function index()
+	{ 
+		$email=$this->session->userdata('email');
         $id_user=$this->model->getUser($email);
         foreach ($id_user->result() as $key) {
-            $data=array(
-                "user"=>$this->model->getUser($email)->row_array(),
+    		$data=array(
+    			"user"=>$this->model->getUser($email)->row_array(),
                 "id_mhs"=>$this->model->getIdMhs($key->id_user)->row_array(),
                 "kelas"=>$this->model->getKelasbyUser($key->id_user)->result(),
-                "aktif"=>"mahasiswa"
-            );
+    			"aktif"=>"mahasiswa"
+    		);
         }
-        $this->load->view('mahasiswa/daftar_kelasV', $data);
-    }
+		$this->load->view('mahasiswa/daftar_kelasV', $data);
+	}
 
-    public function tampilProfil($id_user){
-        $data=array(
-            "user"=>$this->model->getUser1($id_user)->row_array(),
+	public function tampilProfil($id_user){
+		$data=array(
+			"user"=>$this->model->getUser1($id_user)->row_array(),
             "id_mhs"=>$this->model->getIdMhs($id_user)->row_array(),
             "univ"=>$this->model->getUniv(),
             "univ_mhs"=>$this->model->getUnivMhs($id_user),
-            "aktif"=>"mahasiswa"
-        );
-        $this->load->view('mahasiswa/edit_profilV', $data);
-    }
+			"aktif"=>"mahasiswa"
+		);
+		$this->load->view('mahasiswa/edit_profilV', $data);
+	}
 
-    public function ubahProfil() 
-    {
-        //get id user yang ingin di edit
-        $id_user = $this->input->post('id_user');
+	public function ubahProfil() 
+	{
+		//get id user yang ingin di edit
+		$id_user = $this->input->post('id_user');
 
-        $this->load->library('form_validation');
+		$this->load->library('form_validation');
 
-        $this->form_validation->set_rules('nama_depan','nama_depan','required');
-        $this->form_validation->set_rules('nama_belakang','nama_belakang','required');
-        $this->form_validation->set_rules('nim','nim','required');
-        $this->form_validation->set_rules('nama_univ','nama_univ');
-        $this->form_validation->set_rules('jenis_kelamin','jenis_kelamin','required');
-        $this->form_validation->set_rules('email','email','required');
+		$this->form_validation->set_rules('nama_depan','nama_depan','required');
+		$this->form_validation->set_rules('nama_belakang','nama_belakang','required');
+		$this->form_validation->set_rules('nim','nim','required');
+		$this->form_validation->set_rules('nama_univ','nama_univ');
+		$this->form_validation->set_rules('jenis_kelamin','jenis_kelamin','required');
+		$this->form_validation->set_rules('email','email','required');
 
-        if($this->form_validation->run() == FALSE){
+		if($this->form_validation->run() == FALSE){
       //jika form tidak lengkap maka akan dikembalikan ke route "akunAdminR"
-            redirect('MahasiswaC/tampilProfil/'.$id_user);
-        }else{
-            $nama_depan = $this->input->post('nama_depan');
-            $nama_belakang = $this->input->post('nama_belakang');
-            $nim = $this->input->post('nim');
-            $nama_univ = $this->input->post('nama_univ');
-            $jenis_kelamin = $this->input->post('jenis_kelamin');
-            $email = $this->input->post('email');
+			redirect('MahasiswaC/tampilProfil/'.$id_user);
+		}else{
+			$nama_depan = $this->input->post('nama_depan');
+			$nama_belakang = $this->input->post('nama_belakang');
+			$nim = $this->input->post('nim');
+			$nama_univ = $this->input->post('nama_univ');
+			$jenis_kelamin = $this->input->post('jenis_kelamin');
+			$email = $this->input->post('email');
 
             $config['upload_path'] = FCPATH.'gambar'; //path folder
             $config['allowed_types'] = "jpg|png|jpeg"; //type yang dapat diakses bisa anda sesuaikan
@@ -74,38 +74,38 @@ class MahasiswaC extends CI_Controller {
             $gambar = $this->upload->data('file_name');
 
             if ($gambar == ""){
-                $dataUser =  array(
-                    "nama_depan"=>$nama_depan,
-                    "nama_belakang"=>$nama_belakang,
-                    "jenis_kelamin"=>$jenis_kelamin,
-                    "id_univ"=>$nama_univ,
-                    "email"=>$email,
-                    "updateDtm"=>date('Y-m-d H:s:i')
-                );
-                $result = $this->MahasiswaM->ubahProfil($dataUser,$id_user);
-                $result2 = $this->MahasiswaM->ubahNIM($nim,$id_user);
+            	$dataUser =  array(
+            		"nama_depan"=>$nama_depan,
+            		"nama_belakang"=>$nama_belakang,
+            		"jenis_kelamin"=>$jenis_kelamin,
+            		"id_univ"=>$nama_univ,
+            		"email"=>$email,
+            		"updateDtm"=>date('Y-m-d H:s:i')
+            	);
+            	$result = $this->MahasiswaM->ubahProfil($dataUser,$id_user);
+            	$result2 = $this->MahasiswaM->ubahNIM($nim,$id_user);
             }else{ 
-                $gambarubah = $gambar;
-                $dataUser =  array(
-                    "nama_depan"=>$nama_depan,
-                    "nama_belakang"=>$nama_belakang,
-                    "jenis_kelamin"=>$jenis_kelamin,
-                    "id_univ"=>$nama_univ,
-                    "email"=>$email,
-                    "foto_profil"=>$gambarubah,
-                    "updateDtm"=>date('Y-m-d H:s:i')
-                );
-                $result = $this->MahasiswaM->ubahProfil($dataUser,$id_user);
-                $result2 = $this->MahasiswaM->ubahNIM($nim,$id_user);
+            	$gambarubah = $gambar;
+            	$dataUser =  array(
+            		"nama_depan"=>$nama_depan,
+            		"nama_belakang"=>$nama_belakang,
+            		"jenis_kelamin"=>$jenis_kelamin,
+            		"id_univ"=>$nama_univ,
+            		"email"=>$email,
+            		"foto_profil"=>$gambarubah,
+            		"updateDtm"=>date('Y-m-d H:s:i')
+            	);
+            	$result = $this->MahasiswaM->ubahProfil($dataUser,$id_user);
+            	$result2 = $this->MahasiswaM->ubahNIM($nim,$id_user);
             }
 
             if($result2 == TRUE)
             {
-                $this->session->set_flashdata('sukses', 'Akun berhasil diubah.');
+            	$this->session->set_flashdata('sukses', 'Akun berhasil diubah.');
             }
             else
             {
-                $this->session->set_flashdata('error', 'Akun gagal diubah.');
+            	$this->session->set_flashdata('error', 'Akun gagal diubah.');
             } 
 
             redirect('MahasiswaC/tampilProfil/'.$id_user);
@@ -114,126 +114,126 @@ class MahasiswaC extends CI_Controller {
 
     public function resetPassword() {
     //get id user yang akan diubah
-        $id_user = $this->input->post('id_user');
+    	$id_user = $this->input->post('id_user');
 
-        $this->load->library('form_validation');
+    	$this->load->library('form_validation');
 
-        $this->form_validation->set_rules('passlama','Password Lama','required');
-        $this->form_validation->set_rules('passbaru1','Password Baru','required');
-        $this->form_validation->set_rules('passbaru2','Password Baru','required');
+    	$this->form_validation->set_rules('passlama','Password Lama','required');
+    	$this->form_validation->set_rules('passbaru1','Password Baru','required');
+    	$this->form_validation->set_rules('passbaru2','Password Baru','required');
 
-        if($this->form_validation->run() == FALSE)
-        {
+    	if($this->form_validation->run() == FALSE)
+    	{
       //jika form tidak lengkap maka akan dikembalikan ke route "profilDosenR"
-            redirect('MahasiswaC/tampilProfil/'.$id_user);
-        }
-        else
-        {
-            $email = $this->session->userdata('email');
-            $pass = $this->input->post('passlama');
-            $passbaru1 = $this->input->post('passbaru1');
-            $passbaru2 = $this->input->post('passbaru2');
-            $passlama = md5($pass);
+    		redirect('MahasiswaC/tampilProfil/'.$id_user);
+    	}
+    	else
+    	{
+    		$email = $this->session->userdata('email');
+    		$pass = $this->input->post('passlama');
+    		$passbaru1 = $this->input->post('passbaru1');
+    		$passbaru2 = $this->input->post('passbaru2');
+    		$passlama = md5($pass);
 
-            $cek = $this->MahasiswaM->cekPassword($passlama, $email);
-            if(!empty($cek)){
-                if($passbaru1 == $passbaru2){
-                    $dataPassword = array(
-                        "password"=>md5($passbaru1)
-                    );
+    		$cek = $this->MahasiswaM->cekPassword($passlama, $email);
+    		if(!empty($cek)){
+    			if($passbaru1 == $passbaru2){
+    				$dataPassword = array(
+    					"password"=>md5($passbaru1)
+    				);
 
-                    $result = $this->MahasiswaM->resetPassword($dataPassword,$id_user);
+    				$result = $this->MahasiswaM->resetPassword($dataPassword,$id_user);
 
-                    if($result == TRUE){
-                        $this->session->set_flashdata('sukses','Reset password berhasil');
-                    }else{
-                        $this->session->set_flashdata('error','Reset password gagal');
-                    }
-                }else{
-                    $this->session->set_flashdata('error','Password baru tidak sesuai');
-                }
-            }else{
-                $this->session->set_flashdata('error','Password lama tidak sesuai');
-            }
+    				if($result == TRUE){
+    					$this->session->set_flashdata('sukses','Reset password berhasil');
+    				}else{
+    					$this->session->set_flashdata('error','Reset password gagal');
+    				}
+    			}else{
+    				$this->session->set_flashdata('error','Password baru tidak sesuai');
+    			}
+    		}else{
+    			$this->session->set_flashdata('error','Password lama tidak sesuai');
+    		}
 
-            redirect('MahasiswaC/tampilProfil/'.$id_user);
-        }
+    		redirect('MahasiswaC/tampilProfil/'.$id_user);
+    	}
     }
 
     public function gabungKelas() {
     // $id=$this->input->post('id_univ');
 
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('kode', 'kode','required');
-        if($this->form_validation->run() == FALSE) {
-            redirect('MahasiswaC/');
-        }else{
-            $id_mhs = $this->input->post('id_mhs');
-            $kode = $this->input->post('kode');
-            $getIdKelasbyKode = $this->model->getIdKelasbyKode($kode);
+    	$this->load->library('form_validation');
+    	$this->form_validation->set_rules('kode', 'kode','required');
+    	if($this->form_validation->run() == FALSE) {
+    		redirect('MahasiswaC/');
+    	}else{
+    		$id_mhs = $this->input->post('id_mhs');
+    		$kode = $this->input->post('kode');
+    		$getIdKelasbyKode = $this->model->getIdKelasbyKode($kode);
 
-            foreach ($getIdKelasbyKode->result_array() as $key) {
-                $data =  array(
-                    "id_mhs"=>$id_mhs,
-                    "id_kelas"=> $key['id_kelas'],
-                    "createDtm"=>date('Y-m-d H:s:i')
-                );
-            }
+    		foreach ($getIdKelasbyKode->result_array() as $key) {
+    			$data =  array(
+    				"id_mhs"=>$id_mhs,
+    				"id_kelas"=> $key['id_kelas'],
+    				"createDtm"=>date('Y-m-d H:s:i')
+    			);
+    		}
 
-            $result = $this->model->insertKelasMhs($data);
+    		$result = $this->model->insertKelasMhs($data);
 
-            if($result == TRUE)
-            {
-                $this->session->set_flashdata('sukses', 'Anda berhasil bergabung ke kelas.');
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'Anda gagal bergabung ke kelas.');
-            }
+    		if($result == TRUE)
+    		{
+    			$this->session->set_flashdata('sukses', 'Anda berhasil bergabung ke kelas.');
+    		}
+    		else
+    		{
+    			$this->session->set_flashdata('error', 'Anda gagal bergabung ke kelas.');
+    		}
 
-            redirect('MahasiswaC/');
-        }
+    		redirect('MahasiswaC/');
+    	}
     }
 
     public function detailKelas($id_kelas){ 
-        $email=$this->session->userdata('email');
+    	$email=$this->session->userdata('email');
         $kelas=$this->model->getKelas($id_kelas);
         $id_mhs = $this->model->getUser($email);
 
         foreach ($id_mhs->result_array() as $key) {  
-            foreach ($kelas->result_array() as $row) {
-                $data=array(
-                    "user"=>$this->model->getUser($email)->row_array(),
+        	foreach ($kelas->result_array() as $row) {
+        		$data=array(
+        			"user"=>$this->model->getUser($email)->row_array(),
                     "id_mhs"=>$key['id_mhs'],
-                    // "id_mhs"=>$this->model->getIdMhsbyEmail($email)->row_array(),
-                    "kelas"=>$this->model->getKelas($id_kelas)->row_array(),
-                    "getFakultasProdi"=>$this->model->getFakultasProdi($id_kelas)->row_array(),
-                    "pengumuman"=>$this->model->getPengumuman($id_kelas)->result(),
-                    "tugas"=>$this->model->getTugas($id_kelas)->result(),
+        			// "id_mhs"=>$this->model->getIdMhsbyEmail($email)->row_array(),
+        			"kelas"=>$this->model->getKelas($id_kelas)->row_array(),
+        			"getFakultasProdi"=>$this->model->getFakultasProdi($id_kelas)->row_array(),
+        			"pengumuman"=>$this->model->getPengumuman($id_kelas)->result(),
+        			"tugas"=>$this->model->getTugas($id_kelas)->result(),
                     "materi"=>$this->model->getMateri($id_kelas)->result(),
-                    "aktif"=>"mahasiswa"
-                );
-            }
-           $this->load->view('mahasiswa/detail_kelasV', $data);
+        			"aktif"=>"mahasiswa"
+        		);
+        	}
+    	   $this->load->view('mahasiswa/detail_kelasV', $data);
         }
     }
 
     public function tampilSoalPilgan($id)
     {
-        $email=$this->session->userdata('email');
+    	$email=$this->session->userdata('email');
         $id_user=$this->model->getUser($email);
-        $nomor=0;
+    	$nomor=0;
         foreach ($id_user->result() as $key) {
-        $data=array(
+    	$data=array(
             "user"=>$this->model->getUser($email)->row_array(),
-            "nomor" => $nomor,
-            "nama_tugas"=>$this->model->getSoalPilgan($id)->row_array(),
-            "soal"=>$this->model->getSoalPilgan($id)->result(),
-            "aktif"=>"mahasiswa"
-        );
+    		"nomor" => $nomor,
+    		"nama_tugas"=>$this->model->getSoalPilgan($id)->row_array(),
+    		"soal"=>$this->model->getSoalPilgan($id)->result(),
+    		"aktif"=>"mahasiswa"
+    	);
         }
 
-        $this->load->view('mahasiswa/soal_pilganV',$data);
+    	$this->load->view('mahasiswa/soal_pilganV',$data);
     }
 
     public function jawabSoal() {
@@ -241,7 +241,7 @@ class MahasiswaC extends CI_Controller {
      $id_tugas = $this->input->post('id_tugas');
      $id_mhs = $this->model->getUser($email);
 
-     foreach ($id_mhs->result_array() as $row) {        
+     foreach ($id_mhs->result_array() as $row) {    	
       foreach ($_POST['pilihan'] as $pilihan) {
          $pilih = $pilihan['id_soal_pilgan'];
          $kunci = $this->db->query("SELECT * FROM soal_pilgan WHERE id_soal_pilgan = '$pilih'")->result_array();

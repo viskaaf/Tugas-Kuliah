@@ -256,7 +256,7 @@ if($sukses)
              <input type="text" class="col-sm-10 form-control" name="nama_tugas" placeholder="Nama Tugas" required>
            </div>
          </div>
-         <input type="text" class="col-sm-10 form-control" name="tgl_mulai" id="tgl_mulai" value="<?php echo date('Y-m-d');?>" required>
+         <input type="hidden" class="col-sm-10 form-control" name="tgl_mulai" id="tgl_mulai" value="<?php echo date('Y-m-d');?>" required>
          <div class="form-group">
           <label for="" class="col-sm-3 control-label">Tanggal Selesai</label>
           <div class="col-sm-8">
@@ -365,7 +365,7 @@ if($sukses)
           <input type="hidden" name="id_kelas" id="id_kelas" value="<?php echo $kelas['id_kelas']?>">
           <div class="form-group">           
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota" required></input>
+              <input type="text" class="form-control" name="email1" placeholder="Masukkan email anggota" required></input>
             </div>
             <div id="tambah_email1">
              <a class="btn btn-primary btn-xs tooltips" name="tambah_soal1" id="email1" style="margin-top: 6px;">
@@ -375,7 +375,7 @@ if($sukses)
          </div>
          <div class="form-group" id="tambah1" hidden>           
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota"></input>
+              <input type="text" class="form-control" name="email2" placeholder="Masukkan email anggota"></input>
             </div>
             <div id="tambah_email2">
              <a class="btn btn-primary btn-xs tooltips" name="tambah_soal2" id="email2" style="margin-top: 6px;">
@@ -385,7 +385,7 @@ if($sukses)
          </div>
          <div class="form-group" id="tambah2" hidden>           
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota"></input>
+              <input type="text" class="form-control" name="email3" placeholder="Masukkan email anggota"></input>
             </div>
             <div id="tambah_email3">
              <a class="btn btn-primary btn-xs tooltips" name="tambah_soal3" id="email3" style="margin-top: 6px;">
@@ -395,7 +395,7 @@ if($sukses)
          </div>
          <div class="form-group" id="tambah3" hidden>           
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota"></input>
+              <input type="text" class="form-control" name="email4" placeholder="Masukkan email anggota"></input>
             </div>
             <div id="tambah_email4">
              <a class="btn btn-primary btn-xs tooltips" name="tambah_soal3" id="email4" style="margin-top: 6px;">
@@ -403,15 +403,15 @@ if($sukses)
              </a>
             </div>
          </div>
-         <div class="form-group" id="tambah4" hidden>           
+         <div class="form-group" id="tambah4" hidden>
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email" placeholder="Masukkan email anggota"></input>
+              <input type="text" class="form-control" name="email5" placeholder="Masukkan email anggota"></input>
             </div>
          </div>
         </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+        <!-- <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button> -->
         <button type="submit" class="btn btn-primary">Simpan</button>
       </div>
   </div>
@@ -434,7 +434,7 @@ if($sukses)
         </div>
         <div class="modal-body">
          <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/ubahTugas') ?>">
-          <input type="text" class="col-sm-10 form-control" id="id_kelas" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
+          <input type="hidden" class="col-sm-10 form-control" id="id_kelas" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
           <input type="hidden" class="col-sm-10 form-control" id="id_tugas" name="id_tugas" value="<?php echo $value->id_tugas; ?>">
           <div class="form-group">
            <label for="" class="col-sm-3 control-label">Nama Tugas</label>
@@ -442,13 +442,19 @@ if($sukses)
              <input type="text" class="col-sm-10 form-control" id="nama_tugas" name="nama_tugas" value="<?php echo $value->nama_tugas; ?>">
            </div>
          </div>
-            <input type="text" class="col-sm-10 form-control" name="tgl_mulai" value="<?php echo date("d/m/Y",strtotime($value->tgl_mulai)); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+            <input type="hidden" class="col-sm-10 form-control" name="tgl_mulai" value="<?php echo date("d/m/Y",strtotime($value->tgl_mulai)); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
           <div class="form-group">
             <label for="" class="col-sm-3 control-label">Tanggal Selesai</label>
             <div class="col-sm-8">
-              <input type="date" class="col-sm-10 form-control" name="tgl_selesai" value="<?php echo date("Y-m-d",strtotime($value->tgl_selesai)); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask> 
+              <input type="date" class="col-sm-10 form-control" name="tgl_selesai" value="<?php echo date("Y-m-d",strtotime($value->tgl_selesai)); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask min="<?php echo date('Y-m-d');?>"> 
             </div>
-          </div> 
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-3 control-label">Jenis Tugas</label>
+            <div class="col-sm-8">
+              <input type="text" class="col-sm-10 form-control" name="jenis_tugas" value="<?php echo $value->jenis_tugas; ?>" required readonly>
+            </div>
+          </div>
           <?php if($value->jenis_tugas == "Pilihan Ganda") { ?>
           <div class="form-group" id="waktu">
              <label for="" class="col-sm-3 control-label">Waktu</label>
@@ -505,7 +511,7 @@ if($sukses)
           <h4 class="modal-title"><center>Hapus Tugas</center></h4>
         </div>
       <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/hapusTugas/'.$value->id_tugas); ?>">
-      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;>
+      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;">
           <input type="hidden" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
           <input type="hidden" name="id_pengumuman" value="<?php echo $value->id_tugas;?>">
           <h5 class="modal-title"><b>Apakah Anda yakin untuk menghapus tugas ini?</b></h5>
@@ -676,15 +682,6 @@ if($sukses)
 
     $("#tgl_selesai").datepicker({ minDate: 0 });
     $('#tgl_selesai').datepicker({dateFormat: 'yyyy-mm-dd'});
-
-    $("#jenis_tugas").change(function(){
-        // $("#waktu").hide()
-        if($(this).val() == "jenis_tugas1"){
-          $("#waktu").show();
-        }else{
-          $("#waktu").hide();
-        }
-      });
   })
 </script>
 
