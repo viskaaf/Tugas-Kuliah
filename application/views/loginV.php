@@ -30,7 +30,7 @@
 <body class="hold-transition login-page" style="background-image: url('gambar/background1.png'); height: 600px;">
 <div class="login-box">
   <div class="login-logo">
-    <a><b>Tugas </b>Kuliah</a>
+    <a href="<?php echo base_url('HomeC') ?>"><b>Tugas </b>Kuliah</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body" style="background:rgba(255,255,255,0.4);">
@@ -62,7 +62,7 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <br>
-      <button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Masuk</button><br>
+      <button type="submit" name="login" class="btn btn-primary btn-block btn-flat">Login</button><br>
       <div class="row">
         <!-- /.col -->
         <div class="col-xs-8">

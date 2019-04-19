@@ -5,40 +5,52 @@ $this->load->view('head_admin');
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <section class="content-header">
+  <div class="box box-info col-xs-12" style="border-top-color: #fff">
+  <!-- <section class="content-header"> -->
     <h1>
       Universitas
     </h1>
+  <!-- </section> -->
+  <!-- <div style="margin-left: 15px; margin-right: 15px; margin-top: 10px;"> -->
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Universitas</li>
+        <li><a href="<?php echo base_url('AdminC/')?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li class="active">Universitas</li>
     </ol>
+  <!-- </div> -->
+  </div>
   </section>
 
   <!-- Main Content -->
   <section class="content">
     <div class="row">
-      <!-- Alert -->
-      <?php
-      $data=$this->session->flashdata('sukses');
-      if($data!=""){ ?>
-        <div class="alert alert-success" id="success-alert"><strong>Sukses! </strong> <?=$data;?></div>
-      <?php } ?>
-      <?php 
-      $data2=$this->session->flashdata('error');
-      if($data2!=""){ ?>
-        <div class="alert alert-danger" id="success-alert"><strong> Error! </strong> <?=$data2;?></div>
-      <?php } ?>
-      <!-- sampai sini -->
       <div class="col-xs-12">
-        <div style="padding-bottom: 20px;">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-square"></i>  Tambah</button>
-        </div>
-        <div class="box">
+        <!-- Alert -->
+        <?php
+        $data=$this->session->flashdata('sukses');
+        if($data!=""){ ?>
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+            <?=$data;?>
+          </div>
+          <!-- <div class="alert alert-success" id="success-alert"><strong>Sukses! </strong> <?=$data;?></div> -->
+        <?php } ?>
+        <?php 
+        $data2=$this->session->flashdata('error');
+        if($data2!=""){ ?>
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Error!</h4>
+            <?=$data2;?>
+          </div>
+          <!-- <div class="alert alert-danger" id="success-alert"><strong> Error! </strong> <?=$data2;?></div> -->
+        <?php } ?>
+        <!-- sampai sini -->
+        <div class="box box-info" style="border-top-color: #fff">
           <!-- Box Header -->
           <div class="box-body">
-            <div class="row" style="padding-bottom: 15px;">
-
-            </div>
+            <button type="button" class="btn btn-primary pull-right" style="background-color: #002231" data-toggle="modal" data-target="#modal-add">Tambah Universitas</button>
+            <div class="row" style="padding-bottom: 10px;"></div>
             <table id="universitas" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -58,7 +70,7 @@ $this->load->view('head_admin');
                     <a class="btn btn-primary btn-xs tooltips" data-toggle="modal" data-target="#modal-<?php echo $value->id_univ; ?>">
                       <span data-toggle="tooltip" data-original-title="Ubah Kelas" <i class="fa fa-edit"></i></span>
                     </a>
-                    <a class="btn btn-success btn-xs tooltips" href="<?php echo site_url('AdminC/daftarFakultas/'.$value->id_univ) ?>">
+                    <a class="btn btn-info btn-xs tooltips" href="<?php echo site_url('AdminC/daftarFakultas/'.$value->id_univ) ?>">
                       <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-search"></i></span>
                     </a></center>
                   </td>
@@ -175,6 +187,19 @@ $this->load->view('head_admin');
       'autoWidth'   : false
     })
   })
+
+  /** add active class and stay opened when selected */
+  var url = window.location;
+
+    // for sidebar menu entirely but not cover treeview
+    $('ul.sidebar-menu a').filter(function() {
+      return this.href == url;
+    }).parent().addClass('active');
+
+    // for treeview
+    $('ul.treeview-menu a').filter(function() {
+      return this.href == url;
+    }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
 </script>
 </body>
 <footer class="main-footer">

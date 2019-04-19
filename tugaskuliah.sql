@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 30 Mar 2019 pada 08.26
+-- Generation Time: 19 Apr 2019 pada 12.24
 -- Versi Server: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -131,7 +131,11 @@ CREATE TABLE `dosen` (
 
 INSERT INTO `dosen` (`id_dosen`, `nip`, `id_user`, `createDtm`, `updateDtm`) VALUES
 (1, '987654', 2, NULL, '0000-00-00 00:00:00'),
-(2, '912345', 1, NULL, '0000-00-00 00:00:00');
+(2, '912345', 1, NULL, '0000-00-00 00:00:00'),
+(3, '11019288', 17, NULL, '0000-00-00 00:00:00'),
+(4, '99999999', 7, NULL, '0000-00-00 00:00:00'),
+(5, '3456987654', 19, NULL, '0000-00-00 00:00:00'),
+(6, '987654', 25, NULL, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -185,10 +189,9 @@ CREATE TABLE `jawaban_essay` (
 --
 
 INSERT INTO `jawaban_essay` (`id_jawaban_essay`, `jawaban`, `path_file`, `id_soal_essay`, `id_mhs`, `createDtm`, `updateDtm`) VALUES
-(1, 'ini jawabannya', '56.pdf', 13, 3, '2018-12-06 09:32:44', '2018-12-06 09:32:44'),
-(4, 'Berikut ini jawaban dari soal tersebut', 'Artikel_11104011.pdf', 13, 5, '2018-12-06 05:19:09', '2018-12-06 11:09:19'),
-(5, 'Berikut ini jawabannya', '10-37-1-PB.pdf', 14, 6, '2018-12-06 17:19:09', '2018-12-06 23:09:19'),
-(6, 'Berikut jawaban', '', 14, 5, '2018-12-19 02:47:35', '2018-12-19 08:35:47');
+(1, 'ini', '(Rev_2)_Project_Management_Plan_SI__Taaruf_Yuk.pdf', 13, 3, '2019-04-09 21:29:30', '2019-04-10 02:30:29'),
+(2, 'jawaban', 'BAB_I.pdf', 22, 3, '2019-04-10 07:43:28', '2019-04-10 12:28:43'),
+(3, 'ini jawabannya', '(Rev_2)_Project_Management_Plan_SI__Taaruf_Yuk.pdf', 25, 3, '2019-04-11 03:07:23', '2019-04-11 03:23:07');
 
 -- --------------------------------------------------------
 
@@ -198,9 +201,9 @@ INSERT INTO `jawaban_essay` (`id_jawaban_essay`, `jawaban`, `path_file`, `id_soa
 
 CREATE TABLE `jawaban_pilgan` (
   `id_jawaban_pilgan` int(11) NOT NULL,
-  `jawaban` varchar(255) NOT NULL,
-  `status` enum('B','S') NOT NULL,
-  `id_soal_pilgan` int(11) NOT NULL,
+  `jawaban` varchar(1) DEFAULT NULL,
+  `status` enum('B','S') DEFAULT NULL,
+  `id_soal_pilgan` int(11) DEFAULT NULL,
   `id_mhs` int(11) NOT NULL,
   `createDtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateDtm` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
@@ -211,15 +214,25 @@ CREATE TABLE `jawaban_pilgan` (
 --
 
 INSERT INTO `jawaban_pilgan` (`id_jawaban_pilgan`, `jawaban`, `status`, `id_soal_pilgan`, `id_mhs`, `createDtm`, `updateDtm`) VALUES
-(139, 'A', 'B', 60, 3, '2018-11-26 06:02:07', '2018-12-06 04:44:00'),
-(140, 'C', 'B', 61, 3, '2018-11-26 06:02:07', '2018-12-06 04:43:52'),
-(141, 'C', 'S', 62, 3, '2018-11-26 06:02:07', '2018-12-06 04:43:45'),
-(142, 'C', 'S', 63, 3, '2018-11-26 06:02:07', '2018-12-06 04:43:36'),
 (153, 'B', 'S', 29, 5, '2018-12-19 02:22:34', '0000-00-00 00:00:00'),
-(155, 'B', 'S', 60, 5, '2018-12-19 02:27:36', '0000-00-00 00:00:00'),
-(156, 'B', 'S', 61, 5, '2018-12-19 02:28:36', '0000-00-00 00:00:00'),
-(157, 'B', 'B', 62, 5, '2018-12-19 02:28:36', '0000-00-00 00:00:00'),
-(158, 'D', 'B', 63, 5, '2018-12-19 02:28:36', '0000-00-00 00:00:00');
+(243, 'A', 'B', 71, 3, '2019-04-09 05:57:18', '0000-00-00 00:00:00'),
+(244, 'A', 'S', 72, 3, '2019-04-09 05:57:18', '0000-00-00 00:00:00'),
+(245, 'A', 'S', 73, 3, '2019-04-09 05:57:18', '0000-00-00 00:00:00'),
+(246, 'A', 'B', 74, 3, '2019-04-09 05:57:18', '0000-00-00 00:00:00'),
+(251, 'A', 'S', 69, 3, '2019-04-09 05:31:30', '0000-00-00 00:00:00'),
+(252, 'C', 'S', 70, 3, '2019-04-09 05:31:30', '0000-00-00 00:00:00'),
+(253, NULL, 'S', 69, 3, '2019-04-09 21:06:15', '0000-00-00 00:00:00'),
+(254, NULL, 'S', 70, 3, '2019-04-09 21:06:15', '0000-00-00 00:00:00'),
+(255, 'B', 'B', 75, 3, '2019-04-10 07:26:27', '0000-00-00 00:00:00'),
+(256, 'A', 'B', 76, 3, '2019-04-10 07:26:27', '0000-00-00 00:00:00'),
+(257, NULL, 'S', 80, 3, '2019-04-11 03:55:21', '0000-00-00 00:00:00'),
+(258, NULL, 'S', 81, 3, '2019-04-11 03:55:21', '0000-00-00 00:00:00'),
+(259, 'A', 'B', 80, 3, '2019-04-11 03:22:22', '0000-00-00 00:00:00'),
+(260, 'B', 'B', 81, 3, '2019-04-11 03:22:22', '0000-00-00 00:00:00'),
+(261, 'A', 'B', 60, 3, '2019-04-14 10:42:17', '0000-00-00 00:00:00'),
+(262, 'C', 'B', 61, 3, '2019-04-14 10:42:17', '0000-00-00 00:00:00'),
+(263, 'C', 'S', 62, 3, '2019-04-14 10:42:17', '0000-00-00 00:00:00'),
+(264, 'D', 'B', 63, 3, '2019-04-14 10:42:17', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -243,22 +256,26 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `kode`, `status_kelas`, `id_det_fakultasprodi`, `id_dosen`, `createDtm`, `updateDtm`) VALUES
-(1, 'Biologi A', 'b1li07', 'Aktif', 1, 2, '2018-09-09 21:13:09', '0000-00-00 00:00:00'),
+(1, 'Biologi A', 'b1li07', 'Aktif', 1, 2, '2018-09-09 21:13:09', '2019-04-04 03:40:43'),
 (9, 'Farmasi A', 'yp1bom', 'Aktif', 5, 2, '2018-09-20 00:40:44', '0000-00-00 00:00:00'),
 (10, 'Manajemen B1', 'zsfz82', 'Aktif', 4, 2, '2018-09-20 00:36:45', '0000-00-00 00:00:00'),
-(11, 'Biologi C', 'z4zqe4', 'Tidak Aktif', 1, 2, '2018-09-20 00:11:46', '2018-12-25 09:55:44'),
-(12, 'Farmai B', 'dj934f', 'Aktif', 5, 2, '2018-09-20 00:33:46', '0000-00-00 00:00:00'),
+(11, 'Biologi C', 'z4zqe4', 'Tidak Aktif', 1, 2, '2018-09-20 00:11:46', '2019-03-30 06:28:53'),
 (15, 'Kimia A', 'rtw7af', 'Aktif', 17, 1, '2018-10-22 21:34:44', '0000-00-00 00:00:00'),
 (16, 'Kimia B', '6aguxw', 'Aktif', 17, 1, '2018-10-23 09:33:11', '0000-00-00 00:00:00'),
 (17, 'Kimia C', 'xvw7v9', 'Aktif', 17, 1, '2018-10-23 09:58:33', '0000-00-00 00:00:00'),
 (18, 'Kimia D', 'zu2256', 'Aktif', 17, 1, '2018-10-23 09:36:37', '0000-00-00 00:00:00'),
-(19, 'serah', 'oiot2r', 'Aktif', 13, 1, '2018-10-23 09:13:40', '0000-00-00 00:00:00'),
 (20, 'Akuntansi B1', 'cy9su4', 'Aktif', 2, 2, '2018-12-19 20:46:25', '0000-00-00 00:00:00'),
-(21, 'Filsafat AB', 'nu338k', 'Aktif', 6, 2, '2018-12-19 20:10:30', '0000-00-00 00:00:00'),
-(22, 'Bio 1', '0ggfpk', 'Aktif', 1, 2, '2018-12-19 20:35:32', '0000-00-00 00:00:00'),
-(23, 'Bio2', 'q1m1la', 'Tidak Aktif', 1, 2, '2018-12-19 20:07:36', '2018-12-25 10:24:00'),
-(24, 'Ekonomi A17', '483ezx', 'Aktif', 3, 2, '2019-02-01 07:43:43', '0000-00-00 00:00:00'),
-(25, 'A', 'z2gbuf', 'Aktif', 13, 2, '2019-03-25 23:35:53', '0000-00-00 00:00:00');
+(21, 'Filsafat AB', 'nu338k', 'Tidak Aktif', 6, 2, '2018-12-19 20:10:30', '2019-04-02 20:33:03'),
+(23, 'Bio2', 'q1m1la', 'Aktif', 1, 2, '2018-12-19 20:07:36', '2019-04-11 02:52:43'),
+(24, 'Ekonomi A17', '483ezx', 'Aktif', 3, 2, '2019-02-01 07:43:43', '2019-03-31 00:54:25'),
+(25, 'Teknik A', 'up4yx5', 'Aktif', 16, 3, '2019-04-02 10:13:55', '0000-00-00 00:00:00'),
+(26, 'ABC', '6pk82z', 'Aktif', 13, 3, '2019-04-02 11:12:04', '0000-00-00 00:00:00'),
+(27, 'AB', 'zmcr6v', 'Aktif', 15, 3, '2019-04-02 11:20:08', '0000-00-00 00:00:00'),
+(43, 'Algoritma Pemrograman', 'w18xfs', 'Aktif', 3, 2, '2019-04-08 05:38:41', '0000-00-00 00:00:00'),
+(45, 'PAPB1', '5gkrp2', 'Aktif', 1, 2, '2019-04-08 07:31:56', '0000-00-00 00:00:00'),
+(46, 'Ekonomi', 'apo3sr', 'Aktif', 3, 6, '2019-04-10 14:02:17', '0000-00-00 00:00:00'),
+(47, 'coba', 'y3af5e', 'Aktif', 1, 2, '2019-04-11 09:15:04', '0000-00-00 00:00:00'),
+(48, 'Ekonomi A', 'st3vf1', 'Aktif', 3, 2, '2019-04-11 10:30:15', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -281,10 +298,22 @@ CREATE TABLE `kelas_mhs` (
 INSERT INTO `kelas_mhs` (`id_kelas_mhs`, `id_mhs`, `id_kelas`, `createDtm`, `updateDtm`) VALUES
 (3, 3, 1, '2018-11-05 13:17:48', '2018-11-05 12:48:17'),
 (5, 5, 1, '2018-12-04 09:28:47', '2018-12-04 08:47:28'),
-(15, 6, 1, NULL, '2019-03-28 23:58:38'),
-(16, 7, 1, NULL, '2019-03-28 23:58:58'),
-(17, 8, 1, NULL, '2019-03-29 00:01:17'),
-(18, 5, 9, '2019-03-30 00:52:36', '2019-03-29 23:36:52');
+(18, 5, 9, '2019-03-30 00:52:36', '2019-03-29 23:36:52'),
+(19, 6, 9, NULL, '2019-03-31 08:38:53'),
+(21, 8, 9, NULL, '2019-03-31 08:40:25'),
+(28, 3, 9, NULL, '2019-03-31 09:19:02'),
+(37, 3, 10, NULL, '2019-04-04 01:13:05'),
+(45, 8, 1, NULL, '2019-04-05 04:33:51'),
+(82, 6, 1, NULL, '2019-04-08 00:01:26'),
+(84, 3, 45, NULL, '2019-04-08 06:01:11'),
+(85, 5, 45, NULL, '2019-04-08 06:45:51'),
+(86, 3, 46, NULL, '2019-04-10 12:18:44'),
+(87, 6, 46, NULL, '2019-04-10 12:18:44'),
+(88, 3, 24, '2019-04-11 04:05:37', '2019-04-10 22:52:44'),
+(92, 3, 47, NULL, '2019-04-11 02:11:42'),
+(94, 3, 23, '2019-04-11 09:46:43', '2019-04-11 02:46:43'),
+(95, 3, 48, NULL, '2019-04-11 03:16:24'),
+(96, 6, 48, NULL, '2019-04-11 03:16:24');
 
 -- --------------------------------------------------------
 
@@ -308,8 +337,9 @@ INSERT INTO `mahasiswa` (`id_mhs`, `nim`, `id_user`, `createDtm`, `updateDtm`) V
 (3, '15/386079/SV/09465', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (5, '15/386079/SV/08253', 16, '0000-00-00 00:00:00', '2018-12-17 10:18:17'),
 (6, '1234567', 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, '9876543', 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, '564356', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(8, '564356', 7, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(10, '5535638', 11, NULL, '0000-00-00 00:00:00'),
+(11, '5678998', 21, NULL, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -333,7 +363,11 @@ CREATE TABLE `materi` (
 
 INSERT INTO `materi` (`id_materi`, `nama_materi`, `path_file`, `status_materi`, `id_kelas`, `createDtm`, `updateDtm`) VALUES
 (7, 'Sistem Respirasi', 'doc.pdf', 'Aktif', 1, '2019-02-01 00:27:54', '2019-03-29 20:21:34'),
-(8, 'Ekosistem Alam', 'Artikel_11104011.pdf', 'Aktif', 1, '2019-03-29 20:57:53', '2019-03-29 20:15:54');
+(8, 'Ekosistem Alam', 'Artikel_11104011.pdf', 'Aktif', 1, '2019-03-29 20:57:53', '2019-04-02 19:30:57'),
+(9, 'Materi1', '380446_20171_uts__20171125090353.pdf', 'Aktif', 45, '2019-04-08 00:14:57', '2019-04-08 05:57:14'),
+(10, 'ekonomi', '2014-1-00918-SI_Bab1001.pdf', 'Aktif', 46, '2019-04-10 07:41:21', '2019-04-10 12:21:41'),
+(11, 'Sistem Pernapasan', '10-37-1-PB.pdf', 'Aktif', 47, '2019-04-11 02:41:28', '2019-04-11 02:28:41'),
+(12, 'Materi1', 'Artikel_11104011.pdf', 'Aktif', 48, '2019-04-11 03:34:20', '2019-04-11 03:20:34');
 
 -- --------------------------------------------------------
 
@@ -343,7 +377,8 @@ INSERT INTO `materi` (`id_materi`, `nama_materi`, `path_file`, `status_materi`, 
 
 CREATE TABLE `nilai` (
   `id_nilai` int(11) NOT NULL,
-  `nilai` int(3) NOT NULL,
+  `nilai` tinyint(3) NOT NULL,
+  `status_nilai` enum('Sudah Dinilai','Belum Dinilai','Belum Dikerjakan','Tidak Dikerjakan') NOT NULL,
   `id_mhs` int(11) NOT NULL,
   `id_tugas` int(11) NOT NULL,
   `createDtm` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -354,14 +389,31 @@ CREATE TABLE `nilai` (
 -- Dumping data untuk tabel `nilai`
 --
 
-INSERT INTO `nilai` (`id_nilai`, `nilai`, `id_mhs`, `id_tugas`, `createDtm`, `updateDtm`) VALUES
-(29, 50, 3, 75, '2018-11-26 16:24:54', '0000-00-00 00:00:00'),
-(38, 70, 5, 83, '2018-12-06 15:35:36', '0000-00-00 00:00:00'),
-(40, 100, 6, 85, '2018-12-06 17:24:24', '0000-00-00 00:00:00'),
-(41, 0, 5, 63, '2018-12-19 08:34:22', '0000-00-00 00:00:00'),
-(42, -100, 5, 63, '2018-12-19 08:35:03', '0000-00-00 00:00:00'),
-(43, 50, 5, 75, '2018-12-19 08:36:28', '0000-00-00 00:00:00'),
-(44, -200, 5, 63, '2018-12-19 10:27:58', '0000-00-00 00:00:00');
+INSERT INTO `nilai` (`id_nilai`, `nilai`, `status_nilai`, `id_mhs`, `id_tugas`, `createDtm`, `updateDtm`) VALUES
+(1, 0, 'Tidak Dikerjakan', 3, 83, '2019-04-10 15:14:47', '2019-04-10 15:14:47'),
+(2, 0, 'Tidak Dikerjakan', 5, 83, '2019-04-10 14:59:50', '2019-04-10 09:50:59'),
+(3, 0, 'Tidak Dikerjakan', 6, 83, '2019-04-10 14:59:50', '2019-04-10 09:50:59'),
+(4, 0, 'Tidak Dikerjakan', 8, 83, '2019-04-10 14:59:50', '2019-04-10 09:50:59'),
+(5, 90, 'Sudah Dinilai', 3, 83, '2019-04-10 02:33:26', '2019-04-09 21:26:33'),
+(6, 0, 'Tidak Dikerjakan', 3, 125, '2019-04-10 19:30:38', '2019-04-10 19:30:38'),
+(7, 0, 'Tidak Dikerjakan', 5, 125, '2019-04-10 19:30:38', '2019-04-10 19:30:38'),
+(8, 0, 'Tidak Dikerjakan', 3, 126, '2019-04-10 19:30:38', '2019-04-10 19:30:38'),
+(9, 0, 'Tidak Dikerjakan', 5, 126, '2019-04-10 19:30:38', '2019-04-10 19:30:38'),
+(10, 100, 'Sudah Dinilai', 3, 127, '2019-04-10 12:27:26', '2019-04-10 07:26:27'),
+(11, 0, 'Tidak Dikerjakan', 6, 127, '2019-04-10 19:30:38', '2019-04-10 19:30:38'),
+(13, 0, 'Tidak Dikerjakan', 6, 128, '2019-04-10 19:30:38', '2019-04-10 19:30:38'),
+(14, 0, 'Belum Dinilai', 3, 128, '2019-04-10 12:28:43', '0000-00-00 00:00:00'),
+(15, 0, 'Tidak Dikerjakan', 3, 129, '2019-04-10 19:30:38', '2019-04-10 19:30:38'),
+(16, 0, 'Tidak Dikerjakan', 5, 129, '2019-04-10 19:30:38', '2019-04-10 19:30:38'),
+(17, 0, 'Belum Dikerjakan', 3, 130, '2019-04-10 19:19:43', '0000-00-00 00:00:00'),
+(18, 0, 'Belum Dikerjakan', 5, 130, '2019-04-10 19:19:43', '0000-00-00 00:00:00'),
+(19, 0, 'Belum Dikerjakan', 3, 131, '2019-04-11 02:16:14', '0000-00-00 00:00:00'),
+(20, 0, 'Belum Dikerjakan', 3, 132, '2019-04-11 02:45:22', '0000-00-00 00:00:00'),
+(21, 0, 'Sudah Dinilai', 3, 133, '2019-04-11 03:22:22', '2019-04-11 03:22:22'),
+(22, 0, 'Belum Dikerjakan', 6, 133, '2019-04-11 03:21:17', '0000-00-00 00:00:00'),
+(23, 0, 'Belum Dikerjakan', 3, 134, '2019-04-11 03:43:19', '0000-00-00 00:00:00'),
+(24, 0, 'Belum Dikerjakan', 6, 134, '2019-04-11 03:43:19', '0000-00-00 00:00:00'),
+(25, 90, 'Sudah Dinilai', 3, 134, '2019-04-11 03:23:57', '2019-04-11 03:57:23');
 
 -- --------------------------------------------------------
 
@@ -392,7 +444,20 @@ INSERT INTO `pengumuman` (`id_pengumuman`, `pengumuman`, `id_kelas`, `createDtm`
 (14, 'Hari ini kuis bab terakhir.', 1, '2018-12-21 11:55:01', '2018-12-21 10:01:55'),
 (15, 'Saya terlambat masuk 15 menit.', 1, '2019-03-28 06:19:52', '2019-03-28 05:52:19'),
 (16, 'Tugas dikumpulkan diruangan saya. Terimakasih.', 1, '2019-03-28 06:44:52', '2019-03-28 05:52:44'),
-(17, 'Ada tugas baru silahkan dikerjakan', 1, '2019-03-30 03:18:55', '2019-03-30 02:55:18');
+(17, 'Ada tugas baru silahkan dikerjakan', 1, '2019-03-30 03:18:55', '2019-03-30 02:55:18'),
+(20, 'kerjakan', 10, '2019-04-04 02:34:33', '2019-04-04 00:33:34'),
+(21, 'lanjut', 10, '2019-04-04 02:51:34', '2019-04-04 00:34:51'),
+(22, 'kosong', 10, '2019-04-04 02:47:39', '2019-04-04 00:39:47'),
+(23, 'telat', 10, '2019-04-04 02:20:57', '2019-04-04 00:57:20'),
+(24, 'coba', 10, '2019-04-04 02:45:58', '2019-04-04 00:58:45'),
+(25, 'coba1', 10, '2019-04-04 02:33:59', '2019-04-04 00:59:33'),
+(26, 'coba2', 10, '2019-04-04 03:43:13', '2019-04-04 01:13:43'),
+(27, 'coba3', 10, '2019-04-04 03:32:15', '2019-04-04 01:15:32'),
+(49, 'Pengumuman', 45, '2019-04-08 07:30:57', '2019-04-08 05:57:30'),
+(50, 'kelas kosong hari ini.', 46, '2019-04-10 14:24:19', '2019-04-10 12:19:24'),
+(51, 'aaa', 20, '2019-04-11 03:04:49', '2019-04-10 20:49:04'),
+(53, 'kelas kosong', 47, '2019-04-11 09:09:29', '2019-04-11 02:29:09'),
+(54, 'kelas kosong', 48, '2019-04-11 10:01:21', '2019-04-11 03:21:01');
 
 -- --------------------------------------------------------
 
@@ -456,8 +521,13 @@ CREATE TABLE `soal_essay` (
 --
 
 INSERT INTO `soal_essay` (`id_soal_essay`, `keterangan`, `path_file`, `status_soal_essay`, `id_tugas`, `createDtm`, `updateDtm`) VALUES
-(13, 'kerjakan soal ini yaaaaa', '78-Article_Text-234-1-10-20170518.pdf', 'Aktif', 83, '2018-11-30 18:59:23', '0000-00-00 00:00:00'),
-(14, 'zzzzz', '56.pdf', 'Aktif', 85, '2018-11-30 18:22:28', '0000-00-00 00:00:00');
+(13, 'bbb', 'BAB_I.pdf', 'Aktif', 83, '2019-04-08 05:39:20', '2019-04-08 03:20:39'),
+(14, 'zzzzz', '56.pdf', 'Aktif', 85, '2018-11-30 18:22:28', '0000-00-00 00:00:00'),
+(21, 'Buat aartikel!', 'Artikel_11104011.pdf', 'Aktif', 122, '2019-04-08 08:32:47', '2019-04-08 06:47:32'),
+(22, 'kerjakan', '12349384.pdf', 'Aktif', 128, '2019-04-10 14:15:25', '0000-00-00 00:00:00'),
+(23, 'aaa', 'VISKA_AYU_F.pdf', 'Aktif', 130, '2019-04-11 02:29:46', '0000-00-00 00:00:00'),
+(24, 'dikerjakan', 'Artikel_11104011.pdf', 'Aktif', 132, '2019-04-11 09:24:26', '0000-00-00 00:00:00'),
+(25, 'kerjakan', '10-37-1-PB.pdf', 'Aktif', 134, '2019-04-11 10:03:20', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -491,8 +561,21 @@ INSERT INTO `soal_pilgan` (`id_soal_pilgan`, `soal_pilgan`, `gambar`, `pil_a`, `
 (61, 'Saat makan lebih baik mengunyah makanan sebanyak ... kali', '', '20', '25', '32', '31', '', 'C', 'Aktif', 75, '2018-11-26 10:03:29', '2018-11-26 09:29:03'),
 (62, 'Lidah bagian belakang berfungsi untuk mengecap rasa ...', '', 'manis', 'pahit', 'asin', 'asam', '', 'B', 'Aktif', 75, '2018-11-26 10:57:29', '2018-11-26 09:29:57'),
 (63, 'Bakteri Ecoli berada pada usus ...', '', 'usus halus', 'usus 12 jari', 'usus buntu', 'usus besar', '', 'D', 'Aktif', 75, '2018-11-26 10:20:31', '2018-11-26 09:31:20'),
-(64, 'Hewan pemakan daging adalah ...', NULL, 'Karnivora', 'Herbivora', 'Omnivora', 'Pemakan segala', NULL, 'A', 'Aktif', 90, NULL, '2019-03-27 22:14:01'),
-(65, 'Hewan pemakan tumbuhan adalah ...', NULL, 'Omnivora', 'Herbivora', 'Karnivora', 'Pemakan segala', NULL, 'B', 'Aktif', 90, NULL, '2019-03-27 22:15:47');
+(67, 'soal1', '', '1', '2', '3', '4', '5', 'A', 'Aktif', 121, '2019-04-08 05:32:49', '2019-04-08 01:29:33'),
+(68, 'soal2', NULL, '1', '2', '3', '4', '5', 'B', 'Aktif', 121, '2019-04-08 05:32:49', '2019-04-08 03:49:32'),
+(69, 'aaaa', '', 'a', 'b', 'c', 'd', '', 'B', 'Aktif', 123, '2019-04-09 09:55:31', '2019-04-09 07:31:55'),
+(70, 'bbb', '', 'a', 'b', 'c', 'd', '', 'A', 'Aktif', 123, '2019-04-09 09:13:32', '2019-04-09 07:32:13'),
+(71, 'aaaaaaa', '', 'a', 'a', '', '', '', 'A', 'Aktif', 124, '2019-04-09 10:39:32', '2019-04-09 08:32:39'),
+(72, 'bbbbbbbb', '', 'a', 'b', '', '', '', 'B', 'Aktif', 124, '2019-04-09 10:50:32', '2019-04-09 08:32:50'),
+(73, 'ccccccc', '', 'e', 'q', '', '', '', 'B', 'Aktif', 124, '2019-04-09 10:00:33', '2019-04-09 08:33:00'),
+(74, 'qqqqqqqq', '', 'w', 'e', '', '', '', 'A', 'Aktif', 124, '2019-04-09 10:09:33', '2019-04-09 08:33:09'),
+(75, 'aaaaa', '', 'a', 'b', 'c', 'd', '', 'B', 'Aktif', 127, '2019-04-10 14:40:23', '2019-04-10 12:23:40'),
+(76, 'bbbb', '', 'a', 'b', 'c', 'd', '', 'A', 'Aktif', 127, '2019-04-10 14:56:23', '2019-04-10 12:23:56'),
+(77, 'aaa', NULL, 'a', 'b', 'c', NULL, NULL, 'B', 'Aktif', 129, '2019-04-10 16:02:47', '2019-04-10 14:47:02'),
+(78, 'hewan dibawah ini termasuk hewan pemakan ...', 'peternakan-sapi.jpg', 'daging', 'tumbuhan', 'biji', 'segala', '', 'B', 'Aktif', 131, '2019-04-11 09:10:20', '2019-04-11 02:20:10'),
+(79, 'hewan pemakan daging adalah', '', 'karnivora', 'herbivora', 'omnivora', 'segala', '', 'A', 'Aktif', 131, '2019-04-11 09:45:20', '2019-04-11 02:20:45'),
+(80, 'apakah ini?', '', 'a', 'b', 'c', 'd', '', 'A', 'Aktif', 133, '2019-04-11 10:42:18', '2019-04-11 03:18:42'),
+(81, 'ekonomi adalah ...', '', 'a', 'b', 'c', 'd', '', 'B', 'Aktif', 133, '2019-04-11 10:09:19', '2019-04-11 03:19:09');
 
 -- --------------------------------------------------------
 
@@ -518,16 +601,27 @@ CREATE TABLE `tugas` (
 --
 
 INSERT INTO `tugas` (`id_tugas`, `nama_tugas`, `tgl_mulai`, `tgl_selesai`, `status_tugas`, `jenis_tugas`, `waktu`, `id_kelas`, `createDtm`, `updateDtm`) VALUES
-(54, 'kuis9', '2018-10-08 00:00:00', '2018-10-08 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 9, '2018-10-08 12:43:51', '0000-00-00 00:00:00'),
-(55, 'kuis9', '2018-10-08 00:00:00', '2018-10-08 00:00:00', 'Aktif', 'Pilihan Ganda', 120, 9, '2018-10-08 13:02:24', '0000-00-00 00:00:00'),
-(56, 'kuis10', '2018-10-08 00:00:00', '2018-10-08 00:00:00', 'Aktif', 'Pilihan Ganda', 120, 9, '2018-10-08 17:22:24', '0000-00-00 00:00:00'),
 (63, 'kuis 1', '2018-10-22 00:00:00', '2018-10-23 00:00:00', 'Aktif', 'Pilihan Ganda', 120, 15, '2018-10-22 21:05:55', '0000-00-00 00:00:00'),
 (75, 'Kuis Pencernaan', '2018-11-26 00:00:00', '2018-11-28 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 1, '2018-11-26 10:32:25', '0000-00-00 00:00:00'),
 (83, 'Tugas Sistem Respirasi', '2018-11-30 00:00:00', '2018-12-01 00:00:00', 'Aktif', 'Essay', 0, 1, '2018-11-30 18:25:20', '2018-12-06 22:04:39'),
-(85, 'tugasss', '2018-11-30 00:00:00', '2018-12-03 00:00:00', 'Aktif', 'Essay', 0, 9, '2018-11-30 18:05:28', '0000-00-00 00:00:00'),
-(89, 'kuis respirasi', '2019-01-08 00:00:00', '2019-01-09 00:00:00', 'Aktif', 'Pilihan Ganda', 120, 1, '2019-01-08 19:29:43', '0000-00-00 00:00:00'),
-(90, 'Kuis Makhluk Hidup', '2019-03-26 00:00:00', '2019-03-26 00:00:00', 'Aktif', 'Pilihan Ganda', 120, 1, '2019-03-26 01:14:01', '2019-03-29 00:59:20'),
-(91, 'kuis coba', '2019-03-26 00:00:00', '2019-03-27 00:00:00', 'Aktif', 'Essay', 0, 1, '2019-03-26 01:21:21', '0000-00-00 00:00:00');
+(85, 'tugasss', '2018-11-30 00:00:00', '2018-12-03 00:00:00', 'Aktif', 'Essay', 0, 9, '2018-11-30 18:05:28', '2019-04-03 01:41:15'),
+(115, 'coba3', '2019-04-07 00:00:00', '2019-04-07 00:00:00', 'Aktif', 'Essay', 0, 1, '2019-04-07 08:19:03', '0000-00-00 00:00:00'),
+(116, 'coba7', '2019-04-07 00:00:00', '2019-04-07 13:13:00', 'Aktif', 'Essay', 0, 1, '2019-04-07 08:06:06', '2019-04-07 06:12:06'),
+(117, 'kuis9', '2019-04-07 00:00:00', '2019-04-07 13:22:00', 'Aktif', 'Essay', 0, 1, '2019-04-07 08:59:19', '2019-04-07 06:20:59'),
+(121, 'kuis1', '2019-04-08 00:00:00', '2019-04-08 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 43, '2019-04-08 05:08:47', '0000-00-00 00:00:00'),
+(122, 'tugas1', '2019-04-08 00:00:00', '2019-04-09 00:00:00', 'Aktif', 'Essay', 0, 45, '2019-04-08 07:11:58', '0000-00-00 00:00:00'),
+(123, 'kuis1', '2019-04-09 00:00:00', '2019-04-09 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 45, '2019-04-09 09:11:31', '0000-00-00 00:00:00'),
+(124, 'kuis10', '2019-04-09 00:00:00', '2019-04-09 00:00:00', 'Aktif', 'Pilihan Ganda', 240, 45, '2019-04-09 10:26:32', '0000-00-00 00:00:00'),
+(125, 'kuis9', '2019-04-10 00:00:00', '2019-04-10 00:00:00', 'Aktif', 'Essay', 0, 45, '2019-04-10 09:15:00', '0000-00-00 00:00:00'),
+(126, 'tugas2', '2019-04-10 00:00:00', '2019-04-10 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 45, '2019-04-10 09:40:00', '0000-00-00 00:00:00'),
+(127, 'kuis1', '2019-04-10 00:00:00', '2019-04-10 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 46, '2019-04-10 14:44:22', '0000-00-00 00:00:00'),
+(128, 'tugas1', '2019-04-10 00:00:00', '2019-04-10 00:00:00', 'Aktif', 'Essay', 0, 46, '2019-04-10 14:45:24', '0000-00-00 00:00:00'),
+(129, 'coba', '2019-04-10 00:00:00', '2019-04-10 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 45, '2019-04-10 16:12:21', '0000-00-00 00:00:00'),
+(130, 'coba1', '2019-04-11 00:00:00', '2019-04-11 00:00:00', 'Aktif', 'Essay', 0, 45, '2019-04-11 02:19:43', '0000-00-00 00:00:00'),
+(131, 'kuis1', '2019-04-11 00:00:00', '2019-04-11 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 47, '2019-04-11 09:16:14', '0000-00-00 00:00:00'),
+(132, 'tugas1', '2019-04-11 00:00:00', '2019-04-12 00:00:00', 'Aktif', 'Essay', 0, 47, '2019-04-11 09:45:22', '0000-00-00 00:00:00'),
+(133, 'kuis1', '2019-04-11 00:00:00', '2019-04-11 00:00:00', 'Aktif', 'Pilihan Ganda', 60, 48, '2019-04-11 10:21:17', '0000-00-00 00:00:00'),
+(134, 'tugas1', '2019-04-11 00:00:00', '2019-04-11 00:00:00', 'Aktif', 'Essay', 0, 48, '2019-04-11 10:43:19', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -554,7 +648,12 @@ INSERT INTO `universitas` (`id_univ`, `nama_univ`, `status_univ`, `createDtm`, `
 (4, 'Universitas Padjadjaran', 'Aktif', '2018-08-09 10:39:13', '0000-00-00 00:00:00'),
 (5, 'Universitas Sebelas Maret', 'Aktif', '2018-08-09 10:12:15', '0000-00-00 00:00:00'),
 (6, 'Universitas Brawijaya', 'Aktif', '2018-08-09 10:05:43', '0000-00-00 00:00:00'),
-(7, 'Universitas Diponegoro', 'Aktif', '2018-08-09 10:15:44', '0000-00-00 00:00:00');
+(7, 'Universitas Diponegoro', 'Aktif', '2018-08-09 10:15:44', '0000-00-00 00:00:00'),
+(8, 'Universitas Jakarta', 'Aktif', '2019-04-10 06:57:30', '0000-00-00 00:00:00'),
+(9, 'Universitas Yogyakarta', 'Tidak Aktif', '2019-04-10 06:06:33', '2019-04-09 23:16:36'),
+(10, 'Institut Pertanian Bogor', 'Aktif', '2019-04-10 06:43:34', '0000-00-00 00:00:00'),
+(11, 'Universitas Muhammdiyah Yogyakarta', 'Aktif', '2019-04-10 14:30:30', '0000-00-00 00:00:00'),
+(12, 'Universitas Muhammdiyah Yogyakarta', 'Aktif', '2019-04-10 14:30:30', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -582,13 +681,21 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `email`, `password`, `foto_profil`, `status`, `id_userrole`, `id_univ`, `createDtm`, `updateDtm`) VALUES
-(1, 'Viska', 'Ayu F', 'Laki-Laki', 'fatchianav@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'user4-128x128.jpg', 'Aktif', 1, 1, '2018-07-30 11:51:29', '2019-03-29 20:13:58'),
+(1, 'Viska', 'Ayu F', 'Laki-Laki', 'fatchianav@gmail.com', 'd8578edf8458ce06fbc5bb76a58c5ca4', 'user4-128x128.jpg', 'Aktif', 1, 1, '2018-07-30 11:51:29', '2019-04-11 02:13:03'),
 (2, 'Bu', 'Kar', 'Perempuan', 'caramelchiato@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 1, 2, '2018-08-02 09:40:10', '2019-03-28 23:47:42'),
-(7, 'Budi', 'Yanto', 'Laki-Laki', 'vfatchiana@gmail.com', 'fcea920f7412b5da7be0cf42b8c93759', NULL, 'Aktif', 2, 1, '2018-10-25 10:28:56', '2019-03-28 23:59:24'),
+(7, 'Budi', 'Yanto', 'Laki-Laki', 'vfatchiana@gmail.com', 'fcea920f7412b5da7be0cf42b8c93759', NULL, 'Aktif', 1, 1, '2018-10-25 10:28:56', '2019-04-02 23:43:06'),
 (10, 'Ani', 'Inawati', 'Perempuan', 'viska.ayu.f@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, 1, '2018-11-05 11:23:49', '2018-12-17 08:58:24'),
-(11, 'Anto', 'Anti', 'Laki-Laki', 'anto@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, 1, '2018-11-28 17:01:34', '2019-03-28 23:37:01'),
-(12, 'Ana', 'Ani', 'Perempuan', 'ana@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, 1, '2018-11-28 17:31:42', '2018-12-06 23:02:10'),
-(16, 'Hida', 'Hidayati', 'Laki-Laki', 'hida@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, 1, NULL, '2019-03-29 17:29:57');
+(11, 'Anto', 'Anti', 'Laki-Laki', 'antoanti@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, 1, '2018-11-28 17:01:34', '2019-04-07 20:10:58'),
+(12, 'Ana', 'Ani', 'Perempuan', 'ana20@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, 1, '2018-11-28 17:31:42', '2019-04-07 20:11:09'),
+(16, 'Hida', 'Hidayati', 'Laki-Laki', 'shou3@yopmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'ERD_HERA.jpg', 'Aktif', 2, 1, NULL, '2019-04-07 07:51:34'),
+(17, 'Zhel', 'zhel', 'Laki-Laki', 'zhel@yopmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 1, 2, '2019-04-02 10:26:51', '2019-04-02 18:24:19'),
+(19, 'shou', 'shou', 'Perempuan', 'shou@yopmail.com', 'd8578edf8458ce06fbc5bb76a58c5ca4', NULL, 'Belum Aktif', 1, 1, '2019-04-03 01:41:40', '2019-04-10 05:54:35'),
+(20, 'coba', 'coba', 'Perempuan', 'shou20@yopmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, NULL, '2019-04-04 10:46:03', '2019-04-04 08:04:15'),
+(21, 'Nisa', 'Nis', 'Perempuan', 'nisa@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 2, 1, '2019-04-05 07:18:19', '2019-04-07 20:12:47'),
+(22, 'coba', 'coba', 'Laki-Laki', 'annisaduwie@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Belum Aktif', 1, 2, '2019-04-08 05:44:11', '0000-00-00 00:00:00'),
+(23, 'Umar', 'Taufiq', 'Laki-Laki', 'umartaufiq8284@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Belum Aktif', 1, 1, '2019-04-08 05:51:36', '0000-00-00 00:00:00'),
+(24, 'Irkham', 'Huda', 'Laki-Laki', 'hidaaa@yopmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Aktif', 1, 1, '2019-04-08 08:59:19', '2019-04-08 06:21:07'),
+(25, 'Umar', 'Taufiq', 'Laki-Laki', 'umar@yopmail.com', 'e10adc3949ba59abbe56e057f20f883e', NULL, 'Belum Aktif', 1, 1, '2019-04-10 14:14:14', '2019-04-10 07:25:31');
 
 -- --------------------------------------------------------
 
@@ -655,8 +762,8 @@ ALTER TABLE `fakultas`
 --
 ALTER TABLE `jawaban_essay`
   ADD PRIMARY KEY (`id_jawaban_essay`),
-  ADD KEY `id_mhs` (`id_mhs`),
-  ADD KEY `id_soal_essay` (`id_soal_essay`);
+  ADD KEY `id_soal_essay` (`id_soal_essay`),
+  ADD KEY `id_mhs` (`id_mhs`);
 
 --
 -- Indexes for table `jawaban_pilgan`
@@ -782,7 +889,7 @@ ALTER TABLE `detail_univfakultas`
 -- AUTO_INCREMENT for table `dosen`
 --
 ALTER TABLE `dosen`
-  MODIFY `id_dosen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_dosen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `fakultas`
 --
@@ -792,42 +899,42 @@ ALTER TABLE `fakultas`
 -- AUTO_INCREMENT for table `jawaban_essay`
 --
 ALTER TABLE `jawaban_essay`
-  MODIFY `id_jawaban_essay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_jawaban_essay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `jawaban_pilgan`
 --
 ALTER TABLE `jawaban_pilgan`
-  MODIFY `id_jawaban_pilgan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
+  MODIFY `id_jawaban_pilgan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=265;
 --
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `kelas_mhs`
 --
 ALTER TABLE `kelas_mhs`
-  MODIFY `id_kelas_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_kelas_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 --
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `materi`
 --
 ALTER TABLE `materi`
-  MODIFY `id_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id_nilai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `pengumuman`
 --
 ALTER TABLE `pengumuman`
-  MODIFY `id_pengumuman` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_pengumuman` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 --
 -- AUTO_INCREMENT for table `prodi`
 --
@@ -837,27 +944,27 @@ ALTER TABLE `prodi`
 -- AUTO_INCREMENT for table `soal_essay`
 --
 ALTER TABLE `soal_essay`
-  MODIFY `id_soal_essay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_soal_essay` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `soal_pilgan`
 --
 ALTER TABLE `soal_pilgan`
-  MODIFY `id_soal_pilgan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id_soal_pilgan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 --
 -- AUTO_INCREMENT for table `tugas`
 --
 ALTER TABLE `tugas`
-  MODIFY `id_tugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id_tugas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 --
 -- AUTO_INCREMENT for table `universitas`
 --
 ALTER TABLE `universitas`
-  MODIFY `id_univ` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_univ` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `user_role`
 --

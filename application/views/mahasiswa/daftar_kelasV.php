@@ -4,7 +4,7 @@ $this->load->view('head_mahasiswa');
 
 <div class="col-md-9">
   <div class="box-header with-border">
-    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-user"></i> Profil</h3>
+    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-home"></i> Beranda</h3>
   </div>
   <br>
 
@@ -83,20 +83,10 @@ $this->load->view('head_mahasiswa');
 </div>
 <!-- /.modal -->
 
-    <div class="col-md-6">
-    <div class="box box-widget widget-user-2">
-      <div class="widget-user-header bg-primary" > 
-        <center><h4>Menunggu Pengesahan</h4></center>
-      </div>
-        <div class="box-footer no-padding text-center"> 
-          <ul class="nav nav-stacked">
-            
-              <li><a><i>-Tidak ada-</i></a></li>
-            
-          </ul>
-        </div>
-    </div>
-    </div>
+
+
+
+
 </div>
 </div>
 <!-- /.col -->

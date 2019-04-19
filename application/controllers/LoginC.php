@@ -23,6 +23,7 @@ class LoginC extends CI_Controller{
 	 	$email=$this->input->post('email');
 	 	$password=$this->input->post('password');
 
+	 	//untuk mengecek keberadaan email&password di database
 		$cekuseradmin=$this->LoginM->cekuseradmin($email,md5($password))->num_rows();
 		$cekuser1=$this->LoginM->cekuser($email,md5($password))->num_rows();
 		$cekuser2=$this->LoginM->cekuser($email,md5($password))->result();
@@ -35,7 +36,6 @@ class LoginC extends CI_Controller{
 		}else if($cekuser1>0){
 			$id_userrole=$cekuser2[0]->id_userrole;//index ke 0
 			$status=$cekuser2[0]->status;
-			// $this->session->set_userdata('id_user', $id_user);
 			$this->session->set_userdata('email', $email);
 			$this->session->set_userdata('id_user', $id_user);
 			$this->session->set_userdata('id_userrole', $id_userrole);
@@ -43,13 +43,13 @@ class LoginC extends CI_Controller{
 			$this->session->set_userdata('akses',"user");
 			$this->session->set_userdata('masuk',TRUE);
 
-
+			//untuk mengecek apakah akun yg digunakan aktif/belum aktif
 			if ($status == "Belum Aktif"){
 				$this->session->set_flashdata('error','Email belum diverifikasi silahkan buka email Anda untuk memverifikasi akun');
 				redirect('LoginC');
 			}else{
 				if ($id_userrole==1) {
-				redirect('DosenC');
+				redirect('DosenC/');
 				}else if ($id_userrole==2) {
 				redirect('MahasiswaC');
 				}

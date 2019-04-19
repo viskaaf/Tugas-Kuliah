@@ -44,8 +44,8 @@ class HomeM extends CI_Model{
     return $this->db->get('materi');
   }
 
-  public function cariMateri(){
-    $query = $this->db->query("SELECT * FROM materi ORDER BY id_materi DESC LIMIT 4")->result();
+  public function cariMateri($id_materi){
+    $query = $this->db->query("SELECT * FROM materi m, kelas k, dosen d, user u WHERE m.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND m.id_materi='$id_materi'")->row_array();
     return $query;
   }
 }

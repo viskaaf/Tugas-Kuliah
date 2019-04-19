@@ -58,7 +58,7 @@
               <li class="dropdown user user-menu">
                 <a href="<?php echo $url ?>" class="dropdown-toggle" title="Kembali ke Halaman Pengguna">
                   <?php if($this->session->userdata("masuk") == TRUE){ ?>
-                    <?php
+                    <?php 
                     if($foto){
                       ?>
                       <img class="user-image" src="<?php echo base_url('gambar/'.$foto)?>" alt="User Image">
@@ -73,11 +73,11 @@
                   <span class="hidden-xs"><?php echo $nama; ?></span>
                 </a>
               </li>
-              <?php if($this->session->userdata("masuk") == TRUE){ ?>
+              <?php if($this->session->userdata("masuk") == TRUE){ ?> 
               <!-- User Account Menu -->
               <li class="user">
                 <!-- Menu Toggle Button -->
-                <a href="<?php echo site_url('LoginC/logout') ?>" title="Logout dari Tugas Kuliah">
+                <a href="<?php echo site_url('LoginC/logout') ?>" title="Logout dari Tugas Kuliah" onclick="return confirm('Apakah anda yakin ingin keluar dari sistem ini?')">
                   <span><i class="fa fa-sign-out"></i></span>
                 </a>
               </li>

@@ -5,17 +5,23 @@ $this->load->view('head_admin');
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <section class="content-header">
+  <div class="box box-info col-xs-12" style="border-top-color: #fff">
+  <!-- <section class="content-header"> -->
     <h1>
       Program Studi
-      <small><?php echo $getfakultas['nama_fakultas'];?></small>
-    </h1> 
+    </h1>
+  <!-- </section> -->
+  <!-- <div style="margin-left: 15px; margin-right: 15px; margin-top: 10px;"> -->
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Program Studi</li>
+        <li><a href="<?php echo base_url('AdminC/')?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="<?php echo base_url('AdminC/daftarFakultas')?>">Fakultas <?php echo $getfakultas['nama_fakultas'];?></a></li>
+        <li class="active">Program Studi</li>
     </ol>
+  <!-- </div> -->
+  </div>
   </section>
- 
-  <!-- Main Content --> 
+
+  <!-- Main Content -->
   <section class="content">
     <div class="row">
       <!-- Alert -->
@@ -31,16 +37,12 @@ $this->load->view('head_admin');
       <?php } ?>
       <!-- sampai sini -->
       <div class="col-xs-12">
-        <div style="padding-bottom: 20px;">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-square"></i>  Tambah</button>
-        </div>
-        <div class="box">
+        <div class="box box-info" style="border-top-color: #fff">
           <!-- Box Header -->
           <div class="box-body">
-            <div class="row" style="padding-bottom: 15px;">
-
-            </div>
-            <table id="prodi" class="table table-bordered table-striped">
+            <button type="button" class="btn btn-primary pull-right" style="background-color: #002231" data-toggle="modal" data-target="#modal-add">Tambah Program Studi</button>
+            <div class="row" style="padding-bottom: 10px;"></div>
+            <table id="universitas" class="table table-bordered table-striped">
               <thead>
                 <tr>
                   <th><center>No</center></th>
@@ -79,10 +81,7 @@ $this->load->view('head_admin');
               <h4 class="modal-title"><center>Tambah Program Studi</center></h4>
             </div>
             <div class="modal-body">
-             <!-- <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('AdminC/tambahProdi') ?>"> -->
-              <!-- <input type="hidden" class="col-sm-10 form-control" name="id_fakultas" value="<?php echo $getfakultas['id_fakultas']; ?>"> -->
-
-              <?php echo form_open_multipart('AdminC/tambahProdi','id="form" class="form-horizontal"');?>
+             <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('AdminC/tambahProdi') ?>">
                <div class="form-group">
                  <label for="" class="col-sm-2 control-label">Nama Program Studi</label>
                  <div class="col-sm-10">
@@ -98,16 +97,14 @@ $this->load->view('head_admin');
                     <option value="Tidak Aktif">Tidak Aktif</option>
                   </select>
                 </div>
-              </div>
-              <input type="hidden" class="col-sm-10 form-control" id="id_fakultas" name="id_fakultas" value="<?php echo $getfakultas['id_fakultas']; ?>">
+              </div> 
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-              <input class="btn btn-primary" type="submit">
+              <input class="btn btn-primary" id="" type="submit" value="Simpan" >
             </div>
           </div>
-        <!-- </form> -->
-        <?php echo form_close();?>
+        </form>
         <!-- /.modal-content -->
       </div>
       <!-- /.modal-dialog -->
@@ -121,7 +118,7 @@ $this->load->view('head_admin');
 </div>
 <?php $no=0; foreach ($prodi as $value): $no++; ?>
 <!-- modal untuk ubah manual -->
-<div class="modal fade" id="modal-<?php echo $value->id_prodi; ?>">
+<div class="modal fade" id="modal-<?php echo $value->id_fakultas; ?>">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -156,7 +153,7 @@ $this->load->view('head_admin');
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-        <input class="btn btn-primary" type="submit">
+        <input class="btn btn-primary" id="" type="submit" value="Simpan" >
       </div>
     </div>
   </form>
@@ -168,7 +165,7 @@ $this->load->view('head_admin');
 <!-- /.modal -->
 <script>
   $(function () {
-    $('#prodi').DataTable()
+    $('#universitas').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
@@ -178,6 +175,19 @@ $this->load->view('head_admin');
       'autoWidth'   : false
     })
   })
+
+  /** add active class and stay opened when selected */
+  var url = window.location;
+
+    // for sidebar menu entirely but not cover treeview
+    $('ul.sidebar-menu a').filter(function() {
+      return this.href == url;
+    }).parent().addClass('active');
+
+    // for treeview
+    $('ul.treeview-menu a').filter(function() {
+      return this.href == url;
+    }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
 </script>
 </body>
 <footer class="main-footer">

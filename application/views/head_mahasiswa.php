@@ -64,7 +64,7 @@
                       <?php
                     }else{
                       ?> 
-                      <img class="user-image" src="<?php echo base_url('gambar/admin.png')?>" alt="User Image">
+                      <img class="user-image" src="<?php echo base_url('gambar/blankphoto.png')?>" alt="User Image">
                       <?php
                     }
                     ?>
@@ -73,28 +73,28 @@
               </li>
 
               <!-- Notifications Menu -->
-              <li class="dropdown notifications-menu">
+              <!-- <li class="dropdown notifications-menu"> -->
                 <!-- Menu toggle button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<!--                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-bell-o"></i>
                   <span class="label label-warning">10</span>
                 </a>
                 <ul class="dropdown-menu">
                   <li class="header">You have 10 notifications</li>
-                  <li>
+                  <li> -->
                     <!-- Inner Menu: contains the notifications -->
-                    <ul class="menu">
-                      <li><!-- start notification -->
-                        <a href="#">
+                    <!-- <ul class="menu"> -->
+                      <!-- <li>start notification -->
+<!--                         <a href="#">
                           <i class="fa fa-users text-aqua"></i> 5 new members joined today
                         </a>
-                      </li>
+                      </li> -->
                       <!-- end notification -->
-                    </ul>
+<!--                     </ul>
                   </li>
                   <li class="footer"><a href="#">View all</a></li>
                 </ul>
-              </li>
+              </li> -->
 
               <!-- User Account Menu -->
               <li class="user">
@@ -132,7 +132,7 @@
                     <?php
                   }else{
                     ?> 
-                    <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('gambar/admin.png')?>" alt="User profile picture">
+                    <img class="profile-user-img img-responsive img-circle" src="<?php echo base_url('gambar/blankphoto.png')?>" alt="User profile picture">
                     <?php
                   }
                   ?>

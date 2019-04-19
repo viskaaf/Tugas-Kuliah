@@ -62,7 +62,7 @@ $this->load->view('head_soal');
               <td><center><?php echo $i+1; ?></center></td>
               <td><center><?php echo $data->nama_depan . ' ' . $data->nama_belakang ?></center></td>
               <td><center><?php echo $data->nim ?></center></td>
-              <td><center><?php echo !empty($data->nilai) ? $data->nilai : '(tidak ada nilai)'; ?></center></td>
+              <td><center><?php echo !empty($data->nilai) ? $data->nilai : '(tidak diserahkan)'; ?></center></td>
             </tr> 
           <?php } ?>
         </tbody> 

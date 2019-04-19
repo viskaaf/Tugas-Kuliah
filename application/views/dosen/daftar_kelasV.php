@@ -4,7 +4,7 @@ $this->load->view('head_dosen');
 
 <div class="col-md-9">
   <div class="box-header with-border">
-    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-user"></i> Profil</h3>
+    <h3 class="box-title" style="font-size: 25px"><i class="fa fa-home"></i> Beranda</h3>
   </div><br>
 
   <?php
@@ -58,6 +58,7 @@ $this->load->view('head_dosen');
                   <tbody> 
                     <tr>
                       <td>
+                     <!--  -->
                         <a href="<?php echo site_url('DosenC/detailKelas/'.$value->id_kelas); ?>"style="padding-left: 20px;"><?php echo $value->nama_kelas; ?></a>
                       </td>
                       <td>
@@ -67,7 +68,7 @@ $this->load->view('head_dosen');
                               <i class="fa fa-toggle-down"></i></button>
                             <ul class="dropdown-menu" role="menu">
                               <li><a data-toggle="modal" data-target="#modal-edit-<?php echo $value->id_kelas; ?>">Ubah Kelas</a></li>
-                              <li><a data-toggle="modal" data-target="#modal-nonaktif-<?php echo $value->id_kelas;?>">Non-aktifkan</a></li>
+                              <!-- <li><a data-toggle="modal" data-target="#modal-nonaktif-<?php echo $value->id_kelas;?>">Non-aktifkan</a></li> -->
                               <li><a data-toggle="modal" data-target="#modal-delete-<?php echo $value->id_kelas;?>">Hapus</a></li>
                             </ul>
                           </div>
@@ -83,33 +84,34 @@ $this->load->view('head_dosen');
     </div>
   </div>
 
-  <div class="col-md-6">
+<!--   <div class="col-md-6">
     <div class="box box-widget widget-user-2">
       <div class="widget-user-header bg-primary" > 
-        <h4 style="padding-left: 10px;">Kelas Tidak Aktif
+        <h4 style="padding-left: 10px;">Menunggu Pengesahan
       </div>
       <div class="box-footer no-padding">
-        <?php if(empty($kelasnonaktif)) { ?>
+        <?php if(empty($kelastunggu)) { ?>
           <ul class="nav nav-stacked text-center"> 
             <li><a><i>-Tidak ada-</i></a></li>
           </ul>
         <?php }else{ ?>
-          <?php foreach ($kelasnonaktif as $value) { ?>
+          <?php foreach ($anggota as $value) { ?>
             <div class="mailbox-messages">
                 <table class="table table-hover">
                   <tbody> 
                     <tr>
                       <td>
-                        <a href="<?php echo site_url('DosenC/detailKelas/'.$value->id_kelas); ?>"style="padding-left: 20px;"><?php echo $value->nama_kelas; ?></a>
+                        <a href="<?php echo site_url('DosenC/detailKelas/'.$value->id_kelas); ?>" style="padding-left: 20px;"><?php echo $value->nama_kelas; ?></a>
+                        <p style="margin-left: 20px">Ani Inawati</p>
+
                       </td>
                       <td>
                         <div class="box-tools pull-right" style="margin-right: 20px;">
                           <div class="btn-group">
-                            <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                              <i class="fa fa-toggle-down"></i></button>
+                            <a data-toggle="modal" data-target="#modal-<?php echo $value->id_kelas_mhs;?>" class="btn btn-default"><i class="fa fa-check"></i></a>
                             <ul class="dropdown-menu" role="menu">
-                              <li><a data-toggle="modal" data-target="#modal-edit">Ubah Kelas</a></li>
-                              <li><a data-toggle="modal" data-target="#modal-aktif-<?php echo $value->id_kelas;?>">Aktifkan</a></li>
+                              <!-- <li><a data-toggle="modal" data-target="#modal-edit">Ubah Kelas</a></li> -->
+                              <!-- <li><a data-toggle="modal" data-target="#modal-aktif-<?php echo $value->id_kelas;?>">Aktifkan</a></li> -->
                             </ul>
                           </div>
                         </div>
@@ -122,7 +124,35 @@ $this->load->view('head_dosen');
         <?php } ?>
       </div>
     </div>
-  </div>
+  </div> -->
+
+<!--   <?php foreach ($kelastunggu as $value) { ?>
+
+<div class="modal fade" id="modal-<?php echo $value->id_kelas_mhs;?>">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><center>Gabung Kelas</center></h4>
+        </div>
+      <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/gabungKelas/'.$value->id_kelas_mhs); ?>">
+      <div class="modal-body text-center" style="padding-top: 20px; padding-bottom: 20px;">
+          <input type="text" name="id_kelas_mhs" value="<?php echo $value->id_kelas_mhs;?>">
+          <h5 class="modal-title"><b>Apakah Anda yakin untuk menyetujui mahasiswa untuk bergabung ke kelas ini?</b></h5>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+            <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
+      </div>
+  </form> 
+</div>
+
+</div>
+
+</div>
+<?php } ?> -->
+
 
   <!-- modal untuk tambah manual -->
 <div class="modal fade" id="modal-add-<?php echo $string; ?>-<?php echo $id_dosen['id_dosen']?>-<?php echo $id_univ['id_univ']?>">
@@ -134,11 +164,11 @@ $this->load->view('head_dosen');
           <h4 class="modal-title"><center>Tambah Kelas</center></h4>
         </div>
         <div class="modal-body">
-         <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/tambahKelas')?>">
+         <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/tambahKelas') ?>">
           <input type="hidden" name="id_dosen" value="<?php echo $id_dosen['id_dosen']?>">
           <input type="hidden" name="id_univ" value="<?php echo $id_univ['id_univ']?>">
           <div class="form-group">
-           <label for="" class="col-sm-3 control-label">Nama Kelas</label>
+           <label for="" class="col-sm-3 control-label">Nama Kelas</label> 
            <div class="col-sm-8">
              <input type="text" class="col-sm-10 form-control" name="nama_kelas" placeholder="Nama Kelas" required oninvalid="this.setCustomValidity('Isi nama kelas.')" oninput="setCustomValidity('')">
            </div>
@@ -288,7 +318,7 @@ $this->load->view('head_dosen');
 <?php } ?>
 <!-- /.modal -->
 
-                      <?php foreach ($kelasaktif as $value) { ?>
+<?php foreach ($kelasaktif as $value) { ?>
 <!-- modal untuk ubah manual -->
 <div class="modal fade" id="modal-edit-<?php echo $value->id_kelas; ?>">
   <div class="modal-dialog">
@@ -310,33 +340,34 @@ $this->load->view('head_dosen');
          <div class="form-group">
           <label class="col-sm-3 control-label">Fakultas</label> 
           <div class="col-sm-8">
-            <select name="nama_fakultas" id="nama_fakultas" class="form-control select2" style="width: 100%;">
-              <?php
-              foreach ($fakultas_kelas as $data1);
-              foreach ($fakultas as $data) {
-                if ($data->id_det_fakultasprodi == $data1->id_det_fakultasprodi) {
-                  echo "<option value=".$data->id_det_fakultasprodi." selected >".$data->nama_fakultas."</option>";
-                }else
-                echo "<option value=".$data->id_det_fakultasprodi.">".$data->nama_fakultas."</option>";
-              } ?>
+          <select name="nama_fakultasE" id="nama_fakultasE" class="form-control select2" style="width: 100%;" onchange="getprodi();">
+            <option disabled selected><i>---Pilih Fakultas---</i></option>
+            <?php
+              foreach ($fakultas_user as $data2) {
+                if($data2->id_fakultas == $value->id_fakultas){
+              echo "<option value=".$data2->id_fakultas." selected>".$data2->nama_fakultas."</option>";
+              }else 
+                echo "<option value=".$data2->id_fakultas.">".$data2->nama_fakultas."</option>";
+              }?>
             </select>
+            <!-- <input type="text" class="col-sm-8 form-control" id="nama_kelas" name="nama_kelas" value="<?php echo $value->nama_fakultas; ?>"> --> 
           </div>
         </div> 
         <div class="form-group">
           <label class="col-sm-3 control-label">Program Studi</label>
           <div class="col-sm-8">
-            <select name="nama_prodi" id="nama_prodi" class="form-control select2" style="width: 100%;">
+             <select name="nama_prodiE" id="nama_prodiE" class="form-control select2" style="width: 100%;">
               <option disabled selected><i>---Pilih Program Studi---</i></option>
-              <?php if(count($prodi->result())>0) { ?>
-
-                <?php foreach ($prodi->result() as $row) {  ?>
-                  <option value="<?php echo $row->id_prodi;?>"><?php echo $row->nama_prodi;?></option>
-                <?php } ?>
-              <?php  } else { ?>
-                <option value="">- Data Belum Tersedia -</option> 
-
-              <?php } ?>
+              <?php
+              foreach ($prodi->result() as $data2) {
+                if($data2->id_prodi == $value->id_prodi){
+              echo "<option value=".$data2->id_prodi." selected>".$data2->nama_prodi."</option>";
+              }else
+                echo "<option value=".$data2->id_prodi.">".$data2->nama_prodi."</option>";
+              }?>
             </select>
+            
+            <!-- <input class="col-sm-8 form-control " id="prodi" type="text" name="" placeholder="" value="<?php echo $value->id_prodi; ?>" /> -->
           </div>
         </div>
         <div class="form-group">
@@ -348,21 +379,22 @@ $this->load->view('head_dosen');
          <span>Bagikan kode kepada mahasiswa untuk dapat bergabung di kelas Anda.</span>
        </div>
      </div>
-     <div class="form-group">
+<!--      <div class="form-group">
       <label for="" class="col-sm-3 control-label">Status</label>
       <div class="col-sm-8">
-        <select name="status_kelas" class="form-control required" required="">
+        <select name="status_kelas" class="form-control required" required=""> -->
           <!-- <option value="" disabled selected><i>---Pilih Status---</i></option> -->
-          <?php
-          $status_kelas=$value->status_kelas;
-          if ($status_kelas== "Aktif") echo "<option value='Aktif' selected>Aktif</option>";
-          else echo "<option value='Aktif'>Aktif</option>";
-          if ($status_kelas== "Tidak Aktif") echo "<option value='Tidak Aktif' selected>Tidak Aktif</option>";
-          else echo "<option value='Tidak Aktif'>Tidak Aktif</option>";
+<!--           <?php
+          // $status_kelas=$value->status_kelas;
+          // if ($status_kelas== "Aktif") echo "<option value='Aktif' selected>Aktif</option>";
+          // else echo "<option value='Aktif'>Aktif</option>";
+          // if ($status_kelas== "Tidak Aktif") echo "<option value='Tidak Aktif' selected>Tidak Aktif</option>";
+          // else echo "<option value='Tidak Aktif'>Tidak Aktif</option>";
           ?>
         </select>
       </div>
-    </div> 
+    </div>  -->
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
@@ -413,16 +445,36 @@ $this->load->view('head_dosen');
 
   });
 </script>
-
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> -->
 <script type="text/javascript">
+
   $(document).ready(function(){
-    $('#nama_fakultas').change(function(){
-      var id_fakultas=$('#nama_fakultas').val();
-      $.get('<?php echo site_url('DosenC/get_prodi/') ?>'+id_fakultas, function(resp){
-        $('#nama_prodi').html(resp);
+
+      $('#nama_fakultas').change(function(){
+        var id_fakultas=$('#nama_fakultas').val();
+        $.get('<?php echo site_url('DosenC/get_prodi/') ?>'+id_fakultas, function(resp){
+          $('#nama_prodi').html(resp);
+        });
       });
-    });
+
+      // $('#nama_fakultasE').change(function(){
+      //   alert("hayyah");
+      //   var id_fakultas=$('#nama_fakultasE').val();
+      //   $.get('<?php echo site_url('DosenC/get_prodi/') ?>'+id_fakultas, function(resp){
+      //     $('#nama_prodiE').html(resp);
+      //   });
+      // });
+
   });
+
+  function getprodi(){
+    // alert("hayyah");
+    var id_fakultas=$('#nama_fakultasE').val();
+    $.get('<?php echo site_url('DosenC/get_prodi/') ?>'+id_fakultas, function(resp){
+      $('#nama_prodiE').html(resp);
+    });
+  }
+  
 </script>
 
 </div>

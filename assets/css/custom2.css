@@ -1,0 +1,23 @@
+.containergrafik {
+   width: 20px;
+   padding-left: 7%;
+}
+
+.aktifmenu{
+	background-color: #455a64;
+  	color: #fff;
+}
+
+html { height: 100% }
+#map-canvas { height: 100%; width:100%; }
+*{
+	margin: 0;
+	padding: 0;
+}
+.wrapmap {
+	background: #f3f8fb;
+	width:800px;
+	height:500px;
+	border-radius:4px;
+	padding: 20px 5px;
+}

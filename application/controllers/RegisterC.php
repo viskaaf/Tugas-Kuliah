@@ -17,9 +17,19 @@ class RegisterC extends CI_Controller {
          "level"=>$this->input->post('level'),
          "universitas"=>$this->model->getUniv(),
         );
-	 	 $this->load->view('registerV',$data);
+	 	 $this->load->view('register_awalV',$data);
 	 	 // echo $level;
-	} 
+	}
+
+        public function tampilRegister(){
+         // $data['level'] = $this->input->post('level');
+        $data=array(
+         "level"=>$this->input->post('level'),
+         "universitas"=>$this->model->getUniv(),
+        );
+         $this->load->view('registerV',$data);
+         // echo $level;
+    }
 
 	 public function register() { 
  		 $this->load->library('form_validation');
@@ -33,8 +43,7 @@ class RegisterC extends CI_Controller {
          if($this->form_validation->run() == FALSE) {
              $this->session->set_flashdata('error',"Pastikan password minimal 6 karakter.");
              redirect('RegisterC');
-         }else{
-              
+         }else{              
              $nama_depan	=    $this->input->post('nama_depan');
              $nama_belakang	=    $this->input->post('nama_belakang');
              $jenis_kelamin =    $this->input->post('jenis_kelamin');
@@ -42,8 +51,7 @@ class RegisterC extends CI_Controller {
              $email			=    $this->input->post('email');
              $password		=    md5($this->input->post('password'));
              $level			=    $this->input->post('level');
-
-             if ($level == 1){
+             if ($level == 1){   //jika level=1 atau dosen
                  $data =  array(
     				"nama_depan"=>$nama_depan,
     				"nama_belakang"=>$nama_belakang,
@@ -53,8 +61,7 @@ class RegisterC extends CI_Controller {
                     "status" => "Belum Aktif",
     				"id_userrole"=>$level,
                     "id_univ"=>$nama_univ,
-    				"createDtm"=>date('Y-m-d H:s:i')
-    			 );
+    				"createDtm"=>date('Y-m-d H:i:s'));
              }else{
                 $data =  array(
                     "nama_depan"=>$nama_depan,
@@ -64,13 +71,13 @@ class RegisterC extends CI_Controller {
                     "password"=>$password,
                     "status" => "Belum Aktif",
                     "id_userrole"=>$level,
-                    "createDtm"=>date('Y-m-d H:s:i')
-                );
+                    "id_univ"=>$nama_univ,
+                    "createDtm"=>date('Y-m-d H:i:s'));
             }
 
              $result = $this->RegisterM->register($data);
 
-             //enkripsi id
+             //untuk enkripsi data yang diinputkan
              $encrypted_id = md5($result);
 
              $this->load->library('email');
@@ -87,9 +94,9 @@ class RegisterC extends CI_Controller {
                 $config['crlf']="\r\n"; 
                 $config['newline']="\r\n"; 
                 $config['wordwrap'] = TRUE;
-                //memanggil library email dan set konfigurasi untuk pengiriman email
 
-                $this->email->initialize($config);
+                $this->email->initialize($config); //memanggil library email dan set konfigurasi untuk pengiriman email
+
                 //konfigurasi pengiriman
                 $this->email->from($config['smtp_user']);
                 $this->email->to($email);
@@ -109,10 +116,10 @@ class RegisterC extends CI_Controller {
             }
 
      }
-     //VERIFIKASI
+
+             //VERIFIKASI
             public function verification($key){
                 $this->RegisterM->changeActiveState($key);
-                echo "Selamat kamu telah memverifikasi akun kamu";
-                echo "<br><br><a href='".site_url("LoginC")."'>Kembali ke Menu Login</a>";
+                $this->load->view('verifikasiV');
             }
 }

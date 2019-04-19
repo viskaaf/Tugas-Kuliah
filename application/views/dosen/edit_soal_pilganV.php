@@ -37,10 +37,10 @@ $this->load->view('head_dosen');
     <div class="box box-primary"><br>
       <!-- form start -->
       <div class="form-horizontal">
-        <?php echo form_open_multipart('DosenC/tambahSoalPilgan/') ?>
+        <?php echo form_open_multipart('DosenC/ubahSoalPilgan/') ?>
         <div class="box-body"> 
           <input type="hidden" class="form-control" name="id_soal_pilgan" value="<?php echo $soal['id_soal_pilgan']; ?>">
-
+          <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $soal['id_tugas']; ?>">
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-3 control-label">Pertanyaan No. [<?php echo $nomor; ?>] <span style="color: red;">*</span></label>
             <div class="col-sm-8">

@@ -34,7 +34,7 @@
 <body class="hold-transition register-page" style="background-image: url('gambar/background1.png'); height: 600px;">
 <div class="register-box">
   <div class="register-logo">
-    <a href="AdminLTE/index2.html"><b>Daftar</b></a>
+    <a href="<?php echo base_url('HomeC') ?>"><b>Tugas </b>Kuliah</a>
   </div>
 
   <div class="register-box-body" style="background:rgba(255,255,255,0.4);">
@@ -51,11 +51,11 @@
                 <?php } ?>
         <form id="form" action="<?php echo site_url('RegisterC/register') ?>" method="POST">       
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="nama_depan" value="<?php echo set_value('nama_depan'); ?>" placeholder="Nama Depan" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
+        <input type="text" class="form-control" name="nama_depan" placeholder="Nama Depan" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" name="nama_belakang" value="<?php echo set_value('nama_belakang'); ?>" placeholder="Nama Belakang" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
+        <input type="text" class="form-control" name="nama_belakang" placeholder="Nama Belakang" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -78,11 +78,11 @@
         </select>
       </div>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" value="<?php echo set_value('email'); ?>" placeholder="Email" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
+        <input type="email" class="form-control" name="email" placeholder="Email" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password" value="<?php echo set_value('password'); ?>" placeholder="Kata Sandi" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
+        <input type="password" class="form-control" name="password" placeholder="Kata Sandi" required oninvalid="this.setCustomValidity('Wajib diisi')" oninput="setCustomValidity('')">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
         <input type="hidden" class="form-control" name="level" value="<?php echo $level; ?>">

@@ -17,10 +17,10 @@ $this->load->view('head_home');
 
                 <div class="carousel-inner" style="border-radius: 10px;">
                   <div class="item active">
-                    <img src="<?php echo base_url('gambar/ugm.jpg')?>" style="height: 400px; width: 1200px;" alt="First slide">
+                    <img src="<?php echo base_url('gambar/header2.png')?>" style="height: 400px; width: 1200px;" alt="First slide">
                   </div>
                   <div class="item">
-                    <img src="<?php echo base_url('gambar/balairung.jpeg')?>" style="height: 400px; width: 1200px;" alt="Second slide">
+                    <img src="<?php echo base_url('gambar/header1.jpg')?>" style="height: 400px; width: 1200px;" alt="Second slide">
                   </div>
                 </div>
                 <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -41,7 +41,7 @@ $this->load->view('head_home');
               <form action="<?php echo site_url('HomeC/cariMateri');?>" method="get">
                 <div class="box-tools" style="margin-top: 20px; width: 750px;"> 
                   <div class="input-group input-group-sm">
-                      <input type="text" name="cari" class="form-control pull-right" style="height: 50px; font-size: 20px;" placeholder="Masukkan materi yang ingin dicari..."> 
+                      <input type="text" name="cari" class="form-control pull-right" style="height: 50px; font-size: 20px;" placeholder="Masukkan materi yang ingin dicari..." required> 
 
                       <div class="input-group-btn">
                         <button type="submit" class="btn btn-default" style="height: 50px; width: 50px;"><i class="fa fa-search"></i></button>

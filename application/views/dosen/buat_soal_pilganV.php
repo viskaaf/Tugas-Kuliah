@@ -134,14 +134,26 @@ $this->load->view('head_dosen');
         <button type="submit" class="btn btn-primary">Tambah Pertanyaan</button>
         <a href="<?php echo base_url('DosenC/tampilSoalPilgan/'.$tugasbyID['id_tugas']) ?>" class="btn btn-success">Selesai</a>
       </div>
-      <div class="pull-left">        
+<!--       <?php echo form_close(); 
+        if($nomor != 1){
+      ?> -->
+      
+      <!-- <div class="pull-left">         -->
         <!-- <button type="" class="btn btn-default">Reset</button> -->
-        <a href="" class="btn btn-default"><i class="fa fa-long-arrow-left"></i> Sebelumnya</a>
-      </div>
+<!--         <form method="POST" action="<?php echo base_url('DosenC/editSoalPilgan/'.$tugasbyID['id_tugas']) ?>">
+          <input type="hidden" name="nomor" value="<?php echo $nomor-1; ?>">
+        <button type="submit" class="btn btn-default"><i class="fa fa-long-arrow-left"></i></button>
+        </form>
+         <form method="POST" action="<?php echo base_url('DosenC/editSoalPilgan/'.$tugasbyID['id_tugas']) ?>">
+          <input type="hidden" name="nomor" value="<?php echo $nomor+1; ?>">
+        <a class="btn btn-default"><i class="fa fa-long-arrow-right"></i></a>
+        </form>
+      </div> -->
+    <!-- <?php } ?> -->
     </div>
     <!-- /.box-footer -->
   </div>
-  <?php echo form_close(); ?>
+  
 </div>
 <!-- /.box -->
 <!-- /.col -->

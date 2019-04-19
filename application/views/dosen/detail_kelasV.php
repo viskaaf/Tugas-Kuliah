@@ -33,6 +33,16 @@ if($sukses)
     <?php echo $this->session->flashdata('sukses'); ?>
   </div>
 <?php } ?>
+<?php  
+$warning = $this->session->flashdata('warning');
+if($warning)
+{
+  ?>
+  <div class="alert alert-warning alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <?php echo $this->session->flashdata('warning'); ?>
+  </div>
+<?php } ?>
 </div>
  
 <div class="col-md-6">
@@ -72,11 +82,15 @@ if($sukses)
               <?php echo $value->pengumuman;?>
             </p>
           </div>
+
+
           <!-- /.post -->
         <?php } ?>
       <?php } ?>
     </div>
+    <div style="height: 100px;"></div>
   </div>
+    <div style="height: 223px;"></div>
 </div> 
 
 <div class="col-md-3"> 
@@ -108,7 +122,7 @@ if($sukses)
                               <i class="fa fa-toggle-down"></i></button>
                             <ul class="dropdown-menu" role="menu">
                               <li><a data-toggle="modal" data-target="#modal-edit-<?php echo $value->id_materi; ?>">Ubah Nama Materi</a></li>
-                              <li><a data-toggle="modal" data-target="#modal-delete-<?php echo $value->id_materi;?>")">Hapus</a></li>
+                              <li><a data-toggle="modal" data-target="#modal-delete-<?php echo $value->id_materi;?>">Hapus</a></li>
                             </ul>
                           </div>
                         </div>
@@ -326,7 +340,7 @@ if($sukses)
                       <?php
                       }else{
                       ?>
-                      <img src="<?php echo base_url('gambar/admin.png')?>" alt="User Image">
+                      <img src="<?php echo base_url('gambar/blankphoto.png')?>" alt="User Image">
                       <?php
                       }
                       ?>
@@ -338,13 +352,56 @@ if($sukses)
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer text-center">
-                  <a href="javascript:void(0)" class="uppercase">Lihat semua</a>
+                  <a data-toggle="modal" data-target="#modal-lihat" class="btn">Lihat semua</a>
                 </div>
                 <!-- /.box-footer -->
       <?php } ?>
     </div>
   </div>
 </div>
+
+<?php foreach ($anggota as $value) { ?>
+<!-- modal untuk tambah pengumuman -->
+<div class="modal fade" id="modal-lihat">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><center>Anggota</center></h4>
+        </div>
+          <input type="hidden" name="id_kelas" value="<?php echo $kelas['id_kelas'];?>">
+          <div class="box-body direct-chat-messages no-padding">
+                  <ul class="users-list clearfix">
+                    <li>
+                      <?php
+                        if($value->foto_profil){
+                      ?>
+                      <img src="<?php echo base_url('gambar/'.$value->foto_profil)?>" alt="User Image">
+                      <?php
+                      }else{
+                      ?>
+                      <img src="<?php echo base_url('gambar/blankphoto.png')?>" alt="User Image">
+                      <?php
+                      }
+                      ?>
+                      <span><?php echo $value->nama_depan.' '; echo $value->nama_belakang ?></span>
+                    </li>
+                  </ul>
+                  <!-- /.users-list -->
+                </div>
+                <!-- /.box-body -->
+      <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+            <input class="btn btn-primary" type="submit" value="Ya" style="width: 50px;">
+      </div>
+</div>
+  <!-- /.modal-content --> 
+</div>
+<!-- /.modal-dialog -->
+</div>
+<?php } ?>
+<!-- /.modal -->
 
 <!-- modal untuk tambah pengumuman -->
 <div class="modal fade" id="modal-add-anggota">
@@ -361,11 +418,11 @@ if($sukses)
               <h4><i class="fa fa-info-circle"></i> PERHATIAN!</h4>
               <p>Anda bisa menambahkan anggota dengan memasukkan alamat email anggota.</p>
             </div>
-         <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/tambahPengumuman') ?>">
+         <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('DosenC/tambahAnggota') ?>">
           <input type="hidden" name="id_kelas" id="id_kelas" value="<?php echo $kelas['id_kelas']?>">
           <div class="form-group">           
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email1" placeholder="Masukkan email anggota" required></input>
+              <input type="text" class="form-control" name="email[1][email]" placeholder="Masukkan email anggota" required></input>
             </div>
             <div id="tambah_email1">
              <a class="btn btn-primary btn-xs tooltips" name="tambah_soal1" id="email1" style="margin-top: 6px;">
@@ -375,7 +432,7 @@ if($sukses)
          </div>
          <div class="form-group" id="tambah1" hidden>           
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email2" placeholder="Masukkan email anggota"></input>
+              <input type="text" class="form-control" name="email[2][email]" placeholder="Masukkan email anggota"></input>
             </div>
             <div id="tambah_email2">
              <a class="btn btn-primary btn-xs tooltips" name="tambah_soal2" id="email2" style="margin-top: 6px;">
@@ -385,7 +442,7 @@ if($sukses)
          </div>
          <div class="form-group" id="tambah2" hidden>           
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email3" placeholder="Masukkan email anggota"></input>
+              <input type="text" class="form-control" name="email[3][email]" placeholder="Masukkan email anggota"></input>
             </div>
             <div id="tambah_email3">
              <a class="btn btn-primary btn-xs tooltips" name="tambah_soal3" id="email3" style="margin-top: 6px;">
@@ -395,7 +452,7 @@ if($sukses)
          </div>
          <div class="form-group" id="tambah3" hidden>           
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email4" placeholder="Masukkan email anggota"></input>
+              <input type="text" class="form-control" name="email[4][email]" placeholder="Masukkan email anggota"></input>
             </div>
             <div id="tambah_email4">
              <a class="btn btn-primary btn-xs tooltips" name="tambah_soal3" id="email4" style="margin-top: 6px;">
@@ -405,7 +462,7 @@ if($sukses)
          </div>
          <div class="form-group" id="tambah4" hidden>
             <div class="col-sm-11">
-              <input type="text" class="form-control" name="email5" placeholder="Masukkan email anggota"></input>
+              <input type="text" class="form-control" name="email[5][email]" placeholder="Masukkan email anggota"></input>
             </div>
          </div>
         </div>

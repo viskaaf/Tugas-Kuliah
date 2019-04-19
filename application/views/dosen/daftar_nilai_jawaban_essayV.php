@@ -58,29 +58,35 @@ $this->load->view('head_soal');
             </tr>
           </thead>
           <tbody>
-            <?php 
-              foreach ($jawaban as $i => $data) {
-            ?>
+            <?php $no=0; foreach ($semua as $value): $no++; ?> 
             <tr>
-              <td><center><?php echo $i+1; ?></center></td>
-              <td><center><?php echo $data->nama_depan . ' ' . $data->nama_belakang ?></center></td>
-              <td><center><?php echo $data->nim ?></center></td>
-              <td><center><?php echo !empty($data->nilai) ? $data->nilai : '(belum dinilai)'; ?></center></td>
+              <td><center><?php echo $no; ?></center></td>
+              <td><center><?php echo $value->nama_depan . ' ' . $value->nama_belakang; ?></center></td>
+              <td><center><?php echo $value->nim; ?></center></td> 
+              <td><center>
+                <?php if($value->status_nilai == 'Sudah Dinilai'){ 
+                  echo $value->nilai; ?>
+                <?php }elseif($value->status_nilai == 'Belum Dinilai'){
+                  echo '(belum dinilai)'; ?>
+                <?php }else{
+                  echo '(tidak mengumpulkan)'; ?>
+                <?php } ?>
+                </center></td>
               <td>
                 <center>
-                  <?php if(empty($data->nilai)) { ?>
-                  <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_jawaban_essay); ?>">
+                  <?php if($value->status_nilai == 'Belum Dinilai') { ?>
+                  <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$value->id_nilai); ?>">
                     <span data-toggle="tooltip" data-original-title="Koreksi Jawaban" <i class="fa fa-file-text-o"></i></span>
                   </a>
                   <?php }else{ ?>
-                  <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilEditNilaiEssay/'.$data->id_nilai); ?>">
+                  <a class="btn btn-primary btn-xs tooltips" href="<?php echo site_url('DosenC/tampilEditNilaiEssay/'.$value->id_nilai); ?>">
                   <span data-toggle="tooltip" data-original-title="Edit Koreksi Jawaban" <i class="fa fa-edit"></i></span>
                   </a>
                   <?php } ?>
                 </center>
               </td>
             </tr> 
-          <?php } ?>
+          <?php  endforeach; ?>
         </tbody> 
       </table>
     </div>
@@ -138,7 +144,7 @@ $this->load->view('head_soal');
               <td><center><?php echo $data->nim ?></center></td>
               <td><center><?php echo $data->nilai ?></center></td>
               <td><center>
-                <a class="btn btn-warning btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_tugas); ?>">
+                <a class="btn btn-primary btn-xs tooltips" href="<?php echo site_url('DosenC/tampilKoreksiSoalEssay/'.$data->id_tugas); ?>">
                   <span data-toggle="tooltip" data-original-title="Edit Koreksi Jawaban" <i class="fa fa-edit"></i></span>
                 </a></center>
               </td>

@@ -28,12 +28,12 @@ class HomeC extends CI_Controller {
 			);
 		}else{
 			$data = array(
-				'url' => site_url('LoginC/'),
+				'url' => site_url('LoginC'),
 				'nama' => 'Masuk',
 				'foto' => '',
 			);
 		}
-		$this->load->view('homeV.php',$data);
+		$this->load->view('home1V.php',$data);
 	}
 
 	public function halamanLupaPass()
@@ -160,11 +160,7 @@ class HomeC extends CI_Controller {
 			);
 		}
 
-	  	$this->load->view('home_cariV', $data); //menampilkan data yang sudah dicari
-	}
-
-	public function tampilMateri(){
-		$this->load->view('tampil_materiV');
+	  	$this->load->view('home_cari1V', $data); //menampilkan data yang sudah dicari
 	}
 
 }

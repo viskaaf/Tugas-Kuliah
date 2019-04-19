@@ -2,9 +2,30 @@
 $this->load->view('head_soal');
 ?>
 
+      <div class="box box-info col-xs-12" style="border-top-color: #fff; margin-top: 20px">
+    <!-- <h3 class="box-title" style="font-size: 25px"><i class="fa fa-list"></i> Buat Soal</h3> -->
+      <!-- <section class="content-header"> -->
+    <h1>
+      Hasil Soal Pilihan Ganda
+    </h1>
+  <!-- </section> -->
+  <!-- <div style="margin-left: 15px; margin-right: 15px; margin-top: 10px;"> -->
+    <ol class="breadcrumb">
+        <li><a href="<?php echo base_url('MahasiswaC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
+        <li><a href="<?php echo base_url('MahasiswaC/detailKelas/'.$ket_soal['id_kelas']) ?>">Detail Kelas</a></li>
+        <li class="active">Hasil Soal Pilihan Ganda</li>
+    </ol>
+  <!-- </div> -->
+    <div class="callout callout-info">
+    <h4><i class="fa fa-info-circle"></i> INFORMASI</h4>
+    <ul>
+    <li>Warna Hijau = Jawaban Benar</li>
+    <li>Warna Merah = Jawaban Salah</li>
+    </ul>
+  </div>
 <div class="col-xs-9">
   <!-- Main content --> 
-  <div class="box box-primary" style="margin-top: 20px">
+  <div class="box box-default" style="margin-top: 10px">
     <div class="box-header with-border">
       <center>
         <h1 class="box-title" style="font-size: 25px;"><b> <?php echo $ket_soal['nama_tugas'];?></b></h1>
@@ -39,7 +60,7 @@ $this->load->view('head_soal');
                 style="color: #FF0000; font-weight: bold;"
 
               <?php }elseif($value->kunci == 'A'){ ?>
-                style="color: #000000; font-weight: bold;" 
+                style="color: #008000; font-weight: bold;" 
 
               <?php } ?>
 
@@ -60,7 +81,7 @@ $this->load->view('head_soal');
                 style="color: #FF0000; font-weight: bold;"
 
               <?php }elseif($value->kunci == 'B'){ ?>
-                style="color: #000000; font-weight: bold;" 
+                style="color: #008000; font-weight: bold;" 
 
               <?php } ?>
 
@@ -81,7 +102,7 @@ $this->load->view('head_soal');
                   style="color: #FF0000; font-weight: bold;"
 
                 <?php }elseif($value->kunci == 'C'){ ?>
-                  style="color: #000000; font-weight: bold;" 
+                  style="color: #008000; font-weight: bold;" 
 
                 <?php } ?>
 
@@ -103,7 +124,7 @@ $this->load->view('head_soal');
                   style="color: #FF0000; font-weight: bold;"
 
                 <?php }elseif($value->kunci == 'D'){ ?>
-                  style="color: #000000; font-weight: bold;" 
+                  style="color: #008000; font-weight: bold;" 
 
                 <?php } ?>
 
@@ -125,7 +146,7 @@ $this->load->view('head_soal');
                   style="color: #FF0000; font-weight: bold;"
 
                 <?php }elseif($value->kunci == 'E'){ ?>
-                  style="color: #000000; font-weight: bold;" 
+                  style="color: #008000; font-weight: bold;" 
 
                 <?php } ?>
 
@@ -149,7 +170,7 @@ $this->load->view('head_soal');
 </div>
 
 <div class="col-xs-3">
-  <div class="box box-primary" style="margin-top: 20px">
+  <div class="box box-default" style="margin-top: 10px">
     <div class="box-header with-border">
       <center>
         <p>Nilai:</p>
@@ -163,7 +184,7 @@ $this->load->view('head_soal');
           <img class="img-circle img-bordered-sm" src="<?php echo base_url('gambar/'.$ket_soal['foto_profil'])?>" alt="user image">
           <?php
         }else { ?> 
-          <img class="img-circle img-bordered-sm" src="<?php echo base_url('gambar/admin.png')?>" alt="user image">
+          <img class="img-circle img-bordered-sm" src="<?php echo base_url('gambar/blankphoto.png')?>" alt="user image">
         <?php } ?>
         <span class="username" style="font-size: 11px;">
           <a href="#"><?php echo $ket_soal['nama_depan'].' '; echo $ket_soal['nama_belakang'];?></a>

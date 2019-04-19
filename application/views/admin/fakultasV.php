@@ -5,17 +5,23 @@ $this->load->view('head_admin');
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <section class="content-header">
+  <div class="box box-info col-xs-12" style="border-top-color: #fff">
+  <!-- <section class="content-header"> -->
     <h1>
       Fakultas
-      <small><?php echo $getuniv['nama_univ'];?></small>
-    </h1>  
+    </h1>
+  <!-- </section> -->
+  <!-- <div style="margin-left: 15px; margin-right: 15px; margin-top: 10px;"> -->
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Fakultas</li>
+        <li><a href="<?php echo base_url('AdminC/')?>"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        <li><a href="<?php echo base_url('AdminC/daftarUniversitas')?>"><?php echo $getuniv['nama_univ'];?></a></li>
+        <li class="active">Fakultas</li>
     </ol>
+  <!-- </div> -->
+  </div>
   </section>
 
-  <!-- Main Content --> 
+  <!-- Main Content -->
   <section class="content">
     <div class="row">
       <!-- Alert -->
@@ -31,15 +37,11 @@ $this->load->view('head_admin');
       <?php } ?>
       <!-- sampai sini -->
       <div class="col-xs-12">
-        <div style="padding-bottom: 20px;">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-add"><i class="fa fa-plus-square"></i>  Tambah</button>
-        </div>
-        <div class="box">
+        <div class="box box-info" style="border-top-color: #fff">
           <!-- Box Header -->
           <div class="box-body">
-            <div class="row" style="padding-bottom: 15px;">
-
-            </div>
+            <button type="button" class="btn btn-primary pull-right" style="background-color: #002231" data-toggle="modal" data-target="#modal-add">Tambah Fakultas</button>
+            <div class="row" style="padding-bottom: 10px;"></div>
             <table id="universitas" class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -59,7 +61,7 @@ $this->load->view('head_admin');
                     <a class="btn btn-primary btn-xs tooltips" data-toggle="modal" data-target="#modal-<?php echo $value->id_fakultas; ?>">
                       <span data-toggle="tooltip" data-original-title="Ubah Kelas" <i class="fa fa-edit"></i></span>
                     </a>
-                    <a class="btn btn-success btn-xs tooltips" href="<?php echo site_url('AdminC/daftarProdi/'.$value->id_fakultas) ?>">
+                    <a class="btn btn-info btn-xs tooltips" href="<?php echo site_url('AdminC/daftarProdi/'.$value->id_fakultas) ?>">
                       <span data-toggle="tooltip" data-original-title="Detail Kelas" <i class="fa fa-search"></i></span>
                     </a></center>
                   </td>
@@ -82,34 +84,30 @@ $this->load->view('head_admin');
               <h4 class="modal-title"><center>Tambah Fakultas</center></h4>
             </div>
             <div class="modal-body">
-             <!-- <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('AdminC/tambahFakultas') ?>"> -->
-
-              <?php echo form_open_multipart('AdminC/tambahFakultas','id="form" class="form-horizontal"');?>
+             <form id="form" class="form-horizontal" method="POST" action="<?php echo site_url('AdminC/tambahFakultas') ?>">
                <div class="form-group">
                  <label for="" class="col-sm-2 control-label">Nama Fakultas</label>
                  <div class="col-sm-10">
-                   <input type="text" class="col-sm-10 form-control" name="nama_fakultas" placeholder="Nama Fakultas">
+                   <input type="text" class="col-sm-10 form-control" name="nama_univ" placeholder="Nama Fakultas">
                  </div>
                </div> 
                <div class="form-group">
                 <label for="" class="col-sm-2 control-label">Status</label>
                 <div class="col-sm-10">
-                  <select name="status_fakultas" class="form-control required" required="">
+                  <select name="status_univ" class="form-control required" required="">
                     <option value="" disabled selected><i>---Pilih Status---</i></option>
                     <option value="Aktif">Aktif</option>
                     <option value="Tidak Aktif">Tidak Aktif</option>
-                  </select> 
+                  </select>
                 </div>
-              </div>
-              <input type="hidden" class="col-sm-10 form-control" id="id_univ" name="id_univ" value="<?php echo $getuniv['id_univ']; ?>">
+              </div> 
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
-              <input class="btn btn-primary" type="submit">
+              <input class="btn btn-primary" id="" type="submit" value="Simpan" >
             </div>
           </div>
-        <!-- </form> -->
-        <?php echo form_close();?>
+        </form>
         <!-- /.modal-content -->
       </div>
       <!-- /.modal-dialog -->
@@ -127,7 +125,7 @@ $this->load->view('head_admin');
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
           <span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title"><center>Ubah Fakultas</center></h4>
         </div>
@@ -180,6 +178,19 @@ $this->load->view('head_admin');
       'autoWidth'   : false
     })
   })
+
+  /** add active class and stay opened when selected */
+  var url = window.location;
+
+    // for sidebar menu entirely but not cover treeview
+    $('ul.sidebar-menu a').filter(function() {
+      return this.href == url;
+    }).parent().addClass('active');
+
+    // for treeview
+    $('ul.treeview-menu a').filter(function() {
+      return this.href == url;
+    }).parentsUntil(".sidebar-menu > .treeview-menu").addClass('active');
 </script>
 </body>
 <footer class="main-footer">

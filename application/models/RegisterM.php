@@ -10,6 +10,7 @@ class RegisterM extends CI_Model{
     return $this->db->get("universitas")->result();
   }
 
+  //function untuk menambahkan akun dan dimasukkan ke tabel user
   public function register($data){
     $this->db->trans_start();
       

@@ -4,16 +4,10 @@ $this->load->view('head_soal');
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
-  <h1>
+<!--   <h1>
     <?php echo $nama_tugas['nama_tugas'];?>
-  </h1>
+  </h1> -->
 </section><br>
-<ol class="breadcrumb">
-  <li><a href="<?php echo base_url('MahasiswaC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
-  <li><a href="#">Buat Soal</a></li>
-  <li class="active">Soal Pilihan Ganda</li>
-</ol>
-<!-- /.content-header -->
 
 
 
@@ -47,11 +41,13 @@ $this->load->view('head_soal');
 
     ?>
 
-   <div id='timer' style=""></div>
+   <div id='timer'></div>
+
    <table class="table-responsive" style="margin: 10px 10px 10px 10px">
     <!-- form start -->
      <form id="form_soal" action="<?php echo site_url('MahasiswaC/jawabSoal') ?>" method="POST">
       <!-- <div class="box-body"> -->
+        <input type="hidden" name="id_mhs" value="<?php echo $id_mhs; ?>">
         <input type="hidden" name="id_tugas" value="<?php echo $value->id_tugas; ?>">
         <input type="hidden" name="pilihan[<?php echo $nomor;?>][id_soal_pilgan]" value="<?php echo $value->id_soal_pilgan; ?>">
         <tr>
@@ -116,7 +112,7 @@ $this->load->view('head_soal');
     ?>
     <div class="box-footer">
           <center>
-            <button type="submit" class="btn btn-success">Selesai</button>
+            <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Anda yakin?')">Selesai</button>
           </center>
         </div>
   <!-- </div> -->
@@ -181,7 +177,7 @@ $this->load->view('head_soal');
   
                 /** Menampilkan Waktu Timer pada Tag #Timer di HTML yang tersedia */
                 $('#timer').html(
-                    '<div><h3 align="center"'+peringatan+'>Sisa waktu <br />' + jam + ' jam : ' + menit + ' menit : ' + detik + ' detik</h3><div><hr>'
+                    '<div><h4 align="center"'+peringatan+'>Sisa waktu <br />' + jam + ' jam : ' + menit + ' menit : ' + detik + ' detik</h4><div><hr>'
                 );
   
                 /** Melakukan Hitung Mundur dengan Mengurangi variabel detik - 1 */

@@ -6,16 +6,36 @@ $this->load->view('head_soal');
 <!-- Content Header (Page header) -->
 <section class="content-header">
 <!-- Main content -->
-<div class="box box-primary">
-  <center>
-  <div class="box-header with-border">
-      <!-- <center> -->
+  <div class="box box-info col-xs-12" style="border-top-color: #fff">
+    <!-- <h3 class="box-title" style="font-size: 25px"><i class="fa fa-list"></i> Buat Soal</h3> -->
+      <!-- <section class="content-header"> -->
+    <h1>
+      Soal Pilihan Ganda
+    </h1>
+  <!-- </section> -->
+  <!-- <div style="margin-left: 15px; margin-right: 15px; margin-top: 10px;"> -->
+    <ol class="breadcrumb">
+        <li><a href="<?php echo base_url('DosenC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
+        <li><a href="<?php echo base_url('DosenC/detailKelas/'.$ket_soal['id_kelas']) ?>">Detail Kelas</a></li>
+        <li class="active">Soal Pilihan Ganda</li>
+    </ol>
+  <!-- </div> -->
+
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <center>
         <h3><b><?php echo $ket_soal['nama_tugas'];?></b></h3>
-        <p><i class="fa fa-clock-o" ></i> Waktu: <?php echo $ket_soal['waktu'];?> menit</p>
-        <p><i class="fa fa-calendar" ></i> Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
-      <!-- </center>  -->
+      </center> 
     </div>
-  </center>
+    <div class="box-body">
+      <center>
+        <p><i class="fa fa-calendar" ></i> Batas Pengerjaan: <?php echo tgl_indo(date("Y-m-d",strtotime($ket_soal['tgl_selesai']))); ?></p>
+        <p><i class="fa fa-clock-o" ></i> Waktu: <?php echo $ket_soal['waktu'];?> menit</p>
+      </center> 
+    </div>
+  </div>
+
+<div class="box box-primary" style="border-top-color: #fff">
   <?php foreach($soal as $value) { $nomor=$nomor+1; ?>
    <!-- form start -->
    <table width="100%" class="table table-striped">
@@ -275,12 +295,9 @@ $this->load->view('head_soal');
 </script> 
 
 <footer class="main-footer">
-  <div class="container">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2018 <a>Tugas Kuliah</a>.</strong> All rights
-    reserved.
+  <div class="container text-center">
+    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
+    All rights reserved
   </div>
   <!-- /.container -->
 </footer>

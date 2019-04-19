@@ -7,31 +7,32 @@ $this->load->view('head_soal');
   <div class="box box-primary" style="margin-top: 20px">
     <div class="box-header with-border">
       <center>
-        <h1 class="box-title" style="font-size: 25px;"><b> <?php echo $jawaban['nama_depan'] . ' ' . $jawaban['nama_belakang'];?></b></h1>
-        <p style="padding-top: 10px;">NIM: <?php echo $jawaban['nim']; ?></p>
+        <h1 class="box-title" style="font-size: 25px;"><b> <?php echo $nilai['nama_depan'] . ' ' . $nilai['nama_belakang'];?></b></h1>
+        <p style="padding-top: 10px;">NIM: <?php echo $nilai['nim']; ?></p>
       </center> 
     </div>
     <form method="POST" action="<?php echo site_url('DosenC/editNilaiEssay')?>">
     <div class="box-body">
-      <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $jawaban['id_tugas']; ?>">
-      <input type="hidden" class="form-control" name="id_soal_essay" value="<?php echo $jawaban['id_jawaban_essay']; ?>">
-      <input type="hidden" class="form-control" name="id_mhs" value="<?php echo $jawaban['id_mhs']; ?>">
+      <input type="hidden" class="form-control" name="id_tugas" value="<?php echo $nilai['id_tugas']; ?>">
+      <input type="hidden" class="form-control" name="id_soal_essay" value="<?php echo $nilai['id_jawaban_essay']; ?>">
+      <input type="hidden" class="form-control" name="id_mhs" value="<?php echo $nilai['id_mhs']; ?>">
+      <input type="hidden" class="form-control" name="id_nilai" value="<?php echo $nilai['id_nilai']; ?>">
       
       <div class="attachment-block clearfix" style="margin-bottom: 40px;">
-        <?php $link = base_url()."file_upload/".$jawaban['path_file']; ?>
+        <?php $link = base_url()."file_upload/".$nilai['path_file']; ?>
         <a target="_blank" href="<?php echo $link;?>"><img class="attachment-img" src="<?php echo base_url()?>gambar/pdf.svg"></a>
         
         <div class="attachment-pushed">
-          <h4 class="attachment-heading"><a target="_blank" href="<?php echo $link;?>"><?php echo $jawaban['path_file']; ?></a></h4>
+          <h4 class="attachment-heading"><a target="_blank" href="<?php echo $link;?>"><?php echo $nilai['path_file']; ?></a></h4>
           <div class="attachment-text">
             PDF File
           </div>
           <!-- /.attachment-text -->
         </div> 
         <!-- /.attachment-pushed --> 
-      </div>
+      </div> 
       <h4>Catatan:</h4>
-      <p><?php echo $jawaban['jawaban'];?></p> 
+      <p><?php echo $nilai['jawaban'];?></p> 
     </div>
     <!-- /.box-body -->
 

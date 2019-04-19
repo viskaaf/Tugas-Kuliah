@@ -97,11 +97,41 @@ function email($email){
     //memanggil library email dan set konfigurasi untuk pengiriman email
     $ci->email->initialize($config);
     //konfigurasi pengiriman
-    $ci->email->from($config['smtp_user']);
+    $ci->email->from($config['smtp_user'],'Administrator Tugas-Kuliah (No Replay)');
     //email tujuan
     $ci->email->to($email);
 
     return TRUE;
 }
 
+function batasPengerjaan($id_tugas) {
+    $ci=& get_instance();
 
+   $q = $ci->db->query("SELECT id_mhs, id_nilai, status_nilai, tgl_selesai FROM tugas t, nilai n WHERE n.id_tugas = t.id_tugas AND t.id_tugas = '$id_tugas'");
+    // $id_mhs = $ci->db->query("SELECT km.id_mhs FROM tugas t, kelas k, kelas_mhs km WHERE t.id_kelas = k.id_kelas AND k.id_kelas = km.id_kelas AND t.id_tugas = '$id_tugas'");
+    // $id_mhsNilai = $ci->db->query("SELECT id_mhs FROM nilai n, tugas t WHERE n.id_tugas = t.id_tugas AND t.id_tugas = '$id_tugas'");
+
+        $tgl_sekarang=date("Y-m-d");//tanggal sekarang
+
+        // foreach ($id_mhs->result() as $key_id) {
+            foreach ($q->result() as $key) {
+                // foreach ($id_mhsNilai->result() as $key_idNilai) {
+                  $tgl_exp = $key->tgl_selesai;
+                  $jangka_waktu = strtotime('+1 days',strtotime($tgl_exp));// jangka waktu + 365 hari
+                  $tgl_exp=date("Y-m-d",$jangka_waktu);//tanggal expired
+
+                  if ($tgl_sekarang >= $tgl_exp && $key->status_nilai == "Belum Dikerjakan"){
+                    $data = array(
+                        'status_nilai' => "Tidak Dikerjakan",
+                        'updateDtm' => date('Y-m-d H:i:s')
+                    );
+                $id_nilai =     $key->id_nilai;
+                  
+                $ci->DosenM->ubahNilai($data, $id_nilai);
+                }
+
+            // } 
+                // AND $key_id->id_mhs != $key_idNilai->id_mhs
+        }
+    // }
+}

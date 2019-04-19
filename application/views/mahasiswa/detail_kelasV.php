@@ -55,10 +55,10 @@ if($sukses)
                 <img class="img-circle img-bordered-sm" src="<?php echo base_url('gambar/'.$value->foto_profil)?>" alt="user image">
                 <?php
               }else { ?> 
-                <img class="img-circle img-bordered-sm" src="<?php echo base_url('gambar/admin.png')?>" alt="user image">
+                <img class="img-circle img-bordered-sm" src="<?php echo base_url('gambar/blankphoto.png')?>" alt="user image">
               <?php } ?>
               <span class="username">
-                <a href="#"><?php echo $value->nama_depan.' '; echo $value->nama_belakang;?></a>
+                <a data-toggle="modal" data-target="#modal-lihat"><?php echo $value->nama_depan.' '; echo $value->nama_belakang;?></a>
                 <a style="color: #999; font-size: 13px">dikirim ke <b><?php echo $value->nama_kelas?></b></a>
               </span>
               <span class="description"><?php echo tgl_indo(date("Y-m-d",strtotime($value->createDtm))); ?> - <?php echo date("H:i",strtotime($value->createDtm)); ?></span>
@@ -72,8 +72,10 @@ if($sukses)
         <?php } ?>
       <?php } ?>
     </div>
-  </div>
-</div> 
+    <div style="height: 100px;"></div>
+  </div> 
+  <div style="height: 223px;"></div>
+</div>
 
 <div class="col-md-3"> 
   <div class="box box-widget widget-user-2">
@@ -136,6 +138,91 @@ if($sukses)
     </div>
   </div>
 </div>
+
+<div class="col-md-3"> 
+  <div class="box box-widget widget-user-2">
+    <div class="widget-user-header bg-primary">
+      <h4>Anggota
+    </div>
+    <div class="box-footer no-padding"> 
+      <?php if(empty($anggota)) { ?>
+        <ul class="nav nav-stacked text-center"> 
+          <li><a><i>-Tidak ada-</i></a></li> 
+        </ul>
+      <?php }else{ ?>
+          <div class="box-body no-padding">
+                  <ul class="users-list clearfix">
+                    <?php foreach ($anggota as $value) { ?>
+                    <li>
+                      <?php
+                        if($value->foto_profil){
+                      ?>
+                      <img src="<?php echo base_url('gambar/'.$value->foto_profil)?>" alt="User Image">
+                      <?php
+                      }else{
+                      ?>
+                      <img src="<?php echo base_url('gambar/blankphoto.png')?>" alt="User Image">
+                      <?php
+                      }
+                      ?>
+                      <span><?php echo $value->nama_depan.' '; echo $value->nama_belakang ?></span>
+                    </li>
+                    <?php } ?>
+                  </ul>
+                  <!-- /.users-list -->
+                </div>
+                <!-- /.box-body -->
+<!--                 <div class="box-footer text-center">
+                  <a data-toggle="modal" data-target="#modal-lihat" class="btn">Lihat semua</a>
+                </div> -->
+                <!-- /.box-footer -->
+      <?php } ?>
+    </div>
+  </div>
+</div>
+
+        <?php $no=0; foreach ($dosen as $value): $no++; ?>
+        <!-- modal untuk tambah manual -->
+        <div class="modal fade" id="modal-lihat">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title"><center>Profil Dosen</center></h4>
+                </div>
+                <div class="modal-body" style="height: 270px">
+                 <div class="col-md-4">
+                  <?php if(!empty($value->foto_profil)){ ?>
+                    <img class="detail-gambar" align="left" src="<?php echo base_url('gambar/'.$value->foto_profil)?>">
+                  <?php }else{ ?>
+                    <img class="detail-gambar" align="left" src="<?php echo base_url('gambar/'.'blankphoto.png')?>">
+                  <?php } ?>
+                </div>
+                <div class="col-md-7">
+                  <h2><?php echo $value->nama_depan . ' ' . $value->nama_belakang;?></h2> 
+                  <h4><?php echo $value->nip;?></h4><br>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <th style="width:50%">Universitas</th>
+                        <td><?php echo $value->nama_univ;?></td>
+                      </tr>
+                      <tr>
+                        <th style="width:50%">Jenis Kelamin</th>
+                        <td><?php echo $value->jenis_kelamin;?></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+      <?php  endforeach; ?>
 
 </div>
 <!-- /.col -->

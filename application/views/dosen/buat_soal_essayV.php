@@ -4,12 +4,22 @@ $this->load->view('head_dosen');
 
 
 <div class="col-md-9">
-    <div class="box-header with-border">
-      <h3 class="box-title" style="font-size: 25px"><i class="fa fa-list"></i> Buat Soal</h3>
-    </div>
-    <!-- /.box-header -->
+      <div class="box box-info col-xs-12" style="border-top-color: #fff">
+    <!-- <h3 class="box-title" style="font-size: 25px"><i class="fa fa-list"></i> Buat Soal</h3> -->
+      <!-- <section class="content-header"> -->
+    <h1>
+      Buat Soal Essay
+    </h1>
+  <!-- </section> -->
+  <!-- <div style="margin-left: 15px; margin-right: 15px; margin-top: 10px;"> -->
+    <ol class="breadcrumb">
+        <li><a href="<?php echo base_url('DosenC') ?>"><i class="fa fa-home"></i> Beranda</a></li>
+        <li><a href="<?php echo base_url('DosenC/detailKelas/'.$id_kelas) ?>">Detail Kelas</a></li>
+        <li class="active">Buat Soal</li>
+    </ol>
+  <!-- </div> -->
     <?php
-  $this->load->helper('form');
+  $this->load->helper('form'); 
   $error = $this->session->flashdata('error');
   if($error)
   {
@@ -101,12 +111,9 @@ $this->load->view('head_dosen');
 </script>
 
 <footer class="main-footer">
-  <div class="container">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2018 <a>Tugas Kuliah</a>.</strong> All rights
-    reserved.
+  <div class="container text-center">
+    Copyright &copy; 2018 <b><a class="text-black">Tugas Kuliah</a></b><br>
+    All rights reserved
   </div>
   <!-- /.container -->
 </footer>

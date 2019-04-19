@@ -95,9 +95,30 @@ class MahasiswaM extends CI_Model{
 
   //untuk mengambil data kelas sesuai user
 	public function getKelasbyUser($id_user){
-		$q = $this->db->query("SELECT * FROM user u, mahasiswa m, kelas_mhs km, kelas k WHERE u.id_user=m.id_user AND m.id_mhs=km.id_mhs AND km.id_kelas=k.id_kelas AND u.id_user='$id_user'");
+		$q = $this->db->query("SELECT * FROM user u, mahasiswa m, kelas_mhs km, kelas k WHERE u.id_user=m.id_user AND m.id_mhs=km.id_mhs AND km.id_kelas=k.id_kelas AND k.status_kelas='Aktif' AND u.id_user='$id_user'");
 		return $q;
 	}
+
+	//   //untuk mengambil data kelas sesuai user
+	// public function getKelasbyStatus($id_user){
+	// 	$q = $this->db->query("SELECT * FROM user u, mahasiswa m, kelas_mhs km, kelas k WHERE u.id_user=m.id_user AND m.id_mhs=km.id_mhs AND km.id_kelas=k.id_kelas AND k.status_kelas='Aktif' AND u.id_user='$id_user'");
+	// 	return $q;
+	// }
+
+	  public function getAnggota($id_kelas){
+    $q = $this->db->query("SELECT * FROM user u, mahasiswa m, kelas k, kelas_mhs km WHERE u.id_user=m.id_user AND m.id_mhs=km.id_mhs AND k.id_kelas=km.id_kelas AND k.id_kelas=$id_kelas");
+    return $q;
+  }
+
+  	  public function getAnggotaBlm($id_kelas){
+    $q = $this->db->query("SELECT * FROM user u, mahasiswa m, kelas k, kelas_mhs km WHERE u.id_user=m.id_user AND m.id_mhs=km.id_mhs AND k.id_kelas=km.id_kelas AND km.status_kelas_mhs='Tidak' AND k.id_kelas=$id_kelas");
+    return $q;
+  }
+
+  	  public function getDosen($id_kelas){
+    $q = $this->db->query("SELECT * FROM universitas un, user u, dosen d, kelas k WHERE un.id_univ=u.id_univ AND u.id_user= d.id_user AND d.id_dosen=k.id_dosen AND k.id_kelas=$id_kelas");
+    return $q;
+  }
 
   //untuk menambah data kelas
 	public function insertKelasMhs($data){
@@ -128,7 +149,7 @@ class MahasiswaM extends CI_Model{
 
   //untuk menampilkan data tugas berdasarkan id_kelas
 	public function getTugas($id_kelas){
-		$q = $this->db->query("SELECT *, t.createDtm AS createDtm from tugas t, kelas k, dosen d, user u WHERE t.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND k.id_kelas=$id_kelas ORDER BY t.id_tugas DESC");
+		$q = $this->db->query("SELECT *, t.createDtm AS createDtm from tugas t, kelas k, dosen d, user u WHERE t.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND t.status_tugas='Aktif' AND k.id_kelas=$id_kelas ORDER BY t.id_tugas DESC");
 		return $q;
 	}
 
@@ -149,19 +170,23 @@ class MahasiswaM extends CI_Model{
 	}
 
 	//untuk menambahkan nilai soal pilihan ganda
-	public function insertNilaiPilgan($id_tugas,$id_mhs){
+	public function insertNilaiPilgan($dataNilai,$id_mhs,$id_tugas){
 		$jumlahSoal = $this->db->query("SELECT id_soal_pilgan FROM soal_pilgan s, tugas t WHERE s.id_tugas=t.id_tugas AND t.id_tugas ='$id_tugas'")->num_rows();
 
-		$jumlahSalah = $this->db->query("SELECT jp.id_jawaban_pilgan FROM jawaban_pilgan jp, soal_pilgan s, tugas t WHERE jp.id_soal_pilgan=s.id_soal_pilgan AND s.id_tugas=t.id_tugas AND jp.status='S' AND t.id_tugas='$id_tugas' AND jp.id_mhs = '$id_mhs'")->num_rows();
+		$id_mhs = $this->input->post('id_mhs');
+		$jumlahSalah = $this->db->query("SELECT jp.id_jawaban_pilgan FROM jawaban_pilgan jp, soal_pilgan s, tugas t WHERE jp.id_soal_pilgan=s.id_soal_pilgan AND s.id_tugas=t.id_tugas AND jp.status='S' AND t.id_tugas=$id_tugas AND jp.id_mhs=$id_mhs")->num_rows();
 
 		$hitungNilai = ((($jumlahSoal-$jumlahSalah)/$jumlahSoal)*100);
-		// print($jumlahSoal); print($jumlahSalah); exit();
+
 		$dataNilai = array(
 			'nilai' =>$hitungNilai,
-			'id_mhs' =>$id_mhs,
-			'id_tugas' =>$id_tugas
+			'status_nilai' => "Sudah Dinilai",
+			'updateDtm' => date('Y-m-d H:s:i')
 		);
-		$this->db->insert('nilai',$dataNilai);
+
+		$this->db->where('id_mhs',$id_mhs);
+		$this->db->where('id_tugas',$id_tugas);
+		$this->db->update('nilai',$dataNilai);
 		return true;
 	}
 
@@ -182,7 +207,7 @@ class MahasiswaM extends CI_Model{
 
 	public function getNilai($id,$id_mhs){
 		return $this->db
-		->select('n.nilai, t.id_tugas, n.id_mhs')
+		->select('n.nilai, t.id_tugas, n.id_mhs, n.status_nilai')
 		->from('nilai n')
 		->join('tugas t', 't.id_tugas = n.id_tugas')
 		->join('mahasiswa m', 'm.id_mhs = n.id_mhs')
@@ -198,7 +223,7 @@ class MahasiswaM extends CI_Model{
 	}
 
 	public function getSoalEssay($id){
-		$query = $this->db->query("SELECT * FROM soal_essay s, tugas t WHERE s.id_tugas=t.id_tugas AND t.id_tugas = '$id'");
+		$query = $this->db->query("SELECT * FROM soal_essay s, tugas t WHERE s.id_tugas=t.id_tugas AND t.id_tugas = '$id'"); 
 		return $query;
 	}
 
@@ -217,6 +242,7 @@ class MahasiswaM extends CI_Model{
 	public function insertNilaiEssay($id_tugas,$id_mhs){
 		$dataNilai = array(
 			'nilai' =>0,
+			'status_nilai' => "Belum Dinilai",
 			'id_mhs' =>$id_mhs,
 			'id_tugas' =>$id_tugas
 		);
@@ -242,7 +268,7 @@ class MahasiswaM extends CI_Model{
 
 //untuk menampilkan data tugas berdasarkan id_kelas
 	public function getMateri($id_kelas){ 
-		$q = $this->db->query("SELECT * from materi m, kelas k, dosen d, user u WHERE m.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND k.id_kelas=$id_kelas ORDER BY m.id_materi DESC");
+		$q = $this->db->query("SELECT * from materi m, kelas k, dosen d, user u WHERE m.id_kelas=k.id_kelas AND k.id_dosen=d.id_dosen AND d.id_user=u.id_user AND m.status_materi='Aktif' AND k.id_kelas=$id_kelas ORDER BY m.id_materi DESC");
 		return $q;
 	}
 } 
